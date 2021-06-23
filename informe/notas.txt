@@ -1,0 +1,21 @@
+guardo donde estan en su respectivas tablas de hash -> es lo mismo
+
+
+segun que hasheo -> medio q nro seria lo mas logico 
+
+llevar un arbolito con el tema edades 
+
+me pasa 
+
+por la naturaleza del doble hash me podria llegar a pasar que para encontrar todos los de nombres carlos igual me de una vuelta por toda la tabla porque no se donde parar -> recorriendo toda la tabla me aseguro
+
+tener una tablahash que hashea con nombre y apellido
+
+tener arbolitos con su dato y en donde estan segun la tabla de nombre y apellido (índice) -> para conjuntos and or y guardar ordenado
+
+voy a implementar en conjuntos interseccion y union teniendo en cuenta nodos reps
+
+
+buscar por suma de edades -> algoritmou raro
+
+
