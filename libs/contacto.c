@@ -26,20 +26,27 @@ Contacto contacto_crear(char* nombre, char* apellido, unsigned edad, char* telef
  * Destruye un contacto.
  */
 void contacto_destruir(Contacto contacto) {
+  if (contacto) {
     free(contacto->nombre);
     free(contacto->apellido);
     free(contacto->telefono);
     free(contacto);
+  }
 }
 
 /**
  * Imprime por pantalla un contacto.
  */
 void contacto_imprimir(Contacto contacto) {
-  printf("{nombre:%s, apellido:%s, telefono:%s, edad:%d}\n", contacto->nombre, contacto->apellido, contacto->telefono, contacto->edad);
+  if (contacto) {
+    printf("{%s,%s,%d,%s}\n", contacto->nombre, contacto->apellido, contacto->edad, contacto->telefono);
+  }
+  else {
+    printf("NULL\n");
+  }
 }
 
-int main() {
+/*int main() {
     char* nombre = malloc(sizeof(char)*5);
     nombre[0] = 'p';
     nombre[1] = 'e';
@@ -64,4 +71,4 @@ int main() {
     contacto_destruir(p);
 
     return 0;
-}
+}*/

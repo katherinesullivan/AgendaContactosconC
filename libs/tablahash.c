@@ -1,35 +1,7 @@
 #include "tablahash.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
-
-/* Funciones relacionadas a los árboles */
-Arbol crear_nodo(char *dato) {
-  Arbol arbol = malloc(sizeof(NodoArbol));
-
-  arbol->dato = dato;
-  arbol->der = NULL;
-  arbol->izq = NULL;
-  return arbol;
-}
-
-void arbol_destruir(Arbol arbol) {
-  if (arbol != NULL) {
-    arbol_destruir(arbol->izq);
-    arbol_destruir(arbol->der);
-    free(arbol->dato);
-    free(arbol);
-  }
-
-}
-
-void arbol_imprimir_inorder(Arbol arbol) {
-  if (arbol == NULL)
-    return;
-
-  arbol_imprimir_inorder(arbol->izq);
-  printf("%s\n", arbol->dato);
-  arbol_imprimir_inorder(arbol->der);
-}
 
 /* Crea una nueva tabla Hash vacía con la capacidad dada. */
 TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
@@ -53,7 +25,7 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 }
 
 /* Inserta el dato en la tabla asociado a la clave dada. */
-void tablahash_insertar(TablaHash * tabla, char *clave, Arbol dato) {
+void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -94,8 +66,8 @@ void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
     if (tabla->tabla[idx].estado == 0) {
       done = 1;
       return NULL;
-    } else if (strcmp(tabla->tabla[idx].clave, clave) == 0
-               && tabla->tabla[idx].estado != 2) {
+    } else if (tabla->tabla[idx].estado != 2 && 
+                strcmp(tabla->tabla[idx].clave, clave) == 0) {
       done = 1;
       if (solover) {
         return tabla->tabla[idx].clave;
@@ -122,9 +94,9 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
       // Si llegamos a una casilla vacía es porque no estaba el elemento 
       done = 1;
     } else if (strcmp(tabla->tabla[idx].clave, clave) == 0) {
-      // Si estaba, eliminamos y marcamos como eliminado el casillero
+      // Si lo encontramos, eliminamos y marcamos como eliminado el casillero
       free(tabla->tabla[idx].clave);
-      arbol_destruir(tabla->tabla[idx].dato);
+      contacto_destruir(tabla->tabla[idx].dato);
       tabla->tabla[idx].estado = 2;
       // Disminuimos el nro de elementos 
       tabla->numElems--;
@@ -137,7 +109,7 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
 /* Agranda una tabla de hash dada, aumentando su capacidad al doble más 9. 
 Esto nos asegura que empezando con una capacidad de 31, recién cuando lleguemos 
 a 1271 la capacidad de la tabla no será prima. */
-TablaHash *tablahash_agrandar(TablaHash * tabla) {
+TablaHash *tablahash_agrandar(TablaHash* tabla) {
   unsigned cap = tabla->capacidad;
   tabla->tabla = realloc(tabla->tabla, sizeof(CasillaHash) * (cap * 2 + 9));
 
@@ -155,11 +127,24 @@ TablaHash *tablahash_agrandar(TablaHash * tabla) {
 
 /* Destruye la tabla. */
 void tablahash_destruir(TablaHash * tabla) {
-  for (unsigned int i = 0; i < tabla->capacidad; i++) {
-    arbol_destruir(tabla->tabla[i].dato);       // trabaja con NULL también
-    if (tabla->tabla[i].estado != 2)
+  for (unsigned int i = 0; i < tabla->capacidad; i++) {     
+    if (tabla->tabla[i].estado == 1) {
       free(tabla->tabla[i].clave);
+      contacto_destruir(tabla->tabla[i].dato);
+    }
   }
   free(tabla->tabla);
   free(tabla);
+}
+
+void prettyprint_th(TablaHash* th) {
+  printf("--- TABLA HASH (%u elemento%s) ---\n", th->numElems, (th->numElems == 1) ? "" : "s");
+  for (unsigned int i = 0; i < th->capacidad; i++) {
+    if (th->tabla[i].clave == NULL || (th->tabla[i].estado == 2)) puts("NULL");
+    else {
+      printf("%s: \n", th->tabla[i].clave);
+      contacto_imprimir(th->tabla[i].dato);
+    }
+  }
+  printf("-------------------------------%s%s\n", (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
 }

@@ -16,4 +16,6 @@ Contacto contacto_crear(char* nombre, char* apellido, unsigned edad, char* telef
 
 void contacto_destruir(Contacto contacto);
 
+void contacto_imprimir(Contacto contacto);
+
 #endif                          /* __CONTACTO_H__ */

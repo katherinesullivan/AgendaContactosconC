@@ -3,32 +3,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
-
-/**
- *  Estructura para el tipo de dato de la casilla hash. 
- * */
-typedef struct _NodoArbol {
-  char *dato;
-  struct _NodoArbol *der;
-  struct _NodoArbol *izq;
-} NodoArbol;
-
-typedef NodoArbol *Arbol;
-
-/**
- * Crea un nodo de Arbol.
-*/
-Arbol crear_nodo(char *dato);
-
-/**
- *  Función útil para hacer un recorrido inorder tradicional.
- */
-void arbol_imprimir_inorder(Arbol arbol);
-
-/**
- * Función que destruye un elemento de la estructura Arbol.
- */
-void arbol_destruir(Arbol arbol);
+#include "contacto.h"
 
 /**
  * Tipo de las funciones hash a ser consideradas por las tablas hash.
@@ -40,7 +15,7 @@ typedef unsigned (*FuncionHash) (char *clave);
  */
 typedef struct {
   char *clave;
-  Arbol dato;
+  Contacto dato;
   int estado;   // será 0 si esta libre, 1 si está ocupada, 2 si está eliminada
 } CasillaHash;
 
@@ -64,7 +39,7 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 /*
  * Inserta el dato en la tabla asociado a la clave dada.
  */
-void tablahash_insertar(TablaHash * tabla, char *clave, Arbol dato);
+void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
 
 /*
  * Busca el dato en la tabla asociado a la clave dada.
@@ -90,5 +65,7 @@ TablaHash *tablahash_agrandar(TablaHash * tabla);
  * Destruye la tabla.
  */
 void tablahash_destruir(TablaHash * tabla);
+
+void prettyprint_th(TablaHash* th);
 
 #endif                          /* __TABLAHASH_H__ */
