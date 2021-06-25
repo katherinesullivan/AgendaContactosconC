@@ -17,6 +17,11 @@ int main () {
         free(str1);
     }
     arbol_imprimir_inorder(arbol, 2);
+    SList lista = slist_crear();
+    int nro = 1;
+    arbol_buscar(arbol, &lista, &nro, 2, 0);
+    slist_imprimir(lista);
+    slist_destruir(lista);
     char* str = malloc(sizeof(char)*10);
     printf("Ingrese una edad a eliminar\n");
     fgets(str, 9, stdin);
@@ -25,6 +30,11 @@ int main () {
     arbol = arbol_eliminar(arbol, dato, 3, 2);
     free(str);
     free(dato);
+    SList lista1 = slist_crear();
+    int nro1 = 1;
+    arbol_buscar(arbol, &lista1, &nro1, 2, 0);
+    slist_imprimir(lista1);
+    slist_destruir(lista1);
     arbol_imprimir_inorder(arbol, 2);
     arbol_destruir(arbol);
     return 0;

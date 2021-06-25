@@ -248,7 +248,7 @@ void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol) {
     arbol_imprimir_inorder(arbol->der, tipo_de_arbol);
 }
 
-void arbol_buscar(Arbol arbol, SList lista, void* dato, int tipo_arbol) {
+void arbol_buscar(Arbol arbol, SList* lista, void* dato, int tipo_arbol, int found) {
     if (arbol == NULL) return;
 
     if (tipo_arbol == 1) {
@@ -257,24 +257,38 @@ void arbol_buscar(Arbol arbol, SList lista, void* dato, int tipo_arbol) {
         int rdo = strcmp(dato_str,arbol_dato);
 
         if (rdo == 0) {
-            lista = slist_agregar_inicio(lista, arbol->idx);
-            arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
-            arbol_buscar(arbol->der, lista, dato, tipo_arbol);
+            *lista = slist_agregar_inicio(*lista, arbol->idx);
+            arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 1);
+            arbol_buscar(arbol->der, lista, dato, tipo_arbol, 1);
         }
-        else if (rdo < 0) arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
-        else arbol_buscar(arbol->der, lista, dato, tipo_arbol);
+        else if (rdo < 0) {
+            if (found) return;
+            else arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 0);
+        }
+        else {
+            if (found) return;
+            else arbol_buscar(arbol->der, lista, dato, tipo_arbol, 0);
+        }
     }
 
     else if (tipo_arbol == 2) {
         int dato_int = *(int*)dato;
+        printf("Dato_int: %d\n", dato_int);
         int arbol_dato = *(int*)(arbol->dato);
+        printf("Arbol_dato: %d\n", arbol_dato);
 
         if (dato_int == arbol_dato) {
-            lista = slist_agregar_inicio(lista, arbol->idx);
-            arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
-            arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
+            *lista = slist_agregar_inicio(*lista, arbol->idx);
+            arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 1);
+            arbol_buscar(arbol->der, lista, dato, tipo_arbol, 1);
         }
-        else if (dato_int < arbol_dato) arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
-        else arbol_buscar(arbol->der, lista, dato, tipo_arbol);
+        else if (dato_int < arbol_dato) {
+            if (found) return;
+            else arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 0);
+        }
+        else {
+            if (found) return;
+            else arbol_buscar(arbol->der, lista, dato, tipo_arbol, 0);
+        }
     }
 }
