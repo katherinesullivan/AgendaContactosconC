@@ -29,13 +29,12 @@ SList slist_agregar_inicio(SList lista, int dato) {
 }
 
 void slist_imprimir(SList lista) {
+  printf("--------SLIST:%d------------\n",slist_cant(lista));
   if (lista != NULL) {
     SList nodo = lista;
-    printf("--------SLIST: %d elementos----------\n", lista->cant);
     while(nodo != NULL) {
       printf("%d\n", nodo->dato);
-      nodo = lista->sig;
+      nodo = nodo->sig;
     }
   }
-  else printf("--------SLIST: 0 elementos----------\n");
 }
