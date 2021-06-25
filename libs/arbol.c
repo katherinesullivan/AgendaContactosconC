@@ -182,7 +182,8 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
 
             if (tipo_arbol == 2) {
                 int* nuevo_dato = malloc(sizeof(int));
-                nuevo_dato = temp->dato;
+                int temp_dato = *(int*)(temp->dato);
+                *nuevo_dato = temp_dato;
                 nodo->dato = nuevo_dato;
             }
   

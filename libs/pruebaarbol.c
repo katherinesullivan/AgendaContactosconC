@@ -16,6 +16,7 @@ int main () {
         arbol = arbol_insertar(arbol, dato1_pointer, i, 2);
         free(str1);
     }
+    arbol_imprimir_inorder(arbol, 2);
     char* str = malloc(sizeof(char)*10);
     printf("Ingrese una edad a eliminar\n");
     fgets(str, 9, stdin);
