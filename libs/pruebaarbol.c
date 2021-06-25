@@ -6,18 +6,25 @@
 
 int main () {
     Arbol arbol = arbol_crear();
-    for (int i = 0; i < 5; i++) {
-        printf("Ingrese un nombre:\n>");
-        char* str1 = malloc (sizeof(char)*MAX_NOMBRE);
-        fgets(str1, MAX_NOMBRE-1, stdin);
-        arbol = arbol_insertar(arbol, str1, i, 1);
+    for (int i = 0; i < 12; i++) {
+        printf("Ingrese una edad:\n>");
+        char* str1 = malloc(sizeof(char)*10);
+        fgets(str1, 9, stdin);
+        int dato1 = atoi(str1);
+        int* dato1_pointer = malloc(sizeof(int));
+        dato1_pointer[0] = dato1;
+        arbol = arbol_insertar(arbol, dato1_pointer, i, 2);
+        free(str1);
     }
-    char* str = malloc (sizeof(char)*MAX_NOMBRE);
-    printf("Ingrese un nombre a eliminar\n");
-    fgets(str, MAX_NOMBRE-1, stdin);
-    arbol = arbol_eliminar(arbol, str, 0, 1);
+    char* str = malloc(sizeof(char)*10);
+    printf("Ingrese una edad a eliminar\n");
+    fgets(str, 9, stdin);
+    int* dato = malloc(sizeof(int));
+    dato[0] = atoi(str);
+    arbol = arbol_eliminar(arbol, dato, 3, 2);
     free(str);
-    arbol_imprimir_inorder(arbol, 1);
+    free(dato);
+    arbol_imprimir_inorder(arbol, 2);
     arbol_destruir(arbol);
     return 0;
 }

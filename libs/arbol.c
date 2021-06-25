@@ -141,27 +141,19 @@ Arbol min_value_nodo(Arbol nodo) {
 }
 
 Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
-    printf("Entré a la función eliminar\n");
-    char* str1 = (char*)dato;
-    printf("Dato: %s\n", str1);
     if (nodo == NULL) {
-        printf("Me fuí por NULL1");
         return nodo;
     }
     char* str = (char*)(nodo->dato);
-    printf("Nodo dato: %s\n", str);
-    printf("Nodo idx: %d\n", nodo->idx);
     
     if (idx == nodo->idx) {
         // Estamos en el nodo a eliminar 
-        printf("Estoy en el nodo a eliminar\n");
 
         if((nodo->izq == NULL) || (nodo->der == NULL)) {
             Arbol temp = nodo->izq ? nodo->izq : nodo->der;
   
             // No hijos
             if (temp == NULL) {
-                printf("Entré a caso sin hijos\n");
                 temp = nodo;
                 arbol_destruir(nodo);
                 nodo = NULL;
@@ -175,7 +167,6 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
             }
         }
         else {
-            printf("Entré a caso con 2 hijos acá debería estar\n");
             Arbol temp = min_value_nodo(nodo->der);
 
             nodo->idx = temp->idx;
@@ -227,7 +218,6 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
 
     // Si el nodo no tenía hijos
     if (nodo == NULL) {
-        printf("Me fui por NULL2");
         return nodo;
     }
 
@@ -239,18 +229,18 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
 }
 
 void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol) {
-  if (arbol == NULL) return;
+    if (arbol == NULL) return;
 
-  arbol_imprimir_inorder(arbol->izq, tipo_de_arbol);
+    arbol_imprimir_inorder(arbol->izq, tipo_de_arbol);
 
-  if (tipo_de_arbol == 1) {
-      char* dato_str = (char *)arbol->dato;
-      printf("En %d: %s con altura: %d\n", arbol->idx, dato_str, arbol->alt);
-  }
-  if (tipo_de_arbol == 2) {
-      int dato_int = *(int *)(arbol->dato);
-      printf("En %d: %d con altura: %d", arbol->idx, dato_int, arbol->alt);
-  }
+    if (tipo_de_arbol == 1) {
+        char* dato_str = (char *)arbol->dato;
+        printf("En %d: %s con altura: %d\n", arbol->idx, dato_str, arbol->alt);
+    }
+    if (tipo_de_arbol == 2) {
+        int dato_int = *(int *)(arbol->dato);
+        printf("En %d: %d con altura: %d\n", arbol->idx, dato_int, arbol->alt);
+    }
 
-  arbol_imprimir_inorder(arbol->der, tipo_de_arbol);
+    arbol_imprimir_inorder(arbol->der, tipo_de_arbol);
 }
