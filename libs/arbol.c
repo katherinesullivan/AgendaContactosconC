@@ -264,8 +264,11 @@ void arbol_buscar(Arbol arbol, SList* lista, void* dato, int tipo_arbol, int fou
         char* arbol_dato = (char*)(arbol->dato);
         char* dato_str = (char*)dato;
         int rdo = strcmp(dato_str,arbol_dato);
+        printf("Dato_str: %s\n", dato_str);
+        printf("Arbol dato: %s\n", arbol_dato);
 
         if (rdo == 0) {
+            printf("Son iguales dato_str y arbol_dato yay!\n");
             *lista = slist_agregar_inicio(*lista, arbol->idx);
             arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 1);
             arbol_buscar(arbol->der, lista, dato, tipo_arbol, 1);

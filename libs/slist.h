@@ -2,6 +2,7 @@
 #define __SLIST_H__
 
 #include <stddef.h>
+#include <limits.h>
 
 typedef struct _SNodo {
   int dato;
@@ -31,10 +32,17 @@ int slist_cant(SList lista);
  */
 SList slist_agregar_inicio(SList lista, int dato);
 
+SList slist_cant_max(SList lista);
+
 /**
  * Imprime la lista.
  */
 void slist_imprimir(SList lista);
+
+/**
+ * Devuelve la lista con menos elementos entre las 4 pasadas.
+ */
+SList slist_mas_chica(SList lista1, SList lista2, SList lista3, SList lista4);
 
 
 #endif                          /* __SLIST_H__ */
