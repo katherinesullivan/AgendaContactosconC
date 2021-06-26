@@ -148,3 +148,31 @@ void prettyprint_th(TablaHash* th) {
   }
   printf("-------------------------------%s%s\n", (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
 }
+
+void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel) {
+  int done = 0;
+  int i = 0;
+  unsigned idx;
+
+  while (!done) {
+    idx = tabla->hash(clave) + i * tabla->hash2(clave);
+    idx = idx % tabla->capacidad;
+    if (tabla->tabla[idx].estado == 0) {
+      done = 1;
+      return NULL;
+    } else if (tabla->tabla[idx].estado != 2 && 
+                strcmp(tabla->tabla[idx].clave, clave) == 0) {
+      done = 1;
+
+      // Hacer cambios en arboles
+      // ------------------------------------------ VER LO DE DESTRUIR EN ÁRBOLES ---------
+
+      free(tabla->tabla[idx].dato->telefono); 
+      tabla->tabla[idx].dato->telefono = tel;
+      tabla->tabla[idx].dato->edad = edad;
+      return tabla->tabla[idx].dato;
+    }
+    i++;
+  }
+  return NULL;
+}

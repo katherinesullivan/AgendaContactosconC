@@ -32,6 +32,11 @@ int interpretar(TablaHash ** dicc, char* accion) {
         return 1;
     }
 
+    if (nro_accion == 4) {
+        editar(dicc); // y los árboles
+        return 1;
+    }
+
     if (nro_accion == 13) {
         print_salida();
         prettyprint_th(*dicc);
@@ -49,14 +54,40 @@ int interpretar(TablaHash ** dicc, char* accion) {
 /************************** Acciones ********************************/
 
 void buscar(TablaHash** dicc) {
-    buscar_o_eliminar(dicc, 1);
+    buscar_eliminar_editar(dicc, 1);
 }
 
 void eliminar(TablaHash** dicc) {
-    buscar_o_eliminar(dicc, 2);
+    buscar_eliminar_editar(dicc, 2);
 }
 
-void buscar_o_eliminar(TablaHash** dicc, int opcion)  {
+void editar(TablaHash** dicc) {
+    buscar_eliminar_editar(dicc, 3);
+}
+
+void editar_aux(TablaHash** dicc, char* clave) {
+    print_solicitud(5);
+    char* tel = malloc(sizeof(char)*MAX_TEL);
+    fgets(tel, MAX_TEL-1, stdin);
+    tel[strlen(tel)-1] = '\0';
+
+    print_solicitud(6);
+    char* edad_str = malloc(sizeof(char)*MAX_NRO);
+    fgets(edad_str, MAX_NRO-1, stdin);
+    int edad = atoi(edad_str);
+    free(edad_str);
+
+    // HACER CAMBIOS EN ARBOLES TMB
+    void* rdo = tablahash_editar(*dicc, clave, edad, tel);
+
+    // Podría borrar pq si entro acá es pq ya me fije que estuviese
+    if (rdo == NULL) {
+        free(tel);
+        print_error(2);
+    }
+}
+
+void buscar_eliminar_editar(TablaHash** dicc, int opcion)  {
     print_solicitud(1);
     char* nombre = malloc(sizeof(char)*MAX_NOMBRE);
     fgets(nombre, MAX_NOMBRE-1, stdin);
@@ -74,6 +105,7 @@ void buscar_o_eliminar(TablaHash** dicc, int opcion)  {
     if (contacto) {
         if (opcion == 1) contacto_imprimir(contacto);
         else if (opcion == 2) tablahash_eliminar(*dicc, clave); // modificar para que tmb haga eliminacion en los árboles
+        else if (opcion == 3) editar_aux(dicc, clave);
         else printf("Opción inválida");
     }
     else print_error(2);
@@ -100,6 +132,9 @@ void agregar(TablaHash** dicc) { // Y ÁRBOLES
 
     if (tablahash_buscar(*dicc, clave, 1)) {
         print_error(3);
+        free(nombre);
+        free(apellido);
+        free(clave);
         return;
     } 
 
@@ -154,6 +189,16 @@ void print_solicitud(int tipo) {
 
     if (tipo == 4) {
         printf("Ingrese edad:\n");
+        return;
+    }
+
+    if (tipo == 5) {
+        printf("Ingrese nuevo teléfono:\n");
+        return;
+    }
+
+    if (tipo == 6) {
+        printf("Ingrese nueva edad:\n");
         return;
     }
 

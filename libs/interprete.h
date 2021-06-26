@@ -14,7 +14,11 @@ void buscar(TablaHash** dicc);
 
 void eliminar(TablaHash** dicc);
 
-void buscar_o_eliminar(TablaHash** dicc, int opcion);
+void editar(TablaHash** dicc);
+
+void editar_aux(TablaHash** dicc, char* clave);
+
+void buscar_eliminar_editar(TablaHash** dicc, int opcion);
 
 void agregar(TablaHash** dicc);
 

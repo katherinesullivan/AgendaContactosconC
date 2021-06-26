@@ -68,4 +68,6 @@ void tablahash_destruir(TablaHash * tabla);
 
 void prettyprint_th(TablaHash* th);
 
+void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel);
+
 #endif                          /* __TABLAHASH_H__ */
