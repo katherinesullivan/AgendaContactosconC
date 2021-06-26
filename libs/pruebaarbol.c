@@ -27,6 +27,7 @@ int main () {
     fgets(str, 9, stdin);
     int* dato = malloc(sizeof(int));
     dato[0] = atoi(str);
+    printf("A eliminar: %d\n", dato[0]);
     arbol = arbol_eliminar(arbol, dato, 3, 2);
     free(str);
     free(dato);

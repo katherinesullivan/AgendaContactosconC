@@ -144,20 +144,23 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
     if (nodo == NULL) {
         return nodo;
     }
-    char* str = (char*)(nodo->dato);
     
     if (idx == nodo->idx) {
         // Estamos en el nodo a eliminar 
+        printf("Elimino\n");
 
         if((nodo->izq == NULL) || (nodo->der == NULL)) {
             Arbol temp = nodo->izq ? nodo->izq : nodo->der;
   
             // No hijos
             if (temp == NULL) {
+                printf("Sin hijos!\n");
                 temp = nodo;
-                free(nodo->dato);
-                free(temp);
-                //arbol_destruir(nodo);
+                //free(nodo->dato);
+                //free(temp);
+                arbol_destruir(temp);
+                // Me va a generar un invalid read 
+                // si vengo como de otro lado a veces idk
                 nodo = NULL;
             }
 
@@ -211,7 +214,12 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
             int dato_int = *(int *)dato;
             int nodo_dato_int = *(int *)nodo->dato;
 
-            if (dato_int <= nodo_dato_int)
+            if (dato_int == nodo_dato_int) {
+                nodo->izq = arbol_eliminar(nodo->izq, dato, idx, tipo_arbol);
+                nodo->der = arbol_eliminar(nodo->der, dato, idx, tipo_arbol);
+            }
+
+            else if (dato_int < nodo_dato_int)
                 nodo->izq = arbol_eliminar(nodo->izq, dato, idx, tipo_arbol);
 
             else
@@ -221,7 +229,8 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
 
     // Si el nodo no tenía hijos
     if (nodo == NULL) {
-        return nodo;
+        printf("Sali sin hijos!\n");
+        return NULL;
     }
 
     nodo->alt = 1 + max(altura(nodo->izq), altura(nodo->der));
