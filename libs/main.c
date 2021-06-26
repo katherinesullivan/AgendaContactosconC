@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "interprete.h"
 
+#define N 5
+
 unsigned hash(char *s) {
   unsigned hashval;
   for (hashval = 0; *s != '\0'; s++)
@@ -18,6 +20,7 @@ unsigned hash2(char *s) {
 
 int main() {
     int flag = 1;
+    int** acciones = init_desh_reh();
     char* accion = malloc(sizeof(char)*10);
     TablaHash* diccionario = tablahash_crear(31, hash, &hash2);
     do {
