@@ -278,6 +278,10 @@ void cargar(TablaHash** agenda) {
         char* clave = malloc(sizeof(char)*MAX_CLAVE);
         sprintf(clave, "%s%s", nombre, apellido);
 
+        if (tablahash_buscar(*agenda, clave, 1)) {
+            tablahash_eliminar(*agenda, clave);
+        }
+
         Contacto contacto = contacto_crear(nombre, apellido, edad, tel);
 
         tablahash_insertar(*agenda, clave, contacto);
