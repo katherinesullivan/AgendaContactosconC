@@ -71,6 +71,16 @@ void andor(TablaHash** agenda, int* bands, char* nombre, char* apellido, int* ed
 
         SList lista_comparar = slist_mas_chica(lista_nombre, lista_apellido, lista_edad, lista_tel);
         int edad = *edad_pointer;
+        printf("Lista nombre:\n");
+        slist_imprimir(lista_nombre);
+        printf("\nLista apellido:\n");
+        slist_imprimir(lista_apellido);
+        printf("\nLista edad:\n");
+        slist_imprimir(lista_edad);
+        printf("\nLista tel:\n");
+        slist_imprimir(lista_tel);
+        printf("\nLista comparar:\n");
+        slist_imprimir(lista_comparar);
         imprimir_datos_correctos(*agenda, bands, lista_comparar, nombre, apellido, edad, tel);
     }
 
@@ -86,6 +96,7 @@ void andor(TablaHash** agenda, int* bands, char* nombre, char* apellido, int* ed
 
 void imprimir_datos_correctos(TablaHash* agenda, int* bands, SList lista_comparar, char* nombre, char* apellido, int edad, char* tel) {
     SList iter = lista_comparar;
+    slist_imprimir(lista_comparar);
     while (iter != NULL) {
         int suma = 0;
         int idx = iter->dato;
@@ -104,6 +115,7 @@ void imprimir_datos_correctos(TablaHash* agenda, int* bands, SList lista_compara
             if (!strcmp(contacto->telefono, tel)) suma++;
         } else suma++;
         if (suma == 4) contacto_imprimir(contacto);
+        iter = iter->sig;
     }
 }
 

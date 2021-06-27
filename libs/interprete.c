@@ -200,14 +200,12 @@ void and_or(TablaHash** agenda, int funcion) {
     char* edad_str = malloc(sizeof(char)*MAX_NRO);
     print_solicitud(9);
     fgets(edad_str, MAX_NRO-1, stdin);
+    edad_str[strlen(edad_str)-1] = '\0';
     if (strcmp(edad_str, "") != 0) {
         edad_band = 1;
     }
     int* edad_pointer = malloc(sizeof(int));
     *edad_pointer = atoi(edad_str);
-    if (!edad_band) {
-        free(edad_pointer);
-    }
     free(edad_str);
 
     char* tel = malloc(sizeof(char)*MAX_TEL);
