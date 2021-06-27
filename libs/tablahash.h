@@ -35,6 +35,17 @@ typedef struct {
   Arbol arbol_tel;
 } TablaHash;
 
+/**
+ * Estructura que representa un argumento para los hilos creados
+ * para insertar o eliminar en los árboles.
+ */
+typedef struct {
+  Arbol* arbol;
+  void* dato;
+  int idx;
+  int tipo;
+} ArgHilo;
+
 /*
  * Crea una nueva tabla hash vacía con la capacidad dada.
  */
@@ -74,5 +85,13 @@ void tablahash_destruir(TablaHash * tabla);
 void prettyprint_th(TablaHash* th);
 
 void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel);
+
+ArgHilo* tablahash_arg_crear(Arbol* arbol, void* dato, int idx, int tipo);
+
+void* rutina_insertar(void* arg);
+
+void* rutina_eliminar(void* arg);
+
+void parallel_insertar_eliminar(TablaHash* tabla, int idx, int funcion);
 
 #endif                          /* __TABLAHASH_H__ */

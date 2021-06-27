@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
+#include <pthread.h>
 #include "tablahash.h"
 
 /* Crea una nueva tabla Hash vacía con la capacidad dada. */
@@ -45,12 +47,12 @@ void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
       tabla->tabla[idx].estado = 1;
 
       // VER TEMA MEMORIA
-      int* edad_pointer = malloc(sizeof(int));
-      *edad_pointer = dato->edad;
-      tabla->arbol_nombre = arbol_insertar(tabla->arbol_nombre, dato->nombre, idx, 1);
+
+      parallel_insertar_eliminar(tabla, idx, 1);
+      /*tabla->arbol_nombre = arbol_insertar(tabla->arbol_nombre, dato->nombre, idx, 1);
       tabla->arbol_apellido = arbol_insertar(tabla->arbol_apellido, dato->apellido, idx, 1);
       tabla->arbol_edad = arbol_insertar(tabla->arbol_edad, edad_pointer, idx, 2);
-      tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, dato->telefono, idx, 1);
+      tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, dato->telefono, idx, 1);*/
       done = 1;
     }
     i++;
@@ -107,11 +109,13 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
       done = 1;
     } else if (strcmp(tabla->tabla[idx].clave, clave) == 0) {
       // Si lo encontramos, eliminamos y marcamos como eliminado el casillero
-      Contacto dato = tabla->tabla[idx].dato;
-      tabla->arbol_nombre = arbol_eliminar(tabla->arbol_nombre, dato->nombre, idx, 1);
+      
+      parallel_insertar_eliminar(tabla, idx, 2);
+
+      /*tabla->arbol_nombre = arbol_eliminar(tabla->arbol_nombre, dato->nombre, idx, 1);
       tabla->arbol_apellido = arbol_eliminar(tabla->arbol_apellido, dato->apellido, idx, 1);
       tabla->arbol_edad = arbol_eliminar(tabla->arbol_edad, &dato->edad, idx, 2);
-      tabla->arbol_tel = arbol_eliminar(tabla->arbol_tel, dato->telefono, idx, 1);
+      tabla->arbol_tel = arbol_eliminar(tabla->arbol_tel, dato->telefono, idx, 1);*/
 
       free(tabla->tabla[idx].clave);
       contacto_destruir(tabla->tabla[idx].dato);
@@ -168,6 +172,14 @@ void prettyprint_th(TablaHash* th) {
       contacto_imprimir(th->tabla[i].dato);
     }
   }
+  printf("\nArbol nombre\n");
+  arbol_imprimir_inorder(th->arbol_nombre, 1);
+  printf("\nArbol apellido\n");
+  arbol_imprimir_inorder(th->arbol_apellido, 1);
+  printf("\nArbol edad\n");
+  arbol_imprimir_inorder(th->arbol_edad, 2);
+  printf("\nArbol tel\n");
+  arbol_imprimir_inorder(th->arbol_tel, 1);
   printf("-------------------------------%s%s\n", (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
 }
 
@@ -207,4 +219,73 @@ void* tablahash_editar(TablaHash* tabla, char *clave, int edad, char* tel) {
     i++;
   }
   return NULL;
+}
+
+ArgHilo* tablahash_arg_crear(Arbol* arbol, void* dato, int idx, int tipo) {
+  ArgHilo* arg = malloc(sizeof(ArgHilo));
+  arg->arbol = arbol;
+  arg->dato = dato;
+  arg->idx = idx;
+  arg->tipo = tipo;
+  return arg;
+}
+
+void* rutina_insertar(void* arg) {
+  ArgHilo* arg1 = (ArgHilo*)arg;
+  Arbol* arbol = arg1->arbol;
+  void* dato = arg1->dato;
+  int idx = arg1->idx;
+  int tipo = arg1->tipo;
+  *arbol = arbol_insertar(*arbol, dato, idx, tipo);
+  return arbol;
+}
+
+void* rutina_eliminar(void* arg) {
+  ArgHilo* arg1 = (ArgHilo*)arg;
+  Arbol* arbol = arg1->arbol;
+  void* dato = arg1->dato;
+  int idx = arg1->idx;
+  int tipo = arg1->tipo;
+  *arbol = arbol_eliminar(*arbol, dato, idx, tipo);
+  return arbol;
+}
+
+void parallel_insertar_eliminar(TablaHash* tabla, int idx, int funcion) {
+  Contacto dato = tabla->tabla[idx].dato;
+
+  pthread_t hilos[4];
+  ArgHilo* arg_nombre = tablahash_arg_crear(&tabla->arbol_nombre, dato->nombre, idx, 1);
+  ArgHilo* arg_apellido = tablahash_arg_crear(&tabla->arbol_apellido, dato->apellido, idx, 1);
+  ArgHilo* arg_edad;
+  if (funcion == 1) {
+    int* edad_pointer = malloc(sizeof(int));
+    *edad_pointer = dato->edad;
+    arg_edad = tablahash_arg_crear(&tabla->arbol_edad, edad_pointer, idx, 2);
+  }
+  else arg_edad = tablahash_arg_crear(&tabla->arbol_edad, &dato->edad, idx, 2);
+  ArgHilo* arg_tel = tablahash_arg_crear(&tabla->arbol_tel, dato->telefono, idx, 1);
+
+  if (funcion == 1) {
+    assert(! pthread_create(&hilos[0], NULL, rutina_insertar, (void*)arg_nombre));
+    assert(! pthread_create(&hilos[1], NULL, rutina_insertar, (void*)arg_apellido));    
+    assert(! pthread_create(&hilos[2], NULL, rutina_insertar, (void*)arg_edad));
+    assert(! pthread_create(&hilos[3], NULL, rutina_insertar, (void*)arg_tel));
+  }
+
+  if (funcion == 2) {
+    assert(! pthread_create(&hilos[0], NULL, rutina_eliminar, (void*)arg_nombre));
+    assert(! pthread_create(&hilos[1], NULL, rutina_eliminar, (void*)arg_apellido));    
+    assert(! pthread_create(&hilos[2], NULL, rutina_eliminar, (void*)arg_edad));
+    assert(! pthread_create(&hilos[3], NULL, rutina_eliminar, (void*)arg_tel));
+  }
+
+  for (int i = 0; i < 4; i++) {
+    assert(! pthread_join(hilos[i], NULL));
+  }
+
+  free(arg_nombre);
+  free(arg_apellido);
+  free(arg_edad);
+  free(arg_tel);
+
 }

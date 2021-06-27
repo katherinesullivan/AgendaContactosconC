@@ -77,15 +77,15 @@ void editar(TablaHash** agenda) {
 
 void editar_aux(TablaHash** agenda, char* clave) {
     print_solicitud(5);
-    char* tel = malloc(sizeof(char)*MAX_TEL);
-    fgets(tel, MAX_TEL-1, stdin);
-    tel[strlen(tel)-1] = '\0';
-
-    print_solicitud(6);
     char* edad_str = malloc(sizeof(char)*MAX_NRO);
     fgets(edad_str, MAX_NRO-1, stdin);
     int edad = atoi(edad_str);
     free(edad_str);
+
+    print_solicitud(6);
+    char* tel = malloc(sizeof(char)*MAX_TEL);
+    fgets(tel, MAX_TEL-1, stdin);
+    tel[strlen(tel)-1] = '\0';
 
     // HACER CAMBIOS EN ARBOLES TMB
     void* rdo = tablahash_editar(*agenda, clave, edad, tel);
@@ -268,12 +268,12 @@ void print_solicitud(int tipo) {
     }
 
     if (tipo == 5) {
-        printf("Ingrese nuevo teléfono:\n>");
+        printf("Ingrese nueva edad:\n>");
         return;
     }
 
     if (tipo == 6) {
-        printf("Ingrese nueva edad:\n>");
+        printf("Ingrese nuevo teléfono:\n>");
         return;
     }
 
@@ -283,17 +283,17 @@ void print_solicitud(int tipo) {
     }
 
     if (tipo == 8) {
-        printf("Seleccione un apellido a buscar\n>");
+        printf("Ingrese un apellido a buscar\n>");
         return;
     }
 
     if (tipo == 9) {
-        printf("Seleccione una edad a buscar\n>");
+        printf("Ingrese una edad a buscar\n>");
         return;
     }
 
     if (tipo == 10) {
-        printf("Seleccione un teléfono a buscar\n>");
+        printf("Ingrese un teléfono a buscar\n>");
         return;
     }
 
