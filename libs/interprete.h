@@ -27,6 +27,12 @@ void or(TablaHash** agenda);
 
 void and_or(TablaHash** agenda, int funcion);
 
+void cargar(TablaHash** agenda);
+
+void guardar(TablaHash** agenda);
+
+void guardar_ordenado(TablaHash** agenda);
+
 /* Funciones relativas a la impresión de mensajes del intérprete */
 
 void print_salida();

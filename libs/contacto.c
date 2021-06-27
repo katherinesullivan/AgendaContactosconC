@@ -46,6 +46,12 @@ void contacto_imprimir(Contacto contacto) {
   }
 }
 
+void contacto_imprimir_file(Contacto contacto, FILE* fp) {
+  if (contacto) {
+    fprintf(fp,"%s,%s,%d,%s\n", contacto->nombre, contacto->apellido, contacto->edad, contacto->telefono);
+  }
+}
+
 /*int main() {
     char* nombre = malloc(sizeof(char)*5);
     nombre[0] = 'p';

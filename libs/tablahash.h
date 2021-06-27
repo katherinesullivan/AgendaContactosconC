@@ -86,6 +86,18 @@ void prettyprint_th(TablaHash* th);
 
 void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel);
 
+void tablahash_imprimir_file(TablaHash* tabla, FILE* fp);
+
+void inorder_aux(TablaHash* tabla, Arbol arbol, FILE *fp);
+
+void tablahash_imprimir_inorder_nombre(TablaHash* tabla, FILE* fp);
+
+void tablahash_imprimir_inorder_apellido(TablaHash* tabla, FILE* fp);
+
+void tablahash_imprimir_inorder_edad(TablaHash* tabla, FILE* fp);
+
+void tablahash_imprimir_inorder_tel(TablaHash* tabla, FILE* fp);
+
 ArgHilo* tablahash_arg_crear(Arbol* arbol, void* dato, int idx, int tipo);
 
 void* rutina_insertar(void* arg);

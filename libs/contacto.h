@@ -18,4 +18,6 @@ void contacto_destruir(Contacto contacto);
 
 void contacto_imprimir(Contacto contacto);
 
+void contacto_imprimir_file(Contacto contacto, FILE* fp);
+
 #endif                          /* __CONTACTO_H__ */

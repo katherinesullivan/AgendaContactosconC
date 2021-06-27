@@ -221,6 +221,42 @@ void* tablahash_editar(TablaHash* tabla, char *clave, int edad, char* tel) {
   return NULL;
 }
 
+void tablahash_imprimir_file(TablaHash* tabla, FILE* fp) {
+  for (unsigned int i = 0; i < tabla->capacidad; i++) {     
+    if (tabla->tabla[i].estado == 1) {
+      contacto_imprimir_file(tabla->tabla[i].dato, fp);
+    }
+  }
+}
+
+void inorder_aux(TablaHash* tabla, Arbol arbol, FILE *fp) {
+  if (arbol == NULL) return;
+
+  inorder_aux(tabla, arbol->izq, fp);
+  contacto_imprimir_file(tabla->tabla[arbol->idx].dato, fp);
+  inorder_aux(tabla, arbol->der, fp);
+}
+
+void tablahash_imprimir_inorder_nombre(TablaHash* tabla, FILE* fp) {
+  Arbol arbol = tabla->arbol_nombre;
+  inorder_aux(tabla, arbol, fp);
+}
+
+void tablahash_imprimir_inorder_apellido(TablaHash* tabla, FILE* fp) {
+  Arbol arbol = tabla->arbol_apellido;
+  inorder_aux(tabla, arbol, fp);
+}
+
+void tablahash_imprimir_inorder_edad(TablaHash* tabla, FILE* fp) {
+  Arbol arbol = tabla->arbol_edad;
+  inorder_aux(tabla, arbol, fp);
+}
+
+void tablahash_imprimir_inorder_tel(TablaHash* tabla, FILE* fp) {
+  Arbol arbol = tabla->arbol_tel;
+  inorder_aux(tabla, arbol, fp);
+}
+
 ArgHilo* tablahash_arg_crear(Arbol* arbol, void* dato, int idx, int tipo) {
   ArgHilo* arg = malloc(sizeof(ArgHilo));
   arg->arbol = arbol;

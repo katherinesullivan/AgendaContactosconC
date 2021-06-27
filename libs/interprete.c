@@ -8,7 +8,9 @@
 #define MAX_TEL 32
 #define MAX_CLAVE MAX_NOMBRE+MAX_APELLIDO
 #define MAX_NRO 9
-
+#define MAX_FILE 50
+#define FST_LINE_LEN 31
+#define MAX_ATR 32
 
 /************************** Intérprete ********************************/
 
@@ -37,6 +39,16 @@ int interpretar(TablaHash ** agenda, char* accion) {
         return 1;
     }
 
+    if (nro_accion == 5) {
+        cargar(agenda);
+        return 1;
+    }
+
+    if (nro_accion == 6) {
+        guardar(agenda);
+        return 1;
+    }
+
     if (nro_accion == 9) {
         and(agenda);
         return 1;
@@ -44,6 +56,11 @@ int interpretar(TablaHash ** agenda, char* accion) {
 
     if (nro_accion == 10) {
         or(agenda);
+        return 1;
+    }
+
+    if (nro_accion == 11) {
+        guardar_ordenado(agenda);
         return 1;
     }
 
@@ -232,6 +249,118 @@ void and_or(TablaHash** agenda, int funcion) {
     free(edad_pointer);
 }
 
+void cargar(TablaHash** agenda) {
+    print_solicitud(11);
+    char* filename = malloc(sizeof(char)*MAX_FILE);
+    fgets(filename, MAX_FILE-1, stdin);
+    filename[strlen(filename)-1] = '\0';
+    FILE *fp;
+    fp = fopen(filename, "r+");
+    if (fp == NULL) {
+        print_error(4);
+        return; 
+    }
+
+    char* primeralinea = malloc(sizeof(char)*FST_LINE_LEN);
+    fscanf(fp, "%[^\n]\n", primeralinea);
+    free(primeralinea);
+
+    while (!feof(fp)) {
+        char* nombre = malloc(sizeof(char)*MAX_NOMBRE);
+        char* apellido = malloc(sizeof(char)*MAX_APELLIDO);
+        char* edad_str = malloc(sizeof(char)*MAX_NRO);
+        char* tel = malloc(sizeof(char)*MAX_TEL);
+
+        fscanf(fp, "%[^,],%[^,],%[^,],%[^\n]\n", nombre, apellido, edad_str, tel);
+        int edad = atoi(edad_str);
+        free(edad_str);
+
+        char* clave = malloc(sizeof(char)*MAX_CLAVE);
+        sprintf(clave, "%s%s", nombre, apellido);
+
+        Contacto contacto = contacto_crear(nombre, apellido, edad, tel);
+
+        tablahash_insertar(*agenda, clave, contacto);
+    }
+
+    free(filename);
+    fclose(fp);
+}
+
+void guardar(TablaHash** agenda) {
+    print_solicitud(12);
+    char* filename = malloc(sizeof(char)*MAX_FILE);
+    fgets(filename, MAX_FILE-1, stdin);
+    filename[strlen(filename)-1] = '\0';
+    FILE *fp;
+    fp = fopen(filename, "w+");
+    if (fp == NULL) {
+        print_error(4);
+        return; 
+    }
+    fprintf(fp,"nombre,apellido,edad,telefono\n");
+    tablahash_imprimir_file(*agenda, fp);
+
+    free(filename);
+    fclose(fp);
+}
+
+void guardar_ordenado(TablaHash** agenda) {
+    print_solicitud(12);
+    char* filename = malloc(sizeof(char)*MAX_FILE);
+    fgets(filename, MAX_FILE-1, stdin);
+    filename[strlen(filename)-1] = '\0';
+
+    print_solicitud(13);
+    char* atributo = malloc(sizeof(char)*MAX_ATR);
+    fgets(atributo, MAX_ATR-1, stdin);
+    atributo[strlen(atributo)-1] = '\0';
+    printf("%s", atributo);
+
+    FILE *fp;
+    fp = fopen(filename, "w+");
+    if (fp == NULL) {
+        print_error(4);
+        return; 
+    }
+
+    fprintf(fp,"nombre,apellido,edad,telefono\n");
+
+    if (!strcmp(atributo, "nombre")) 
+        tablahash_imprimir_inorder_nombre(*agenda, fp);
+
+    else if(!strcmp(atributo, "apellido"))
+        tablahash_imprimir_inorder_apellido(*agenda, fp);
+
+    else if(!strcmp(atributo, "edad")) 
+        tablahash_imprimir_inorder_edad(*agenda, fp);
+
+    else if (!strcmp(atributo, "telefono"))
+        tablahash_imprimir_inorder_tel(*agenda, fp);
+
+    else print_error(5);
+
+    free(atributo);
+    free(filename);
+    fclose(fp);
+}
+
+/*int contar_lineas (FILE *fp) {
+  int count = 0;
+  char c;
+  // Recorro el archivo caracter por caracter contando líneas
+  for (c = getc(fp); c != EOF; c = getc(fp)) {
+    if (c == '\n') {
+      count++;
+    }
+  }
+  // Una vez llegado al end of file, hago que el puntero al archivo 
+  // vuelva a estar al principio del mismo
+  rewind(fp);
+
+  // Y devuelvo el contador
+  return count;
+}*/
 
 
 /************************** Impresiones ********************************/
@@ -278,22 +407,37 @@ void print_solicitud(int tipo) {
     }
 
     if (tipo == 7) {
-        printf("Ingrese un nombre a buscar\n>");
+        printf("Ingrese un nombre a buscar:\n>");
         return;
     }
 
     if (tipo == 8) {
-        printf("Ingrese un apellido a buscar\n>");
+        printf("Ingrese un apellido a buscar:\n>");
         return;
     }
 
     if (tipo == 9) {
-        printf("Ingrese una edad a buscar\n>");
+        printf("Ingrese una edad a buscar:\n>");
         return;
     }
 
     if (tipo == 10) {
-        printf("Ingrese un teléfono a buscar\n>");
+        printf("Ingrese un teléfono a buscar:\n>");
+        return;
+    }
+
+    if (tipo == 11) {
+        printf("Ingrese ruta de entrada:\n>");
+        return;
+    }
+
+    if (tipo == 12) {
+        printf("Ingrese ruta de salida:\n>");
+        return;
+    }
+
+    if (tipo == 13) {
+        printf("Ingrese nombre de atributo:\n>");
         return;
     }
 
@@ -308,7 +452,7 @@ void print_error(int tipo) {
     }
 
     if (tipo == 2) {
-        printf("No existe contacto con tal nombre y apellido en la agenda\n");
+        printf("No existe contacto con tal nombre y apellido en la agenda.\n");
         return;
     }
 
@@ -317,6 +461,18 @@ void print_error(int tipo) {
         printf("puesto que ya existe uno así.\n");
         printf("Intente volver a agregarlo con nombre o apellido distintos ");
         printf("o elimine el contacto que ya tiene.\n");
+        return;
+    }
+
+    if (tipo == 4) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    if (tipo == 5) {
+        printf("Atributo inválido. ");
+        printf("Los atributos permitidos son: ");
+        printf("nombre, apellido, edad y telefono.\n");
         return;
     }
 
