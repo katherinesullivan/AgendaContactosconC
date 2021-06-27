@@ -9,11 +9,11 @@ Arbol arbol_crear() {
     return NULL;
 }
 
-Arbol arbol_destruir(Arbol arbol) {
+Arbol arbol_destruir(Arbol arbol, int tipo_arbol) {
     if (arbol != NULL) {
-        arbol_destruir(arbol->izq);
-        arbol_destruir(arbol->der);
-        free(arbol->dato);
+        arbol_destruir(arbol->izq, tipo_arbol);
+        arbol_destruir(arbol->der, tipo_arbol);
+        if (tipo_arbol == 2) free(arbol->dato);
         free(arbol);
     }
 }
@@ -156,9 +156,9 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
             if (temp == NULL) {
                 printf("Sin hijos!\n");
                 temp = nodo;
-                //free(nodo->dato);
-                //free(temp);
-                arbol_destruir(temp);
+                if (tipo_arbol == 2) free(nodo->dato);
+                free(temp);
+                //arbol_destruir(temp);
                 // Me va a generar un invalid read 
                 // si vengo como de otro lado a veces idk
                 nodo = NULL;
@@ -166,7 +166,7 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
 
             // Un hijo
             else {
-                free(nodo->dato);
+                if (tipo_arbol == 2) free(nodo->dato);
                 *nodo = *temp;
                 free(temp);
             }
@@ -175,15 +175,11 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol) {
             Arbol temp = min_value_nodo(nodo->der);
 
             nodo->idx = temp->idx;
-            free(nodo->dato);
             
-            if (tipo_arbol == 1) {
-                char* nuevo_dato = malloc(sizeof(char)*MAX_STR);
-                strcpy(nuevo_dato, temp->dato);
-                nodo->dato = nuevo_dato;
-            }
+            if (tipo_arbol == 1) nodo->dato = temp->dato;
 
-            if (tipo_arbol == 2) {
+            else if (tipo_arbol == 2) {
+                free(nodo->dato);
                 int* nuevo_dato = malloc(sizeof(int));
                 int temp_dato = *(int*)(temp->dato);
                 *nuevo_dato = temp_dato;

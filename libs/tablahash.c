@@ -1,10 +1,10 @@
-#include "tablahash.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "tablahash.h"
 
 /* Crea una nueva tabla Hash vacía con la capacidad dada. */
-TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
+TablaHash* tablahash_crear(unsigned capacidad, FuncionHash hash,
                            FuncionHash hash2) {
   // Pedimos memoria para la estructura principal y las casillas.
   TablaHash *tabla = malloc(sizeof(TablaHash));
@@ -13,6 +13,10 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
   tabla->tabla = malloc(sizeof(CasillaHash) * capacidad);
   tabla->numElems = 0;
   tabla->hash2 = hash2;
+  tabla->arbol_nombre = arbol_crear();
+  tabla->arbol_apellido = arbol_crear();
+  tabla->arbol_edad = arbol_crear();
+  tabla->arbol_tel = arbol_crear();
 
   // Inicializamos las casillas con datos nulos.
   for (unsigned idx = 0; idx < capacidad; ++idx) {
@@ -39,6 +43,14 @@ void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
       tabla->tabla[idx].clave = clave;
       tabla->tabla[idx].dato = dato;
       tabla->tabla[idx].estado = 1;
+
+      // VER TEMA MEMORIA
+      int* edad_pointer = malloc(sizeof(int));
+      *edad_pointer = dato->edad;
+      tabla->arbol_nombre = arbol_insertar(tabla->arbol_nombre, dato->nombre, idx, 1);
+      tabla->arbol_apellido = arbol_insertar(tabla->arbol_apellido, dato->apellido, idx, 1);
+      tabla->arbol_edad = arbol_insertar(tabla->arbol_edad, edad_pointer, idx, 2);
+      tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, dato->telefono, idx, 1);
       done = 1;
     }
     i++;
@@ -95,6 +107,12 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
       done = 1;
     } else if (strcmp(tabla->tabla[idx].clave, clave) == 0) {
       // Si lo encontramos, eliminamos y marcamos como eliminado el casillero
+      Contacto dato = tabla->tabla[idx].dato;
+      tabla->arbol_nombre = arbol_eliminar(tabla->arbol_nombre, dato->nombre, idx, 1);
+      tabla->arbol_apellido = arbol_eliminar(tabla->arbol_apellido, dato->apellido, idx, 1);
+      tabla->arbol_edad = arbol_eliminar(tabla->arbol_edad, &dato->edad, idx, 2);
+      tabla->arbol_tel = arbol_eliminar(tabla->arbol_tel, dato->telefono, idx, 1);
+
       free(tabla->tabla[idx].clave);
       contacto_destruir(tabla->tabla[idx].dato);
       tabla->tabla[idx].estado = 2;
@@ -109,7 +127,7 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
 /* Agranda una tabla de hash dada, aumentando su capacidad al doble más 9. 
 Esto nos asegura que empezando con una capacidad de 31, recién cuando lleguemos 
 a 1271 la capacidad de la tabla no será prima. */
-TablaHash *tablahash_agrandar(TablaHash* tabla) {
+TablaHash* tablahash_agrandar(TablaHash* tabla) {
   unsigned cap = tabla->capacidad;
   tabla->tabla = realloc(tabla->tabla, sizeof(CasillaHash) * (cap * 2 + 9));
 
@@ -133,6 +151,10 @@ void tablahash_destruir(TablaHash * tabla) {
       contacto_destruir(tabla->tabla[i].dato);
     }
   }
+  arbol_destruir(tabla->arbol_nombre, 1);
+  arbol_destruir(tabla->arbol_apellido, 1);
+  arbol_destruir(tabla->arbol_edad, 2);
+  arbol_destruir(tabla->arbol_tel, 1);
   free(tabla->tabla);
   free(tabla);
 }
@@ -149,7 +171,7 @@ void prettyprint_th(TablaHash* th) {
   printf("-------------------------------%s%s\n", (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
 }
 
-void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel) {
+void* tablahash_editar(TablaHash* tabla, char *clave, int edad, char* tel) {
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -166,10 +188,20 @@ void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel) {
 
       // Hacer cambios en arboles
       // ------------------------------------------ VER LO DE DESTRUIR EN ÁRBOLES ---------
+      char* tel_viejo = tabla->tabla[idx].dato->telefono;
+      int edad_vieja = tabla->tabla[idx].dato->edad;
 
-      free(tabla->tabla[idx].dato->telefono); 
+      tabla->arbol_tel = arbol_eliminar(tabla->arbol_tel, tel_viejo, idx, 1);
+      tabla->arbol_edad = arbol_eliminar(tabla->arbol_edad, &edad_vieja, idx, 2);
+      free(tel_viejo); 
+
       tabla->tabla[idx].dato->telefono = tel;
       tabla->tabla[idx].dato->edad = edad;
+      tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, tel, idx, 1);
+      int* edad_pointer = malloc(sizeof(int));
+      *edad_pointer = edad;
+      tabla->arbol_edad = arbol_insertar(tabla->arbol_edad, edad_pointer, idx, 2);
+
       return tabla->tabla[idx].dato;
     }
     i++;

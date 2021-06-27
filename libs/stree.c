@@ -34,10 +34,11 @@ STree stree_insertar(STree tree, int idx) {
     else return tree;
 }
 
-void stree_imprimir(STree tree) {
+/*void stree_imprimir(TablaHash* agenda, STree tree) {
     if (tree != NULL) {
-        stree_imprimir(tree->izq);
-        printf("Idx: %d\n", tree->idx);
-        stree_imprimir(tree->der);
+        stree_imprimir(agenda, tree->izq);
+        int idx = tree->idx;
+        contacto_imprimir(agenda->tabla[idx].dato);
+        stree_imprimir(agenda, tree->der);
     }
-}
+}*/

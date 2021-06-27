@@ -37,7 +37,7 @@ int main () {
     slist_imprimir(lista1);
     slist_destruir(lista1);
     arbol_imprimir_inorder(arbol, 2);
-    arbol_destruir(arbol);
+    arbol_destruir(arbol,2);
     return 0;
 }
 

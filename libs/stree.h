@@ -20,6 +20,6 @@ STree stree_nuevo_nodo(int idx);
 
 STree stree_insertar(STree tree, int idx);
 
-void stree_imprimir(STree tree);
+//void stree_imprimir(TablaHash* agenda, STree tree);
 
 #endif                          /* __STREE_H__ */

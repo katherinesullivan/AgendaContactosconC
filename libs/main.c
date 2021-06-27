@@ -20,11 +20,10 @@ unsigned hash2(char *s) {
 
 int main() {
     int flag = 1;
-    int** acciones = init_desh_reh();
     char* accion = malloc(sizeof(char)*10);
-    TablaHash* diccionario = tablahash_crear(31, hash, &hash2);
+    TablaHash* agenda = tablahash_crear(31, hash, &hash2);
     do {
-        flag = interpretar(&diccionario, accion);
+        flag = interpretar(&agenda, accion);
     } while (flag);
     free(accion);
     return 0;

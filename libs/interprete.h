@@ -2,8 +2,7 @@
 #define __INTERPRETE_H__
 
 #include <stddef.h>
-#include "tablahash.h"
-#include "contacto.h"
+#include "andor.h"
 
 /* Función que maneja la parte interactiva del programa */
 int interpretar(TablaHash** dicc, char* accion);
@@ -21,6 +20,12 @@ void editar_aux(TablaHash** dicc, char* clave);
 void buscar_eliminar_editar(TablaHash** dicc, int opcion);
 
 void agregar(TablaHash** dicc);
+
+void and(TablaHash** agenda);
+
+void or(TablaHash** agenda);
+
+void and_or(TablaHash** agenda, int funcion);
 
 /* Funciones relativas a la impresión de mensajes del intérprete */
 

@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include "contacto.h"
+#include "arbol.h"
 
 /**
  * Tipo de las funciones hash a ser consideradas por las tablas hash.
@@ -28,6 +29,10 @@ typedef struct {
   unsigned capacidad;
   FuncionHash hash;
   FuncionHash hash2;
+  Arbol arbol_nombre;
+  Arbol arbol_apellido;
+  Arbol arbol_edad;
+  Arbol arbol_tel;
 } TablaHash;
 
 /*

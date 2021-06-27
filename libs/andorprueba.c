@@ -243,10 +243,10 @@ int main () {
 
     else printf("Opcion desconocida\n");
 
-    arbol_destruir(arbol_nombre);
-    arbol_destruir(arbol_apellido);
-    arbol_destruir(arbol_edad);
-    arbol_destruir(arbol_tel);
+    arbol_destruir(arbol_nombre, 1);
+    arbol_destruir(arbol_apellido, 1);
+    arbol_destruir(arbol_edad, 2);
+    arbol_destruir(arbol_tel, 1);
 
     return 0;
 }
