@@ -34,6 +34,7 @@ SList slist_cant_max(SList lista) {
   nuevo_nodo->dato = 0;
   nuevo_nodo->sig = lista;
   nuevo_nodo->cant = INT_MAX;
+  return nuevo_nodo;
 }
 
 void slist_imprimir(SList lista) {

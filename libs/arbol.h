@@ -16,7 +16,7 @@ typedef Nodo *Arbol;
 
 Arbol arbol_crear();
 
-Arbol arbol_destruir(Arbol arbol, int tipo_arbol);
+void arbol_destruir(Arbol arbol, int tipo_arbol);
 
 int max(int a, int b);
 

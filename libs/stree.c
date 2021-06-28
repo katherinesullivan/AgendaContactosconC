@@ -32,8 +32,7 @@ STree stree_insertar(STree tree, int idx) {
     tree->izq = stree_insertar(tree->izq, idx);
   else if (idx > tree->idx)
     tree->der = stree_insertar(tree->der, idx);
-  else
-    return tree;
+  return tree;
 }
 
 /*void stree_imprimir(TablaHash* agenda, STree tree) {

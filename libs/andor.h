@@ -2,7 +2,6 @@
 #define __ANDOR_H__
 
 #include <stddef.h>
-#include "arbol.h"
 #include "stree.h"
 #include "tablahash.h"
 

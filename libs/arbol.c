@@ -9,7 +9,7 @@ Arbol arbol_crear() {
   return NULL;
 }
 
-Arbol arbol_destruir(Arbol arbol, int tipo_arbol) {
+void arbol_destruir(Arbol arbol, int tipo_arbol) {
   if (arbol != NULL) {
     arbol_destruir(arbol->izq, tipo_arbol);
     arbol_destruir(arbol->der, tipo_arbol);

@@ -81,7 +81,7 @@ presente, y un puntero a su clave si lo está. */
 void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
   if (tabla->numElems == tabla->capacidad) {
     printf("No es posible realizar búsquedas. Capacidad completa.\n");
-    return;
+    return NULL;
   }
   int done = 0;
   int i = 0;
