@@ -196,10 +196,7 @@ void agregar(TablaHash ** agenda) {
 
   Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
-  int rdo = tablahash_insertar(*agenda, clave, contacto);
-
-  if (rdo == 2)
-    print_aviso_capacidad(2);
+  *agenda = tablahash_insertar(*agenda, clave, contacto);
 
 }
 
@@ -312,7 +309,7 @@ void cargar(TablaHash ** agenda) {
 
     Contacto contacto = contacto_crear(nombre, apellido, edad, tel);
 
-    tablahash_insertar(*agenda, clave, contacto);
+    *agenda = tablahash_insertar(*agenda, clave, contacto);
     i++;
 
     if ((*agenda)->numElems == (*agenda)->capacidad) {

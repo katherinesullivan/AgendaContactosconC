@@ -46,6 +46,7 @@ typedef struct {
   int tipo;
 } ArgHilo;
 
+
 /*
  * Crea una nueva tabla hash vacía con la capacidad dada.
  */
@@ -55,7 +56,12 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 /*
  * Inserta el dato en la tabla asociado a la clave dada.
  */
-int tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
+TablaHash* tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
+
+/*
+ * Agranda una tabla de hash dada, duplicando su capacidad.
+ */
+TablaHash *tablahash_agrandar(TablaHash * tabla);
 
 /*
  * Busca el dato en la tabla asociado a la clave dada.
@@ -71,11 +77,6 @@ void *tablahash_buscar(TablaHash * tabla, char *clave, int solover);
  * en caso de que este haya estado presente.
  */
 void tablahash_eliminar(TablaHash * tabla, char *clave);
-
-/*
- * Agranda una tabla de hash dada, duplicando su capacidad.
- */
-TablaHash *tablahash_agrandar(TablaHash * tabla);
 
 /*
  * Destruye la tabla.
@@ -97,6 +98,12 @@ void tablahash_imprimir_inorder_apellido(TablaHash * tabla, FILE * fp);
 void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp);
 
 void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp);
+
+void* rutina_destruir_1(void* arbol);
+
+void* rutina_destruir_2(void* arbol);
+
+void paralell_destruir_arboles(TablaHash * tabla);
 
 ArgHilo *tablahash_arg_crear(Arbol * arbol, void *dato, int idx, int tipo);
 

@@ -4,6 +4,10 @@
 #include <assert.h>
 #include <pthread.h>
 #include "tablahash.h"
+#define MAX_NOMBRE 32
+#define MAX_APELLIDO 32
+#define MAX_TEL 32
+#define MAX_CLAVE MAX_NOMBRE+MAX_APELLIDO
 
 /* Crea una nueva tabla Hash vacía con la capacidad dada. */
 TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
@@ -31,10 +35,7 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 }
 
 /* Inserta el dato en la tabla asociado a la clave dada. */
-int tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
-  if (tabla->numElems == tabla->capacidad) {
-    return 0;
-  }
+TablaHash* tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
   printf("Entre\n");
 
   int done = 0;
@@ -67,11 +68,41 @@ int tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
   // Aumentamos la cantidad de elementos que hay
   tabla->numElems++;
 
-  if (tabla->numElems / tabla->capacidad >= 0.85) {
-    return 2;
+  if (tabla->numElems / tabla->capacidad >= 0.75) {
+    tabla = tablahash_agrandar(tabla);
   }
 
-  return 1;
+  return tabla;
+
+}
+
+/* Agranda una tabla de hash dada, aumentando su capacidad al doble. */
+TablaHash *tablahash_agrandar(TablaHash * tabla) {
+  printf("Su agenda estaba llegando a un punto crítico en su capacidad, ");
+  printf("por lo tanto estamos duplicando su capacidad. ");
+  printf("Esto puede demorar unos momentos.\n");
+  unsigned cap = tabla->capacidad;
+  TablaHash* nueva_tabla = tablahash_crear(cap*2, tabla->hash, tabla->hash2);
+
+  for (unsigned int idx = 0; idx < cap; idx++) {
+    if (tabla->tabla[idx].estado == 1) {
+      Contacto dato = tabla->tabla[idx].dato;
+      char* clave = tabla->tabla[idx].clave;
+      char* nueva_clave = malloc(sizeof(char)*MAX_CLAVE);
+      strcpy(nueva_clave, clave);
+      char* nuevo_nombre = malloc(sizeof(char)*MAX_NOMBRE);
+      strcpy(nuevo_nombre, dato->nombre);
+      char* nuevo_apellido = malloc(sizeof(char)*MAX_APELLIDO);
+      strcpy(nuevo_apellido, dato->apellido);
+      char* nuevo_tel = malloc(sizeof(char)*MAX_TEL);
+      strcpy(nuevo_tel, dato->telefono);
+      Contacto nuevo_contacto = contacto_crear(nuevo_nombre, nuevo_apellido, dato->edad, nuevo_tel);
+      tablahash_insertar(nueva_tabla, nueva_clave, nuevo_contacto);
+    }
+  }
+  tablahash_destruir(tabla);
+
+  return nueva_tabla;
 }
 
 /* Busca el dato en la tabla asociado a la clave dada. 
@@ -79,10 +110,6 @@ Si solover es 0, en caso de que esté presente devuelve un puntero al mismo,
 en caso contrario devuelve NULL. Si solover es 1, devuelve NULL si no está 
 presente, y un puntero a su clave si lo está. */
 void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
-  if (tabla->numElems == tabla->capacidad) {
-    printf("No es posible realizar búsquedas. Capacidad completa.\n");
-    return NULL;
-  }
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -149,10 +176,7 @@ void tablahash_destruir(TablaHash * tabla) {
       contacto_destruir(tabla->tabla[i].dato);
     }
   }
-  arbol_destruir(tabla->arbol_nombre, 1);
-  arbol_destruir(tabla->arbol_apellido, 1);
-  arbol_destruir(tabla->arbol_edad, 2);
-  arbol_destruir(tabla->arbol_tel, 1);
+  paralell_destruir_arboles(tabla);
   free(tabla->tabla);
   free(tabla);
 }
@@ -255,6 +279,37 @@ void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp) {
 void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp) {
   Arbol arbol = tabla->arbol_tel;
   inorder_aux(tabla, arbol, fp);
+}
+
+void* rutina_destruir_1(void* arbol) {
+  Arbol arbol1 = (Arbol) arbol;
+  arbol_destruir(arbol1,1);
+  return arbol1;
+}
+
+void* rutina_destruir_2(void* arbol) {
+  Arbol arbol2 = (Arbol) arbol;
+  arbol_destruir(arbol2,2);
+  return arbol2;
+}
+
+void paralell_destruir_arboles(TablaHash * tabla) {
+  Arbol arbol_nombre = tabla->arbol_nombre;
+  Arbol arbol_apellido = tabla->arbol_apellido;
+  Arbol arbol_edad = tabla->arbol_edad;
+  Arbol arbol_tel = tabla->arbol_tel;
+
+  pthread_t hilos[4];
+
+  assert(!pthread_create(&hilos[0], NULL, rutina_destruir_1, (void*) arbol_nombre));
+  assert(!pthread_create(&hilos[2], NULL, rutina_destruir_1, (void*) arbol_apellido));
+  assert(!pthread_create(&hilos[1], NULL, rutina_destruir_2, (void*) arbol_edad));
+  assert(!pthread_create(&hilos[3], NULL, rutina_destruir_1, (void *) arbol_tel));
+
+  for (int i = 0; i < 4; i++) {
+    assert(!pthread_join(hilos[i], NULL));
+  }
+
 }
 
 ArgHilo *tablahash_arg_crear(Arbol * arbol, void *dato, int idx, int tipo) {
