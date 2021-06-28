@@ -40,7 +40,7 @@ Arbol arbol_eliminar(Arbol nodo, void* dato, int idx, int tipo_arbol);
 
 void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol);
 
-void arbol_a_arrays(Arbol arbol, int** array_edades, int** array_indices, int* i);
+void arbol_a_arrays(Arbol arbol, int* array_edades, int* array_indices, int* i);
 
 /**
  * Busca en el arbol y agrega a una lista simplemente enlazada todos aquellos

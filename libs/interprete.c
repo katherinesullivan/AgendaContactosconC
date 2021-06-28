@@ -385,7 +385,7 @@ void buscar_suma_edades(TablaHash** agenda) {
     int* id = malloc(sizeof(int));
     *id = 0;
 
-    arbol_a_arrays((*agenda)->arbol_edad, &array_edades, &array_indices, id);
+    arbol_a_arrays((*agenda)->arbol_edad, array_edades, array_indices, id);
 
     for (int i = 0; i < n; i++) {
         printf("array_edades[%d]: %d\n",i,array_edades[i]);
