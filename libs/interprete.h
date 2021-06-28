@@ -22,6 +22,10 @@ void buscar_eliminar_editar(TablaHash ** dicc, int opcion, AccList* deshacer);
 
 void agregar(TablaHash ** dicc, AccList* deshacer);
 
+void agregar_opuesto_des_re(Accion* accion, AccList* acclist);
+
+void undo_redo(TablaHash** agenda, AccList* acclist, AccList* opuesta_acclist);
+
 void and(TablaHash ** agenda);
 
 void or(TablaHash ** agenda);

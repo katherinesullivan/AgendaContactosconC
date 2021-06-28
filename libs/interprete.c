@@ -16,6 +16,7 @@
 
 int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* rehacer) {
   imprimir_acciones(deshacer);
+  imprimir_acciones(rehacer);
 
   print_solicitud(0);
   fgets(accion, MAX_NRO, stdin);
@@ -52,6 +53,18 @@ int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* r
 
   if (nro_accion == 6) {
     guardar(agenda);
+    return 1;
+  }
+
+  if (nro_accion == 7) {
+    if (deshacer->elems == 0) print_error(7);
+    else undo_redo(agenda, deshacer, rehacer);
+    return 1;
+  }
+
+  if (nro_accion == 8) {
+    if (rehacer->elems == 0) print_error(8);
+    else undo_redo(agenda, rehacer, deshacer);
     return 1;
   }
 
@@ -554,6 +567,82 @@ void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
   //return subset[n][sum];
 }
 
+void agregar_opuesto_des_re(Accion* accion, AccList* acclist) {
+  char* nombre_add = malloc(sizeof(char) * MAX_NOMBRE);
+  strcpy(nombre_add, accion->nombre);
+  char* apellido_add = malloc(sizeof(char) * MAX_APELLIDO);
+  strcpy(apellido_add, accion->apellido);
+  char* tel_add = malloc(sizeof(char) * MAX_TEL);
+  strcpy(tel_add, accion->tel[0]);
+  int edad_add = accion->edad[0];
+
+  if (accion->tipo == 1) acciones_agregar(acclist, 2, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+
+  else if (accion->tipo == 2) acciones_agregar(acclist, 1, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+
+  else if (accion->tipo == 3) {
+    char* tel_add2 = malloc(sizeof(char)*MAX_TEL);
+    strcpy(tel_add2, accion->tel[1]);
+    int edad_add2 = accion->edad[1];
+    // Cambiamos de orden las edades y los telefonos para siempre sacar los del principio
+    acciones_agregar(acclist, 3, nombre_add, apellido_add, tel_add2, tel_add, edad_add2, edad_add);
+  }
+}
+
+void undo_redo(TablaHash** agenda, AccList* acclist, AccList* opuesta_acclist) {
+  Accion* accion = acclist->tail->dato;
+
+  // Si debo agregar 
+  if (accion->tipo == 1) {
+    // Realizo la inserción
+    char* nombre_agg = malloc(sizeof(char) * MAX_NOMBRE);
+    strcpy(nombre_agg, accion->nombre);
+    char* apellido_agg = malloc(sizeof(char) * MAX_APELLIDO);
+    strcpy(apellido_agg, accion->apellido);
+    char* tel_agg = malloc(sizeof(char) * MAX_TEL);
+    strcpy(tel_agg, accion->tel[0]);
+
+    char* clave_agg = malloc(sizeof(char) * MAX_CLAVE);
+    sprintf(clave_agg, "%s%s", nombre_agg, apellido_agg);
+    Contacto contacto = contacto_crear(nombre_agg, apellido_agg, accion->edad[0], tel_agg);
+    *agenda = tablahash_insertar(*agenda, clave_agg, contacto);
+  }
+
+  // Si debo eliminar o editar
+  else if (accion->tipo == 2 || accion->tipo == 3) {
+    char* nombre = malloc(sizeof(char) * MAX_NOMBRE);
+    strcpy(nombre, accion->nombre);
+    char* apellido = malloc(sizeof(char) * MAX_APELLIDO);
+    strcpy(apellido, accion->apellido);
+
+    char* clave = malloc(sizeof(char) * MAX_CLAVE);
+    sprintf(clave, "%s%s", nombre, apellido);
+
+    Contacto contacto = tablahash_buscar(*agenda, clave, 0);
+    if (contacto) {
+      // Elimino o
+      if (accion->tipo == 2) tablahash_eliminar(*agenda, clave);
+
+      // Edito
+      else {
+        char* nuevo_tel = malloc(sizeof(char)*MAX_TEL);
+        strcpy(nuevo_tel, accion->tel[0]);
+        int nueva_edad = accion->edad[0];
+        tablahash_editar(*agenda, clave, nueva_edad, nuevo_tel);
+      }
+    }
+    else print_error(2);
+    free(nombre);
+    free(apellido);
+    free(clave);
+  }
+
+  // Agrego la acción opuesta a la lista opuesta
+  agregar_opuesto_des_re(accion, opuesta_acclist);
+  // Elimino la acción de la lista
+  acciones_eliminar_final(acclist);
+}
+
 
 /************************** Impresiones ********************************/
 
@@ -663,6 +752,7 @@ void print_error(int tipo) {
   }
 
   if (tipo == 2) {
+    printf("No se pudo realizar la acción. ");
     printf("No existe contacto con tal nombre y apellido en la agenda.\n");
     return;
   }
@@ -690,6 +780,16 @@ void print_error(int tipo) {
   if (tipo == 6) {
     printf("No existe subconjunto de contactos cuyas edades ");
     printf("sumadas den el natural propuesto.\n");
+    return;
+  }
+
+  if (tipo == 7) {
+    printf("Nada por deshacer.\n");
+    return;
+  }
+
+  if (tipo == 8) {
+    printf("Nada por rehacer.\n");
     return;
   }
 

@@ -102,23 +102,37 @@ void accion_destruir(Accion * accion) {
 }
 
 void acciones_eliminar_incio(AccList * lista) {
-  Accion *accion_a_eliminar = lista->head->dato;
-  accion_destruir(accion_a_eliminar);
+  if (lista == NULL) return;
+  if (lista->head != NULL) {
+    Accion *accion_a_eliminar = lista->head->dato;
+    accion_destruir(accion_a_eliminar);
 
-  AccNodo *exhead = lista->head;
-  lista->head = exhead->sig;
-  free(exhead);
-  lista->elems--;
+    AccNodo *exhead = lista->head;
+    lista->head = exhead->sig;
+    lista->head->ant = NULL;
+    free(exhead);
+    lista->elems--;
+  }
 }
 
 void acciones_eliminar_final(AccList * lista) {
-  Accion *accion_a_eliminar = lista->tail->dato;
-  accion_destruir(accion_a_eliminar);
+  if (lista == NULL) return;
+  if (lista->head != NULL) {
+    if (lista->elems == 1) lista->head = NULL;
+    Accion *accion_a_eliminar = lista->tail->dato;
+    accion_destruir(accion_a_eliminar);
 
-  AccNodo *extail = lista->tail;
-  lista->tail = extail->ant;
-  free(extail);
-  lista->elems--;
+    AccNodo *extail = lista->tail;
+    if (extail->ant == NULL) printf("Nueva tail NULL");
+    else {
+      printf("Nueva lista tail: ");
+      imprimir_accion(extail->ant->dato);
+    }
+    lista->tail = extail->ant;
+    if (lista->tail) lista->tail->sig = NULL;
+    free(extail);
+    lista->elems--;
+  }
 }
 
 void imprimir_accion(Accion * acc) {
@@ -128,10 +142,12 @@ void imprimir_accion(Accion * acc) {
 void imprimir_acciones(AccList * lista) {
   if (lista != NULL) {
     printf("------------Lista: %d elems------------\n", lista->elems);
-    AccNodo *head = lista->head;
-    while (head != NULL) {
-      imprimir_accion(head->dato);
-      head = head->sig;
+    if (lista->head != NULL) {
+      AccNodo *head = lista->head;
+      while (head != NULL) {
+        imprimir_accion(head->dato);
+        head = head->sig;
+      }
     }
   } else
     printf("--------Lista: NULL--------------\n");
