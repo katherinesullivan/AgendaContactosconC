@@ -64,6 +64,11 @@ int interpretar(TablaHash ** agenda, char* accion) {
         return 1;
     }
 
+    if (nro_accion == 12) {
+        buscar_suma_edades(agenda);
+        return 1;
+    }
+
     if (nro_accion == 13) {
         print_salida();
         prettyprint_th(*agenda);
@@ -366,6 +371,119 @@ void guardar_ordenado(TablaHash** agenda) {
   return count;
 }*/
 
+void buscar_suma_edades(TablaHash** agenda) {
+    char* suma_str = malloc(sizeof(char)*MAX_NRO);
+    print_solicitud(14);
+    fgets(suma_str,MAX_NRO-1, stdin);
+    int suma = atoi(suma_str);
+
+    int n = (*agenda)->numElems;
+
+    int* array_edades = calloc(n,sizeof(int));
+    int* array_indices = calloc(n,sizeof(int));
+    printf("suma = %d\n", suma);
+    int* id = malloc(sizeof(int));
+    *id = 0;
+
+    arbol_a_arrays((*agenda)->arbol_edad, &array_edades, &array_indices, id);
+
+    for (int i = 0; i < n; i++) {
+        printf("array_edades[%d]: %d\n",i,array_edades[i]);
+        printf("array_indices[%d]: %d\n",i, array_indices[i]);
+    }
+
+
+    sbcjto_edad(array_edades, n, suma, array_indices, agenda);
+
+    free(id);
+    free(array_indices);
+    free(array_edades);
+    free(suma_str);
+}
+
+void sbcjto_edad(int* array_edades, int n, int sum, int* array_indices, TablaHash** agenda) {
+	// The value of subset[i][j] will be true if
+	// there is a subset of array_edades[0..j-1] with sum
+	// equal to i
+    int** subset = malloc(sizeof(int*)*(n+1));
+    for (int i=0; i<=n; i++) {
+        subset[i] = calloc(sum+1,sizeof(int));
+    }
+	//int subset[n + 1][sum + 1];
+
+	// If sum is 0, then answer is true
+	for (int i = 0; i <= n; i++) {
+		subset[i][0] = 1;
+    }
+
+	// If sum is not 0 and array_edades is empty,
+	// then answer is false
+	for (int i = 1; i <= sum; i++) {
+		subset[0][i] = 0;
+    }
+
+	// Fill the subset table in botton up manner
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= sum; j++) {
+			if (j < array_edades[i - 1]) {
+				subset[i][j] = subset[i - 1][j];
+            }
+			if (j >= array_edades[i - 1]) {
+				subset[i][j] = subset[i - 1][j] || subset[i - 1][j - array_edades[i - 1]];
+            }
+		}
+	}
+
+    int band = 1;
+
+    if (!subset[n][sum]){
+        print_error(6);
+        band = 0;
+    }
+
+	// uncomment this code to print table
+    printf("   0   1   2   3   4   5   6   7   8   9\n");
+    printf("-----------------------------------------\n");
+	for (int i = 0; i <= n; i++)
+	{
+	for (int j = 0; j <= sum; j++)
+		printf ("%4d", subset[i][j]);
+	printf("\n");
+	}
+
+    if (band) {
+        int new_sum = sum;
+        int i = n;
+        /*for (;i > 0; i--) {
+            printf("i is equal to %d\n", i);
+            if (!subset[i-1][new_sum]) {
+                printf("%d\n", array_edades[i-1]);
+                new_sum = new_sum - array_edades[i-1];
+            }
+        }*/
+        while (i > 0 && (new_sum != 0)) {
+            if (!subset[i-1][new_sum]) {
+                printf("%d\n", array_edades[i-1]);
+                printf("En indice: %d\n", array_indices[i-1]);
+                int idx = array_indices[i-1];
+                contacto_imprimir((*agenda)->tabla[idx].dato);
+                new_sum = new_sum - array_edades[i-1];
+            }
+            i--;
+        }
+        if (new_sum < 0) {
+            printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
+        }
+    }
+
+    for (int i=0; i<=n; i++) {
+        free(subset[i]);
+    }
+    free(subset);
+
+	//return subset[n][sum];
+}
+
 
 /************************** Impresiones ********************************/
 
@@ -445,6 +563,11 @@ void print_solicitud(int tipo) {
         return;
     }
 
+    if (tipo == 14) {
+        printf("Ingrese un natural:\n>");
+        return;
+    }
+
     else printf("Solicitud imposible de imprimir\n");
 }
 
@@ -477,6 +600,12 @@ void print_error(int tipo) {
         printf("Atributo inválido. ");
         printf("Los atributos permitidos son: ");
         printf("nombre, apellido, edad y telefono.\n");
+        return;
+    }
+
+    if (tipo == 6) {
+        printf("No existe subconjunto de contactos cuyas edades ");
+        printf("sumadas den el natural propuesto.\n");
         return;
     }
 

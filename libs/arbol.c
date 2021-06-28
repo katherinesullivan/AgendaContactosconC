@@ -253,6 +253,18 @@ void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol) {
     arbol_imprimir_inorder(arbol->der, tipo_de_arbol);
 }
 
+void arbol_a_arrays(Arbol arbol, int** array_edades, int** array_indices, int* i) {
+    if (arbol == NULL) return;
+
+    arbol_a_arrays(arbol->izq, array_edades, array_indices, i);
+    int dato_int = *(int *)(arbol->dato);
+    printf("En %d: %d con altura: %d e i=%d\n", arbol->idx, dato_int, arbol->alt, *i);
+    (*array_edades)[*i] = *(int*)arbol->dato;
+    (*array_indices)[*i] = arbol->idx;
+    *i = *i+1;
+    arbol_a_arrays(arbol->der, array_edades, array_indices, i);
+}
+
 void arbol_buscar(Arbol arbol, SList* lista, void* dato, int tipo_arbol, int found) {
     if (arbol == NULL) return;
 

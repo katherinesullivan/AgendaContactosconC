@@ -33,6 +33,10 @@ void guardar(TablaHash** agenda);
 
 void guardar_ordenado(TablaHash** agenda);
 
+void buscar_suma_edades(TablaHash** agenda);
+
+void sbcjto_edad(int* array_edades, int n, int sum, int* array_indices, TablaHash** agenda);
+
 /* Funciones relativas a la impresión de mensajes del intérprete */
 
 void print_salida();
