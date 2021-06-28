@@ -50,8 +50,8 @@ int main() {
         char* tel1 = malloc(sizeof(char)*MAX_STR);
         strcpy(tel1,tel);
 
-        acciones_agregar(deshacer, tipo, nombre, apellido, tel, edad);
-        acciones_agregar(rehacer, tipo, nombre1, apellido1, tel1, edad);
+        acciones_agregar(deshacer, tipo, nombre, apellido, tel, NULL, edad, 0);
+        acciones_agregar(rehacer, tipo, nombre1, apellido1, tel1, NULL, edad, 0);
     }
 
     char* prueba = malloc(sizeof(char)*5);

@@ -8,14 +8,19 @@ STREE = stree.c
 SLIST = slist.c 
 ARBOL = arbol.c
 CONTACTO = contacto.c
+ACCIONES = acciones.c
 FLAGS = -Wall -Wextra -Werror -g -std=c99
 
 .PHONY : all
 all: main clean
 
 # Ejecutable de la implementación del programa.
-main: main.c $(INTERPRETE:.c=.o) $(TABLAHASH:.c=.o) $(ANDOR:.c=.o) $(STREE:.c=.o) $(SLIST:.c=.o) $(ARBOL:.c=.o) $(CONTACTO:.c=.o)
+main: main.c $(INTERPRETE:.c=.o) $(TABLAHASH:.c=.o) $(ANDOR:.c=.o) $(STREE:.c=.o) $(SLIST:.c=.o) $(ARBOL:.c=.o) $(CONTACTO:.c=.o) $(ACCIONES:.c=.o)
 	$(CC) $(FLAGS) -o $@ $^ -pthread
+
+# Archivo objeto de la implementación de las listas de acciones para deshacer y rehacer
+$(ACCIONES:.c=.o) : $(ACCIONES) $(ACCIONES:.c=.h)
+	$(CC) $(FLAGS) -c $(ACCIONES)
 
 # Archivo objeto de la implementación de la estructura contacto
 $(CONTACTO:.c=.o) : $(CONTACTO) $(CONTACTO:.c=.h)
@@ -42,7 +47,7 @@ $(ANDOR:.c=.o) : $(ANDOR) $(ANDOR:.c=.h) $(STREE:.c=.o) $(TABLAHASH:.c=.o)
 	$(CC) $(FLAGS) -c $(ANDOR)
 
 # Archivo objeto de la implementación del intérprete.
-$(INTERPRETE:.c=.o) : $(INTERPRETE) $(INTERPRETE:.c=.h) $(ANDOR:.c=.o)
+$(INTERPRETE:.c=.o) : $(INTERPRETE) $(INTERPRETE:.c=.h) $(ANDOR:.c=.o) $(ACCIONES:.c=.o)
 	$(CC) $(FLAGS) -c $(INTERPRETE)
 
 # Destino simbólico que borra todos los archivos con extensión .o cuando se invoca.

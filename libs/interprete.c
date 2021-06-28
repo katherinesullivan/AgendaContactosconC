@@ -14,32 +14,38 @@
 
 /************************** Intérprete ********************************/
 
-int interpretar(TablaHash ** agenda, char *accion) {
+int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* rehacer) {
+  imprimir_acciones(deshacer);
+
   print_solicitud(0);
   fgets(accion, MAX_NRO, stdin);
   int nro_accion = atoi(accion);
 
   if (nro_accion == 1) {
-    buscar(agenda);
+    buscar(agenda, deshacer);
     return 1;
   }
 
   if (nro_accion == 2) {
-    agregar(agenda);            // y los árboles
+    acciones_reestablecer(rehacer);
+    agregar(agenda, deshacer);            // y los árboles
     return 1;
   }
 
   if (nro_accion == 3) {
-    eliminar(agenda);           // y los árboles
+    acciones_reestablecer(rehacer);
+    eliminar(agenda, deshacer);           // y los árboles
     return 1;
   }
 
   if (nro_accion == 4) {
-    editar(agenda);             // y los árboles
+    acciones_reestablecer(rehacer);
+    editar(agenda, deshacer);             // y los árboles
     return 1;
   }
 
   if (nro_accion == 5) {
+    acciones_reestablecer(rehacer); // debatible dejar esto o no
     cargar(agenda);
     return 1;
   }
@@ -73,6 +79,8 @@ int interpretar(TablaHash ** agenda, char *accion) {
     print_salida();
     prettyprint_th(*agenda);
     tablahash_destruir(*agenda);
+    acciones_destruir(deshacer);
+    acciones_destruir(rehacer);
     return 0;
   }
 
@@ -85,19 +93,19 @@ int interpretar(TablaHash ** agenda, char *accion) {
 
 /************************** Acciones ********************************/
 
-void buscar(TablaHash ** agenda) {
-  buscar_eliminar_editar(agenda, 1);
+void buscar(TablaHash ** agenda, AccList* deshacer) {
+  buscar_eliminar_editar(agenda, 1, deshacer);
 }
 
-void eliminar(TablaHash ** agenda) {
-  buscar_eliminar_editar(agenda, 2);
+void eliminar(TablaHash ** agenda, AccList* deshacer) {
+  buscar_eliminar_editar(agenda, 2, deshacer);
 }
 
-void editar(TablaHash ** agenda) {
-  buscar_eliminar_editar(agenda, 3);
+void editar(TablaHash ** agenda, AccList* deshacer) {
+  buscar_eliminar_editar(agenda, 3, deshacer);
 }
 
-void editar_aux(TablaHash ** agenda, char *clave) {
+void editar_aux(TablaHash ** agenda, char *clave, AccList* deshacer, Contacto contacto, char* tel_viejo, int edad_vieja) {
   print_solicitud(5);
   char *edad_str = malloc(sizeof(char) * MAX_NRO);
   fgets(edad_str, MAX_NRO - 1, stdin);
@@ -109,17 +117,27 @@ void editar_aux(TablaHash ** agenda, char *clave) {
   fgets(tel, MAX_TEL - 1, stdin);
   tel[strlen(tel) - 1] = '\0';
 
-  // HACER CAMBIOS EN ARBOLES TMB
   void *rdo = tablahash_editar(*agenda, clave, edad, tel);
 
   // Podría borrar pq si entro acá es pq ya me fije que estuviese
   if (rdo == NULL) {
     free(tel);
     print_error(2);
+    return;
   }
+
+  char* nuevo_nombre = malloc(sizeof(char)*MAX_NOMBRE);
+  strcpy(nuevo_nombre,contacto->nombre);
+  char* nuevo_apellido = malloc(sizeof(char)*MAX_APELLIDO);
+  strcpy(nuevo_apellido,contacto->apellido);
+
+  char* nuevo_tel = malloc(sizeof(char)*MAX_TEL);
+  strcpy(nuevo_tel, tel);
+
+  acciones_agregar(deshacer, 3, nuevo_nombre, nuevo_apellido, tel_viejo, nuevo_tel, edad_vieja, edad);
 }
 
-void buscar_eliminar_editar(TablaHash ** agenda, int opcion) {
+void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList* deshacer) {
   if ((*agenda)->numElems == (*agenda)->capacidad) {
     print_aviso_capacidad(1);
     return;
@@ -142,10 +160,23 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion) {
   if (contacto) {
     if (opcion == 1)
       contacto_imprimir(contacto);
-    else if (opcion == 2)
-      tablahash_eliminar(*agenda, clave);       // modificar para que tmb haga eliminacion en los árboles
-    else if (opcion == 3)
-      editar_aux(agenda, clave);
+    else if (opcion == 2) {
+      char* nombre_nuevo = malloc(sizeof(char)*MAX_NOMBRE);
+      strcpy(nombre_nuevo, nombre);
+      char* apellido_nuevo = malloc(sizeof(char)*MAX_APELLIDO);
+      strcpy(apellido_nuevo,apellido);
+      char* tel_nuevo = malloc(sizeof(char)*MAX_TEL);
+      strcpy(tel_nuevo,contacto->telefono);
+      int edad = contacto->edad;
+      acciones_agregar(deshacer, 1, nombre_nuevo, apellido_nuevo, tel_nuevo, NULL, edad, 0);
+      tablahash_eliminar(*agenda, clave);
+    }
+    else if (opcion == 3) {
+      char* tel_viejo = malloc(sizeof(char)*MAX_TEL);
+      strcpy(tel_viejo,contacto->telefono);
+      int edad_vieja = contacto->edad;
+      editar_aux(agenda, clave, deshacer, contacto, tel_viejo, edad_vieja);
+    }
     else
       printf("Opción inválida");
   } else
@@ -156,7 +187,7 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion) {
   free(clave);
 }
 
-void agregar(TablaHash ** agenda) {
+void agregar(TablaHash ** agenda, AccList* deshacer) {
   if ((*agenda)->numElems == (*agenda)->capacidad) {
     print_aviso_capacidad(1);
     return;
@@ -197,6 +228,15 @@ void agregar(TablaHash ** agenda) {
   Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
   *agenda = tablahash_insertar(*agenda, clave, contacto);
+
+  char* nombre_nuevo = malloc(sizeof(char)*MAX_NOMBRE);
+  strcpy(nombre_nuevo, nombre);
+  char* apellido_nuevo = malloc(sizeof(char)*MAX_APELLIDO);
+  strcpy(apellido_nuevo, apellido);
+  char* telefono_nuevo = malloc(sizeof(char)*MAX_TEL);
+  strcpy(telefono_nuevo, telefono);
+
+  acciones_agregar(deshacer, 2, nombre_nuevo, apellido_nuevo, telefono_nuevo, NULL, edad, 0);
 
 }
 

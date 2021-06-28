@@ -21,9 +21,11 @@ unsigned hash2(char *s) {
 int main() {
   int flag = 1;
   char *accion = malloc(sizeof(char) * 10);
+  AccList* deshacer = acciones_init(N);
+  AccList* rehacer = acciones_init(N);
   TablaHash *agenda = tablahash_crear(11, hash, &hash2);
   do {
-    flag = interpretar(&agenda, accion);
+    flag = interpretar(&agenda, accion, deshacer, rehacer);
   } while (flag);
   free(accion);
   return 0;

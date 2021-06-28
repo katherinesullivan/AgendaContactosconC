@@ -3,23 +3,24 @@
 
 #include <stddef.h>
 #include "andor.h"
+#include "acciones.h"
 
 /* Función que maneja la parte interactiva del programa */
-int interpretar(TablaHash ** dicc, char *accion);
+int interpretar(TablaHash ** dicc, char *accion, AccList* deshacer, AccList* rehacer);
 
 /* Funciones relativas a las acciones del intérprete */
 
-void buscar(TablaHash ** dicc);
+void buscar(TablaHash ** dicc, AccList* deshacer);
 
-void eliminar(TablaHash ** dicc);
+void eliminar(TablaHash ** dicc, AccList* deshacer);
 
-void editar(TablaHash ** dicc);
+void editar(TablaHash ** dicc, AccList* deshacer);
 
-void editar_aux(TablaHash ** dicc, char *clave);
+void editar_aux(TablaHash ** agenda, char *clave, AccList* deshacer, Contacto contacto, char* tel_viejo, int edad_vieja);
 
-void buscar_eliminar_editar(TablaHash ** dicc, int opcion);
+void buscar_eliminar_editar(TablaHash ** dicc, int opcion, AccList* deshacer);
 
-void agregar(TablaHash ** dicc);
+void agregar(TablaHash ** dicc, AccList* deshacer);
 
 void and(TablaHash ** agenda);
 

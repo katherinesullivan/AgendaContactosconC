@@ -11,8 +11,8 @@ typedef struct {
   int tipo;                     // 1 agregar - 2 eliminar - 3 editar 
   char *nombre;
   char *apellido;
-  char *tel;
-  int edad;
+  char **tel;
+  int *edad;
 } Accion;
 
 typedef struct _AccNodo {
@@ -34,13 +34,13 @@ AccList *acciones_init(int tamano);
 
 /* ------ Agregado ------ */
 
-Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel,
-                     int edad);
+Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2);
 
-void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
-                      char *tel, int edad);
+void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2);
 
 /* ------ Destrucción ------ */
+
+void acciones_reestablecer(AccList * lista);
 
 void acciones_destruir(AccList * lista);
 

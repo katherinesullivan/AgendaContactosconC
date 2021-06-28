@@ -11,22 +11,24 @@ AccList *acciones_init(int tamano) {
   return acciones;
 }
 
-Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel,
-                     int edad) {
+Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2) {
   Accion *accion = malloc(sizeof(Accion));
   accion->tipo = tipo;
   accion->nombre = nombre;
   accion->apellido = apellido;
-  accion->tel = tel;
-  accion->edad = edad;
+  accion->tel = malloc(sizeof(char*)*2);
+  accion->tel[0] = tel1;
+  accion->tel[1] = tel2;
+  accion->edad = malloc(sizeof(int)*2);
+  accion->edad[0] = edad1;
+  accion->edad[1] = edad2;
   return accion;
 }
 
-void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
-                      char *tel, int edad) {
+void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2) {
   if (lista->head == NULL) {
     lista->head = malloc(sizeof(AccNodo));
-    lista->head->dato = accion_nueva(tipo, nombre, apellido, tel, edad);
+    lista->head->dato = accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
     lista->head->ant = NULL;
     lista->head->sig = NULL;
 
@@ -39,7 +41,7 @@ void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
     acciones_eliminar_incio(lista);
   }
 
-  Accion *newaccion = accion_nueva(tipo, nombre, apellido, tel, edad);
+  Accion *newaccion = accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
   AccNodo *newnodo = malloc(sizeof(AccNodo));
 
   newnodo->dato = newaccion;
@@ -59,6 +61,23 @@ void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
   lista->elems++;
 }
 
+void acciones_reestablecer(AccList * lista) {
+  if (lista != NULL) {
+    int cap = lista->cap;
+    AccNodo *head = lista->head;
+    while (head != NULL) {
+      AccNodo *a_eliminar = head;
+      head = a_eliminar->sig;
+      accion_destruir(a_eliminar->dato);
+      free(a_eliminar);
+    }
+    lista->head = NULL;
+    lista->tail = NULL;
+    lista->elems = 0;
+    lista->cap = cap;
+  }
+}
+
 void acciones_destruir(AccList * lista) {
   if (lista != NULL) {
     AccNodo *head = lista->head;
@@ -75,6 +94,9 @@ void acciones_destruir(AccList * lista) {
 void accion_destruir(Accion * accion) {
   free(accion->nombre);
   free(accion->apellido);
+  free(accion->edad);
+  free(accion->tel[0]);
+  free(accion->tel[1]);
   free(accion->tel);
   free(accion);
 }
@@ -100,8 +122,7 @@ void acciones_eliminar_final(AccList * lista) {
 }
 
 void imprimir_accion(Accion * acc) {
-  printf("{%d: %s,%s,%s,%d}\n", acc->tipo, acc->nombre, acc->apellido, acc->tel,
-         acc->edad);
+  printf("{%d: %s,%s,tels:%s,%s,edades:%d,%d}\n", acc->tipo, acc->nombre, acc->apellido, acc->tel[0], acc->tel[1] ,acc->edad[0], acc->edad[1]);
 }
 
 void imprimir_acciones(AccList * lista) {
