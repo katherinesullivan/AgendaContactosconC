@@ -55,7 +55,7 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 /*
  * Inserta el dato en la tabla asociado a la clave dada.
  */
-void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
+int tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
 
 /*
  * Busca el dato en la tabla asociado a la clave dada.

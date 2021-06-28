@@ -41,6 +41,8 @@ void sbcjto_edad(int* array_edades, int n, int sum, int* array_indices, TablaHas
 
 void print_salida();
 
+void print_aviso_capacidad(int tipo);
+
 void print_solicitud(int tipo);
 
 void print_error(int tipo);

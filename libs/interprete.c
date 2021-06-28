@@ -120,6 +120,11 @@ void editar_aux(TablaHash** agenda, char* clave) {
 }
 
 void buscar_eliminar_editar(TablaHash** agenda, int opcion)  {
+    if ((*agenda)->numElems == (*agenda)->capacidad) {
+        print_aviso_capacidad(1);
+        return;
+    }
+
     print_solicitud(1);
     char* nombre = malloc(sizeof(char)*MAX_NOMBRE);
     fgets(nombre, MAX_NOMBRE-1, stdin);
@@ -147,7 +152,11 @@ void buscar_eliminar_editar(TablaHash** agenda, int opcion)  {
     free(clave);
 }
 
-void agregar(TablaHash** agenda) { // Y ÁRBOLES
+void agregar(TablaHash** agenda) {
+    if ((*agenda)->numElems == (*agenda)->capacidad) {
+        print_aviso_capacidad(1);
+        return;
+    }
 
     print_solicitud(1);
     char* nombre = malloc(sizeof(char)*MAX_NOMBRE);
@@ -183,9 +192,9 @@ void agregar(TablaHash** agenda) { // Y ÁRBOLES
 
     Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
-    tablahash_insertar(*agenda, clave, contacto);
+    int rdo = tablahash_insertar(*agenda, clave, contacto);
 
-    // AGREGAR A LOS ÁRBOLES CON IDX ya que nunca cambio ese cdo agrando la tabla y solo espero que matcheen las claves
+    if (rdo == 2) print_aviso_capacidad(2);
 
 }
 
@@ -255,6 +264,11 @@ void and_or(TablaHash** agenda, int funcion) {
 }
 
 void cargar(TablaHash** agenda) {
+    if ((*agenda)->numElems == (*agenda)->capacidad) {
+        print_aviso_capacidad(1);
+        return;
+    }
+
     print_solicitud(11);
     char* filename = malloc(sizeof(char)*MAX_FILE);
     fgets(filename, MAX_FILE-1, stdin);
@@ -263,14 +277,18 @@ void cargar(TablaHash** agenda) {
     fp = fopen(filename, "r+");
     if (fp == NULL) {
         print_error(4);
+        free(filename);
         return; 
     }
 
     char* primeralinea = malloc(sizeof(char)*FST_LINE_LEN);
     fscanf(fp, "%[^\n]\n", primeralinea);
     free(primeralinea);
+    int i = 0;
+    int band = 1;
 
-    while (!feof(fp)) {
+    while (!feof(fp) && band) {
+
         char* nombre = malloc(sizeof(char)*MAX_NOMBRE);
         char* apellido = malloc(sizeof(char)*MAX_APELLIDO);
         char* edad_str = malloc(sizeof(char)*MAX_NRO);
@@ -290,6 +308,13 @@ void cargar(TablaHash** agenda) {
         Contacto contacto = contacto_crear(nombre, apellido, edad, tel);
 
         tablahash_insertar(*agenda, clave, contacto);
+        i++;
+
+        if ((*agenda)->numElems == (*agenda)->capacidad) {
+            printf("Se pudieron cargar los primeros %d contactos\n", i);
+            print_aviso_capacidad(1);
+            band = 0;
+        }
     }
 
     free(filename);
@@ -305,6 +330,7 @@ void guardar(TablaHash** agenda) {
     fp = fopen(filename, "w+");
     if (fp == NULL) {
         print_error(4);
+        free(filename);
         return; 
     }
     fprintf(fp,"nombre,apellido,edad,telefono\n");
@@ -330,6 +356,7 @@ void guardar_ordenado(TablaHash** agenda) {
     fp = fopen(filename, "w+");
     if (fp == NULL) {
         print_error(4);
+        free(filename);
         return; 
     }
 
@@ -489,6 +516,20 @@ void sbcjto_edad(int* array_edades, int n, int sum, int* array_indices, TablaHas
 
 void print_salida() {
     printf("Cerrando programa\n");
+}
+
+void print_aviso_capacidad(int tipo) {
+    if (tipo == 1) {
+        printf("Agenda llena. No fue posible realizar la acción solicitada. ");
+        printf("Guarde sus datos e inicie una nueva agenda ");
+        printf("con mayor capacidad y cargue sus datos actuales.\n");
+    }
+    else if (tipo == 2) {
+        printf("Su agenda está llegando a un nivel crítico en su capacidad. ");
+        printf("Esto ralentiza sus operaciones. Considere guardar sus datos ");
+        printf("en un archivo e inicializar una nueva agenda con mayor ");
+        printf("capacidad donde los puede cargar automáticamente.\n");
+    }
 }
 
 void print_solicitud(int tipo) {

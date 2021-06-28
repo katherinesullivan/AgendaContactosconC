@@ -31,7 +31,12 @@ TablaHash* tablahash_crear(unsigned capacidad, FuncionHash hash,
 }
 
 /* Inserta el dato en la tabla asociado a la clave dada. */
-void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
+int tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
+  if (tabla->numElems == tabla->capacidad) {
+    return 0;
+  }
+  printf("Entre\n");
+
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -41,6 +46,7 @@ void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
     idx = tabla->hash(clave) + i * tabla->hash2(clave);
     idx = idx % tabla->capacidad;
     if (tabla->tabla[idx].estado == 0 || tabla->tabla[idx].estado == 2) {
+      printf("Encontré indice\n");
       // Si estaba vacío o eliminado el lugar, almacenamos los datos ingresados.
       tabla->tabla[idx].clave = clave;
       tabla->tabla[idx].dato = dato;
@@ -60,9 +66,12 @@ void tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
 
   // Aumentamos la cantidad de elementos que hay
   tabla->numElems++;
-  if (tabla->numElems / tabla->capacidad >= 0.75) {
-    tablahash_agrandar(tabla);
+
+  if (tabla->numElems / tabla->capacidad >= 0.85) {
+    return 2;
   }
+
+  return 1;
 }
 
 /* Busca el dato en la tabla asociado a la clave dada. 
@@ -70,6 +79,10 @@ Si solover es 0, en caso de que esté presente devuelve un puntero al mismo,
 en caso contrario devuelve NULL. Si solover es 1, devuelve NULL si no está 
 presente, y un puntero a su clave si lo está. */
 void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
+  if (tabla->numElems == tabla->capacidad) {
+    printf("No es posible realizar búsquedas. Capacidad completa.\n");
+    return;
+  }
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -126,25 +139,6 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
     }
     i++;
   }
-}
-
-/* Agranda una tabla de hash dada, aumentando su capacidad al doble más 9. 
-Esto nos asegura que empezando con una capacidad de 31, recién cuando lleguemos 
-a 1271 la capacidad de la tabla no será prima. */
-TablaHash* tablahash_agrandar(TablaHash* tabla) {
-  unsigned cap = tabla->capacidad;
-  tabla->tabla = realloc(tabla->tabla, sizeof(CasillaHash) * (cap * 2 + 9));
-
-  // Inicializamos las casillas que agregamos con datos nulos.
-  for (unsigned idx = cap; idx < cap * 2 + 9; ++idx) {
-    tabla->tabla[idx].clave = NULL;
-    tabla->tabla[idx].dato = NULL;
-    tabla->tabla[idx].estado = 0;
-  }
-
-  tabla->capacidad = cap * 2 + 9;
-
-  return tabla;
 }
 
 /* Destruye la tabla. */
