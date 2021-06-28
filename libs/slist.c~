@@ -16,8 +16,7 @@ void slist_destruir(SList lista) {
 }
 
 int slist_cant(SList lista) {
-  if (lista == NULL)
-    return 0;
+  if (lista == NULL) return 0;
   return lista->cant;
 }
 
@@ -25,7 +24,7 @@ SList slist_agregar_inicio(SList lista, int dato) {
   SList nuevo_nodo = malloc(sizeof(SNodo));
   nuevo_nodo->dato = dato;
   nuevo_nodo->sig = lista;
-  nuevo_nodo->cant = slist_cant(lista) + 1;
+  nuevo_nodo->cant = slist_cant(lista)+1;
   return nuevo_nodo;
 }
 
@@ -37,10 +36,10 @@ SList slist_cant_max(SList lista) {
 }
 
 void slist_imprimir(SList lista) {
-  printf("--------SLIST:%d------------\n", slist_cant(lista));
+  printf("--------SLIST:%d------------\n",slist_cant(lista));
   if (lista != NULL) {
     SList nodo = lista;
-    while (nodo != NULL) {
+    while(nodo != NULL) {
       printf("%d\n", nodo->dato);
       nodo = nodo->sig;
     }
@@ -52,16 +51,19 @@ SList slist_mas_chica(SList lista1, SList lista2, SList lista3, SList lista4) {
   int cant2 = slist_cant(lista2);
   int cant3 = slist_cant(lista3);
   int cant4 = slist_cant(lista4);
-  if (cant1 < cant2) {
-    if (cant1 < cant3) {
+  if (cant1 < cant2){
+    if (cant1 < cant3){
       return (cant1 < cant4 ? lista1 : lista4);
-    } else {
+    }
+    else {
       return (cant3 < cant4 ? lista3 : lista4);
     }
-  } else {
+  }
+  else {
     if (cant2 < cant3) {
       return (cant2 < cant4 ? lista2 : lista4);
-    } else {
+    }
+    else {
       return (cant3 < cant4 ? lista3 : lista4);
     }
   }

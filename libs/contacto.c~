@@ -7,8 +7,7 @@
 /**
  * Crea un nuevo contacto.
  */
-Contacto contacto_crear(char *nombre, char *apellido, unsigned edad,
-                        char *telefono) {
+Contacto contacto_crear(char* nombre, char* apellido, unsigned edad, char* telefono) {
   Contacto nuevo = malloc(sizeof(Contact));
   assert(nuevo != NULL);
 
@@ -40,17 +39,16 @@ void contacto_destruir(Contacto contacto) {
  */
 void contacto_imprimir(Contacto contacto) {
   if (contacto) {
-    printf("{%s,%s,%d,%s}\n", contacto->nombre, contacto->apellido,
-           contacto->edad, contacto->telefono);
-  } else {
+    printf("{%s,%s,%d,%s}\n", contacto->nombre, contacto->apellido, contacto->edad, contacto->telefono);
+  }
+  else {
     printf("NULL\n");
   }
 }
 
-void contacto_imprimir_file(Contacto contacto, FILE * fp) {
+void contacto_imprimir_file(Contacto contacto, FILE* fp) {
   if (contacto) {
-    fprintf(fp, "%s,%s,%d,%s\n", contacto->nombre, contacto->apellido,
-            contacto->edad, contacto->telefono);
+    fprintf(fp,"%s,%s,%d,%s\n", contacto->nombre, contacto->apellido, contacto->edad, contacto->telefono);
   }
 }
 

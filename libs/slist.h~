@@ -6,11 +6,11 @@
 
 typedef struct _SNodo {
   int dato;
-  struct _SNodo *sig;
+  struct _SNodo* sig;
   int cant;
 } SNodo;
 
-typedef SNodo *SList;
+typedef SNodo* SList;
 
 /**
  * Devuelve una lista vacía.

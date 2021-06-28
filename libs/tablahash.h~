@@ -17,7 +17,7 @@ typedef unsigned (*FuncionHash) (char *clave);
 typedef struct {
   char *clave;
   Contacto dato;
-  int estado;                   // será 0 si esta libre, 1 si está ocupada, 2 si está eliminada
+  int estado;   // será 0 si esta libre, 1 si está ocupada, 2 si está eliminada
 } CasillaHash;
 
 /*
@@ -40,8 +40,8 @@ typedef struct {
  * para insertar o eliminar en los árboles.
  */
 typedef struct {
-  Arbol *arbol;
-  void *dato;
+  Arbol* arbol;
+  void* dato;
   int idx;
   int tipo;
 } ArgHilo;
@@ -82,28 +82,28 @@ TablaHash *tablahash_agrandar(TablaHash * tabla);
  */
 void tablahash_destruir(TablaHash * tabla);
 
-void prettyprint_th(TablaHash * th);
+void prettyprint_th(TablaHash* th);
 
-void *tablahash_editar(TablaHash * tabla, char *clave, int edad, char *tel);
+void* tablahash_editar(TablaHash * tabla, char *clave, int edad, char* tel);
 
-void tablahash_imprimir_file(TablaHash * tabla, FILE * fp);
+void tablahash_imprimir_file(TablaHash* tabla, FILE* fp);
 
-void inorder_aux(TablaHash * tabla, Arbol arbol, FILE * fp);
+void inorder_aux(TablaHash* tabla, Arbol arbol, FILE *fp);
 
-void tablahash_imprimir_inorder_nombre(TablaHash * tabla, FILE * fp);
+void tablahash_imprimir_inorder_nombre(TablaHash* tabla, FILE* fp);
 
-void tablahash_imprimir_inorder_apellido(TablaHash * tabla, FILE * fp);
+void tablahash_imprimir_inorder_apellido(TablaHash* tabla, FILE* fp);
 
-void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp);
+void tablahash_imprimir_inorder_edad(TablaHash* tabla, FILE* fp);
 
-void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp);
+void tablahash_imprimir_inorder_tel(TablaHash* tabla, FILE* fp);
 
-ArgHilo *tablahash_arg_crear(Arbol * arbol, void *dato, int idx, int tipo);
+ArgHilo* tablahash_arg_crear(Arbol* arbol, void* dato, int idx, int tipo);
 
-void *rutina_insertar(void *arg);
+void* rutina_insertar(void* arg);
 
-void *rutina_eliminar(void *arg);
+void* rutina_eliminar(void* arg);
 
-void parallel_insertar_eliminar(TablaHash * tabla, int idx, int funcion);
+void parallel_insertar_eliminar(TablaHash* tabla, int idx, int funcion);
 
 #endif                          /* __TABLAHASH_H__ */

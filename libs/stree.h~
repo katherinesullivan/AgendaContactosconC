@@ -4,13 +4,13 @@
 #include <stddef.h>
 #include "slist.h"
 
-typedef struct _STNodo {
-  int idx;                      // Índice en donde se encuentra el contacto
-  struct _STNodo *izq;          // Subárbol izquierdo
-  struct _STNodo *der;          // Subárbol derecho
+typedef struct _STNodo{
+    int idx; // Índice en donde se encuentra el contacto
+    struct _STNodo *izq; // Subárbol izquierdo
+    struct _STNodo *der; // Subárbol derecho
 } STNodo;
 
-typedef STNodo *STree;
+typedef STNodo* STree;
 
 STree stree_crear();
 
