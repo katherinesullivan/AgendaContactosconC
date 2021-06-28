@@ -19,10 +19,22 @@ voy a implementar en conjuntos interseccion y union teniendo en cuenta nodos rep
 buscar por suma de edades -> algoritmou raro
 
 
+MAS IMPORTANTE -> mantener busquedas en lo menor posible O(1) con op 1 O(h) con and or donde h es log n 
+
+INSERCION/.... -> O(h) 
+
+BUSCAR POR SUMA EDADES
+
+
+
 
 DIFICULTADES ENCONTRADAS
 
-agregar si ya existe el contacto con det nombre y apellido -> no lo agrego
+agregar si ya existe el contacto con det nombre y apellido -> no lo agrego -> pero si en cargar
+
+mantener orden por coso del arbol
+
+cuando o no rehacer NULL
 
 USO DOUBLE HASHING QUE NO ME CAMBIE LOS IDX DE LA TABLA PERO QUE ME ASEGURA ENCONTRARLOS AUN CON TABLA AGRANDADA PARA PODER TENER ACCESO RAPIDO AL CONTACTO EN ARBOL ORDENADO
 

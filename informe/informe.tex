@@ -1,0 +1,119 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs} % Cursive font
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{nameref}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+
+% for C
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+
+\usepackage{mathtools}
+\usepackage{xparse} \DeclarePairedDelimiterX{\Iintv}[1]{\llbracket}{\rrbracket}{\iintvargs{#1}}
+\NewDocumentCommand{\iintvargs}{>{\SplitArgument{1}{,}}m}
+{\iintvargsaux#1}
+\NewDocumentCommand{\iintvargsaux}{mm} {#1\mkern1.5mu,\mkern1.5mu#2}
+
+\makeatletter
+\newcommand*{\currentname}{\@currentlabelname}
+\makeatother
+
+\usepackage[a4paper,hmargin=1in, vmargin=1.4in,footskip=0.25in]{geometry}
+
+\graphicspath{ {./images/} }
+
+
+%\addtolength{\hoffset}{-1cm}
+%\addtolength{\hoffset}{-2.5cm}
+%\addtolength{\voffset}{-2.5cm}
+\addtolength{\textwidth}{0.2cm}
+%\addtolength{\textheight}{2cm}
+\setlength{\parskip}{8pt}
+\setlength{\parindent}{0.5cm}
+\linespread{1.5}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{TP - Sullivan}
+\lhead{Estructuras de Datos y Algoritmos I}
+\rfoot{\vspace{1cm} \thepage}
+
+\renewcommand*\contentsname{\LARGE Índice}
+
+\begin{document}
+
+\begin{titlepage}
+    \vspace{-1cm}
+    \hspace{-1.2cm}\includegraphics[scale= 0.8]{header2.png}
+    \begin{center}
+        \vfill
+        \vfill
+            \vspace{0.7cm}
+            \noindent\textbf{\Huge Trabajo Práctico}\par
+            \vspace{.5cm}
+        \vfill
+        \noindent \textbf{\huge Alumna:}\par
+        \vspace{.5cm}
+        \noindent \textbf{\Large Sullivan, Katherine}\par
+ 
+        \vfill
+        \large Universidad Nacional de Rosario \par
+        \noindent\large 2021
+    \end{center}
+\end{titlepage}
+\ 
+
+\section{M\'odulos del programa}
+
+\section{Estructuras de datos utilizadas}
+
+\section{Algoritmos de inter\'es}
+
+    \subsection{Deshacer/Rehacer}
+
+    \subsection{Guardar ordenado}
+
+    \subsection{Buscar por suma de edades}
+
+\section{Dificultades encontradas}
+
+\section{Compilaci\'on e invocaci\'on}
+
+\section{Bibliograf\'ia}
+
+\end{document}
