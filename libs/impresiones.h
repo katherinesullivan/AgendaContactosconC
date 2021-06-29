@@ -3,14 +3,24 @@
 
 #include <stddef.h>
 
+/**
+ * Imprime el menú de acciones
+ */
 void print_menu_acciones();
 
+/**
+ * Imprime un mensaje para la salida
+ */
 void print_salida();
 
-void print_aviso_capacidad(int tipo);
-
+/**
+ * Función para la impresión de solicitudes al usuario
+ */
 void print_solicitud(int tipo);
 
+/**
+ * Función para imprimir errores
+ */
 void print_error(int tipo);
 
 #endif                          /* __IMPRESIONES_H__ */

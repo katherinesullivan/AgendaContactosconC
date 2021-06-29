@@ -14,6 +14,10 @@
 
 /************************** Intérprete ********************************/
 
+/**
+ * Función principal. 
+ * Decide a qué función llamar dependiendo de la entrada del usuario
+ */
 int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
                 AccList * rehacer) {
   imprimir_acciones(deshacer);
@@ -30,24 +34,24 @@ int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
 
   if (nro_accion == 2) {
     acciones_reestablecer(rehacer);
-    agregar(agenda, deshacer);  // y los árboles
+    agregar(agenda, deshacer);
     return 1;
   }
 
   if (nro_accion == 3) {
     acciones_reestablecer(rehacer);
-    eliminar(agenda, deshacer); // y los árboles
+    eliminar(agenda, deshacer);
     return 1;
   }
 
   if (nro_accion == 4) {
     acciones_reestablecer(rehacer);
-    editar(agenda, deshacer);   // y los árboles
+    editar(agenda, deshacer);
     return 1;
   }
 
   if (nro_accion == 5) {
-    acciones_reestablecer(rehacer);     // debatible dejar esto o no
+    acciones_reestablecer(rehacer);
     cargar(agenda);
     return 1;
   }
@@ -111,58 +115,31 @@ int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
 
 /************************** Acciones ********************************/
 
+/**
+ * Función para buscar un contacto
+ */
 void buscar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 1, deshacer);
 }
 
+/**
+ * Función para eliminar un contacto
+ */
 void eliminar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 2, deshacer);
 }
 
+/**
+ * Función para editar un contacto
+ */
 void editar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 3, deshacer);
 }
 
-void editar_aux(TablaHash ** agenda, char *clave, AccList * deshacer,
-                Contacto contacto, char *tel_viejo, int edad_vieja) {
-  print_solicitud(5);
-  char *edad_str = malloc(sizeof(char) * MAX_NRO);
-  fgets(edad_str, MAX_NRO - 1, stdin);
-  int edad = atoi(edad_str);
-  free(edad_str);
-
-  print_solicitud(6);
-  char *tel = malloc(sizeof(char) * MAX_TEL);
-  fgets(tel, MAX_TEL - 1, stdin);
-  tel[strlen(tel) - 1] = '\0';
-
-  void *rdo = tablahash_editar(*agenda, clave, edad, tel);
-
-  // Podría borrar pq si entro acá es pq ya me fije que estuviese
-  if (rdo == NULL) {
-    free(tel);
-    print_error(2);
-    return;
-  }
-
-  char *nuevo_nombre = malloc(sizeof(char) * MAX_NOMBRE);
-  strcpy(nuevo_nombre, contacto->nombre);
-  char *nuevo_apellido = malloc(sizeof(char) * MAX_APELLIDO);
-  strcpy(nuevo_apellido, contacto->apellido);
-
-  char *nuevo_tel = malloc(sizeof(char) * MAX_TEL);
-  strcpy(nuevo_tel, tel);
-
-  acciones_agregar(deshacer, 3, nuevo_nombre, nuevo_apellido, tel_viejo,
-                   nuevo_tel, edad_vieja, edad);
-}
-
+/**
+ * Función que engloba los comportamientos de buscar, eliminar y editar
+ */
 void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList * deshacer) {
-  if ((*agenda)->numElems == (*agenda)->capacidad) {
-    print_aviso_capacidad(1);
-    return;
-  }
-
   print_solicitud(1);
   char *nombre = malloc(sizeof(char) * MAX_NOMBRE);
   fgets(nombre, MAX_NOMBRE - 1, stdin);
@@ -177,10 +154,13 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList * deshacer)
   sprintf(clave, "%s%s", nombre, apellido);
 
   Contacto contacto = tablahash_buscar(*agenda, clave, 0);
+
+  // Procedo dependiendo de con qué función la llamé
   if (contacto) {
     if (opcion == 1)
       contacto_imprimir(contacto);
     else if (opcion == 2) {
+      // Creo copias de los datos necesarios y añado un elemento a deshacer
       char *nombre_nuevo = malloc(sizeof(char) * MAX_NOMBRE);
       strcpy(nombre_nuevo, nombre);
       char *apellido_nuevo = malloc(sizeof(char) * MAX_APELLIDO);
@@ -190,14 +170,16 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList * deshacer)
       int edad = contacto->edad;
       acciones_agregar(deshacer, 1, nombre_nuevo, apellido_nuevo, tel_nuevo,
                        NULL, edad, 0);
+      
       tablahash_eliminar(*agenda, clave);
     } else if (opcion == 3) {
+      // Paso los datos que cambiarán luego de editar
       char *tel_viejo = malloc(sizeof(char) * MAX_TEL);
       strcpy(tel_viejo, contacto->telefono);
       int edad_vieja = contacto->edad;
+
       editar_aux(agenda, clave, deshacer, contacto, tel_viejo, edad_vieja);
-    } else
-      printf("Opción inválida");
+    }
   } else
     print_error(2);
 
@@ -206,12 +188,42 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList * deshacer)
   free(clave);
 }
 
-void agregar(TablaHash ** agenda, AccList * deshacer) {
-  if ((*agenda)->numElems == (*agenda)->capacidad) {
-    print_aviso_capacidad(1);
-    return;
-  }
+/**
+ * Función que continúa con editar después de buscar_eliminar_editar
+ */
+void editar_aux(TablaHash ** agenda, char *clave, AccList * deshacer,
+                Contacto contacto, char *tel_viejo, int edad_vieja) {
+  print_solicitud(5);
+  char *edad_str = malloc(sizeof(char) * MAX_NRO);
+  fgets(edad_str, MAX_NRO - 1, stdin);
+  int edad = atoi(edad_str);
+  free(edad_str);
 
+  print_solicitud(6);
+  char *tel = malloc(sizeof(char) * MAX_TEL);
+  fgets(tel, MAX_TEL - 1, stdin);
+  tel[strlen(tel) - 1] = '\0';
+
+  tablahash_editar(*agenda, clave, edad, tel);
+
+  // Creo copias de los datos necesarios y
+  char *nuevo_nombre = malloc(sizeof(char) * MAX_NOMBRE);
+  strcpy(nuevo_nombre, contacto->nombre);
+  char *nuevo_apellido = malloc(sizeof(char) * MAX_APELLIDO);
+  strcpy(nuevo_apellido, contacto->apellido);
+
+  char *nuevo_tel = malloc(sizeof(char) * MAX_TEL);
+  strcpy(nuevo_tel, tel);
+
+  // agrego una nueva acción para deshacer
+  acciones_agregar(deshacer, 3, nuevo_nombre, nuevo_apellido, tel_viejo,
+                   nuevo_tel, edad_vieja, edad);
+}
+
+/**
+ * Función para agregar un contacto
+ */
+void agregar(TablaHash ** agenda, AccList * deshacer) {
   print_solicitud(1);
   char *nombre = malloc(sizeof(char) * MAX_NOMBRE);
   fgets(nombre, MAX_NOMBRE - 1, stdin);
@@ -225,6 +237,7 @@ void agregar(TablaHash ** agenda, AccList * deshacer) {
   char *clave = malloc(sizeof(char) * MAX_CLAVE);
   sprintf(clave, "%s%s", nombre, apellido);
 
+  // Si ya existía un contacto con ese nombre le aviso al usuario
   if (tablahash_buscar(*agenda, clave, 1)) {
     print_error(3);
     free(nombre);
@@ -233,6 +246,7 @@ void agregar(TablaHash ** agenda, AccList * deshacer) {
     return;
   }
 
+  // Si no, lo agrego
   print_solicitud(3);
   char *edad_str = malloc(sizeof(char) * MAX_NRO);
   fgets(edad_str, MAX_NRO - 1, stdin);
@@ -246,6 +260,7 @@ void agregar(TablaHash ** agenda, AccList * deshacer) {
 
   Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
+  // Creo copias de los datos necesarios para deshacer
   char *nombre_nuevo = malloc(sizeof(char) * MAX_NOMBRE);
   strcpy(nombre_nuevo, nombre);
   char *apellido_nuevo = malloc(sizeof(char) * MAX_APELLIDO);
@@ -255,20 +270,33 @@ void agregar(TablaHash ** agenda, AccList * deshacer) {
 
   *agenda = tablahash_insertar(*agenda, clave, contacto);
 
+  // Agrego una nueva acción para deshacer
   acciones_agregar(deshacer, 2, nombre_nuevo, apellido_nuevo, telefono_nuevo,
                    NULL, edad, 0);
-
 }
 
+/**
+ * Función que imprime los contactos que cumplen con todas los 
+ * atributos ingresados por el usuario
+ */
 void and(TablaHash ** agenda) {
   and_or(agenda, 1);
 }
 
+/**
+ * Función que imprime los contactos que cumplen con alguno
+ * de los atributos ingresados por el usuario
+ */
 void or(TablaHash ** agenda) {
   and_or(agenda, 2);
 }
 
+/**
+ * Función que engloba los comportamientos de and y or
+ */
 void and_or(TablaHash ** agenda, int funcion) {
+  // Las banderas nos servirán para saber si el usuario
+  // ingresó como vacío alguno de los atributos
   int nombre_band = 0;
   int apellido_band = 0;
   int tel_band = 0;
@@ -309,12 +337,14 @@ void and_or(TablaHash ** agenda, int funcion) {
     tel_band = 1;
   }
 
+  // Creo un puntero para pasar dentro de él todas las banderas
   int *bands = malloc(sizeof(int) * 4);
   bands[0] = nombre_band;
   bands[1] = apellido_band;
   bands[2] = edad_band;
   bands[3] = tel_band;
 
+  // Llamo a la función de andor de la librería homónima
   andor(agenda, bands, nombre, apellido, edad_pointer, tel, funcion);
 
   free(bands);
@@ -325,12 +355,10 @@ void and_or(TablaHash ** agenda, int funcion) {
   free(edad_pointer);
 }
 
+/**
+ * Función que carga a la agenda los contactos presentes en un archivo
+ */
 void cargar(TablaHash ** agenda) {
-  if ((*agenda)->numElems == (*agenda)->capacidad) {
-    print_aviso_capacidad(1);
-    return;
-  }
-
   print_solicitud(11);
   char *filename = malloc(sizeof(char) * MAX_FILE);
   fgets(filename, MAX_FILE - 1, stdin);
@@ -346,11 +374,10 @@ void cargar(TablaHash ** agenda) {
   char *primeralinea = malloc(sizeof(char) * FST_LINE_LEN);
   fscanf(fp, "%[^\n]\n", primeralinea);
   free(primeralinea);
-  int i = 0;
-  int band = 1;
 
-  while (!feof(fp) && band) {
-
+  // Luego de leer la primera línea recorro todo el archivo 
+  // agregando en la agenda los contactos que voy encontrando
+  while (!feof(fp)) {
     char *nombre = malloc(sizeof(char) * MAX_NOMBRE);
     char *apellido = malloc(sizeof(char) * MAX_APELLIDO);
     char *edad_str = malloc(sizeof(char) * MAX_NRO);
@@ -370,19 +397,16 @@ void cargar(TablaHash ** agenda) {
     Contacto contacto = contacto_crear(nombre, apellido, edad, tel);
 
     *agenda = tablahash_insertar(*agenda, clave, contacto);
-    i++;
-
-    if ((*agenda)->numElems == (*agenda)->capacidad) {
-      printf("Se pudieron cargar los primeros %d contactos\n", i);
-      print_aviso_capacidad(1);
-      band = 0;
-    }
   }
 
   free(filename);
   fclose(fp);
 }
 
+/**
+ * Función que guarda todos los contactos presentes en la agenda 
+ * en un archivo
+ */
 void guardar(TablaHash ** agenda) {
   print_solicitud(12);
   char *filename = malloc(sizeof(char) * MAX_FILE);
@@ -402,6 +426,10 @@ void guardar(TablaHash ** agenda) {
   fclose(fp);
 }
 
+/**
+ * Ídem guardar solo que lo hace de manera ordenada según 
+ * el atributo ingresado por el usuario
+ */
 void guardar_ordenado(TablaHash ** agenda) {
   print_solicitud(12);
   char *filename = malloc(sizeof(char) * MAX_FILE);
@@ -444,23 +472,10 @@ void guardar_ordenado(TablaHash ** agenda) {
   fclose(fp);
 }
 
-/*int contar_lineas (FILE *fp) {
-  int count = 0;
-  char c;
-  // Recorro el archivo caracter por caracter contando líneas
-  for (c = getc(fp); c != EOF; c = getc(fp)) {
-    if (c == '\n') {
-      count++;
-    }
-  }
-  // Una vez llegado al end of file, hago que el puntero al archivo 
-  // vuelva a estar al principio del mismo
-  rewind(fp);
-
-  // Y devuelvo el contador
-  return count;
-}*/
-
+/**
+ * Imprime (si existe) un subconjunto de contactos tales que sus edades sumadas
+ * den el número natural ingresado por el usuario
+ */
 void buscar_suma_edades(TablaHash ** agenda) {
   char *suma_str = malloc(sizeof(char) * MAX_NRO);
   print_solicitud(14);
@@ -475,6 +490,7 @@ void buscar_suma_edades(TablaHash ** agenda) {
   int *id = malloc(sizeof(int));
   *id = 0;
 
+  // Convierto en arrays los datos que usaré para la búsqueda
   arbol_a_arrays((*agenda)->arbol_edad, array_edades, array_indices, id);
 
   for (int i = 0; i < n; i++) {
@@ -482,7 +498,8 @@ void buscar_suma_edades(TablaHash ** agenda) {
     printf("array_indices[%d]: %d\n", i, array_indices[i]);
   }
 
-
+  // Llamo a la función que establece si existe un tal subconjunto
+  // y lo imprime
   sbcjto_edad(array_edades, n, suma, array_indices, agenda);
 
   free(id);
@@ -491,29 +508,41 @@ void buscar_suma_edades(TablaHash ** agenda) {
   free(suma_str);
 }
 
+/**
+ * Arma una tabla para establecer si existe un subconjunto de array_edades
+ * que de sum y si esto sucede imprime uno.
+ */
 void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
                  TablaHash ** agenda) {
-  // The value of subset[i][j] will be true if
-  // there is a subset of array_edades[0..j-1] with sum
-  // equal to i
+  // Construyo una tabla subset.
+  // El valor de subset[i][j] va a ser 1 si existe un subconjunto
+  // de contactos de los que se encuentran en los índices de la tabla de
+  // hash indicados por array_indices[0..i-1] tal que la suma de sus 
+  // edades de j
   int **subset = malloc(sizeof(int *) * (n + 1));
   for (int i = 0; i <= n; i++) {
     subset[i] = calloc(sum + 1, sizeof(int));
   }
-  //int subset[n + 1][sum + 1];
 
-  // If sum is 0, then answer is true
+  // Para la columna 0 todas las entradas son 1
+  // puesto que siempre existe el conjunto vacío
   for (int i = 0; i <= n; i++) {
     subset[i][0] = 1;
   }
 
-  // If sum is not 0 and array_edades is empty,
-  // then answer is false
+  // Si no estoy en la columna 0, luego con 0
+  // elementos no podemos llegar a sumar ninguna edad
   for (int i = 1; i <= sum; i++) {
     subset[0][i] = 0;
   }
 
-  // Fill the subset table in botton up manner
+  // Lleno el resto de la tabla de manera bottom-up
+  // siguiendo el siguiente análisis:
+  // 1- si la suma (columna) es más chica que la edad en 
+  //    la que estamos (array_edades[fila-1]) me fijo si ya se
+  //    pudo obtener esa suma y guardo el dato
+  // 2- si lo anterior no sucede chequeo si se pudo obtener esa
+  //    suma o si la puedo obtener añadiendo esta edad
   for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= sum; j++) {
       if (j < array_edades[i - 1]) {
@@ -526,43 +555,30 @@ void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
     }
   }
 
+  // Una vez completada la tabla compruebo el resultado
   int band = 1;
 
   if (!subset[n][sum]) {
     print_error(6);
     band = 0;
   }
-  // uncomment this code to print table
-  printf("   0   1   2   3   4   5   6   7   8   9\n");
-  printf("-----------------------------------------\n");
-  for (int i = 0; i <= n; i++) {
-    for (int j = 0; j <= sum; j++)
-      printf("%4d", subset[i][j]);
-    printf("\n");
-  }
 
+  // Si se puede obtener un conjunto deseado, imprimo uno
+  // haciendo backtracking
   if (band) {
     int new_sum = sum;
     int i = n;
-    /*for (;i > 0; i--) {
-       printf("i is equal to %d\n", i);
-       if (!subset[i-1][new_sum]) {
-       printf("%d\n", array_edades[i-1]);
-       new_sum = new_sum - array_edades[i-1];
-       }
-       } */
+    // Recorro por la longitud de los arrays
     while (i > 0 && (new_sum != 0)) {
-      if (!subset[i - 1][new_sum]) {
-        printf("%d\n", array_edades[i - 1]);
-        printf("En indice: %d\n", array_indices[i - 1]);
+      // Si no puedo ignorar la edad porque fue necesaria para la
+      // construcción de la new_sum actual la imprimo y establezco
+      // la new_sum actual como la anterior menos esta edad necesaria
+      if (!subset[i - 1][new_sum] && subset[i][new_sum]) {
         int idx = array_indices[i - 1];
         contacto_imprimir((*agenda)->tabla[idx].dato);
         new_sum = new_sum - array_edades[i - 1];
       }
       i--;
-    }
-    if (new_sum < 0) {
-      printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
     }
   }
 
@@ -570,10 +586,13 @@ void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
     free(subset[i]);
   }
   free(subset);
-
-  //return subset[n][sum];
 }
 
+/**
+ * Deshace o rehace la última acción de la lista de acciones pasada
+ * la elimina de la misma y agrega la acción opuesta a la lista opuesta
+ * también pasada
+ */
 void undo_redo(TablaHash ** agenda, AccList * acclist,
                AccList * opuesta_acclist) {
   Accion *accion = acclist->tail->dato;

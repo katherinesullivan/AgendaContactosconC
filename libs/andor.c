@@ -5,6 +5,9 @@
 #include <assert.h>
 #include <pthread.h>
 
+/**
+ * Crea un argumento para pasarle a la rutina 
+ */
 Argumento *argumento_crear(Arbol arbol, int tipo, SList * lista, void *dato) {
   Argumento *arg = malloc(sizeof(Argumento));
   arg->arbol = arbol;
@@ -14,12 +17,22 @@ Argumento *argumento_crear(Arbol arbol, int tipo, SList * lista, void *dato) {
   return arg;
 }
 
+/**
+ * Rutina para los hilos. Busca los datos en el árbol
+ * y los añade a la lista
+ */
 void *rutina(void *arg) {
   Argumento *arg1 = (Argumento *) arg;
   arbol_buscar(arg1->arbol, arg1->lista, arg1->dato, arg1->tipo);
   return arg;
 }
 
+/**
+ * Función principal del módulo.
+ * Busca en paralelo los datos pasados en los árboles de la agenda y
+ * luego en base a si está siendo llamada por and o or llama a las
+ * funciones que mostrarán los datos por pantalla.
+ */
 void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
            int *edad_pointer, char *tel, int funcion) {
   Arbol arbol_nombre = (*agenda)->arbol_nombre;
@@ -27,7 +40,8 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   Arbol arbol_edad = (*agenda)->arbol_edad;
   Arbol arbol_tel = (*agenda)->arbol_tel;
 
-  // Como se realizan en paralelo creo todas las listas 
+  // Como se realiza en paralelo busco en todas las listas 
+  // por lo tanto creo sus hilos y argumentos respectivos
   pthread_t hilos[4];
 
   SList lista_nombre = slist_crear();
@@ -45,9 +59,6 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   SList lista_tel = slist_crear();
   Argumento *argumento_tel = argumento_crear(arbol_tel, 1, &lista_tel, tel);
 
-  printf("ARBOL TELEFONOS:\n");
-  arbol_imprimir_inorder(arbol_tel, 1);
-
   assert(!pthread_create(&hilos[0], NULL, rutina, (void *) argumento_nombre));
   assert(!pthread_create(&hilos[1], NULL, rutina, (void *) argumento_apellido));
   assert(!pthread_create(&hilos[2], NULL, rutina, (void *) argumento_edad));
@@ -57,18 +68,16 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
     assert(!pthread_join(hilos[i], NULL));
   }
 
-  printf("ARBOL TELEFONOS:\n");
-  arbol_imprimir_inorder(arbol_tel, 1);
-
-  printf("LISTA TELEFONOS:\n");
-  slist_imprimir(lista_tel);
-
   free(argumento_nombre);
   free(argumento_apellido);
   free(argumento_edad);
   free(argumento_tel);
 
   if (funcion == 1) {
+    // Bands en i resulta 0 si el argumento correspondiente
+    // fue pasado como vacío por el usuario
+
+    // No queremos considerar esas listas porque serán vacías
     if (!bands[0]) {
       lista_nombre = slist_cant_max(lista_nombre);
     }
@@ -85,16 +94,6 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
     SList lista_comparar =
         slist_mas_chica(lista_nombre, lista_apellido, lista_edad, lista_tel);
     int edad = *edad_pointer;
-    printf("Lista nombre:\n");
-    slist_imprimir(lista_nombre);
-    printf("\nLista apellido:\n");
-    slist_imprimir(lista_apellido);
-    printf("\nLista edad:\n");
-    slist_imprimir(lista_edad);
-    printf("\nLista tel:\n");
-    slist_imprimir(lista_tel);
-    printf("\nLista comparar:\n");
-    slist_imprimir(lista_comparar);
     imprimir_datos_correctos(*agenda, bands, lista_comparar, nombre, apellido,
                              edad, tel);
   }
@@ -110,6 +109,12 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   slist_destruir(lista_tel);
 }
 
+/**
+ * Recorre la lista pasada y verifica que los contactos de la
+ * tabla de hash en los índices de la lista posean los datos pasados por
+ * parámetro (si no son "") y en caso de que lo hagan los imprime.
+ * Funcionalidad and. 
+ */
 void imprimir_datos_correctos(TablaHash * agenda, int *bands,
                               SList lista_comparar, char *nombre,
                               char *apellido, int edad, char *tel) {
@@ -146,6 +151,11 @@ void imprimir_datos_correctos(TablaHash * agenda, int *bands,
   }
 }
 
+/**
+ * Añade todos los elementos de las listas pasadas a un árbol (para revisar 
+ * que no haya repetidos) y luego los imprime.
+ * Funcionalidad or.
+ */
 void imprimir_todos(TablaHash * agenda, SList lista_nombre,
                     SList lista_apellido, SList lista_edad, SList lista_tel) {
   STree tree = stree_crear();
@@ -169,15 +179,19 @@ void imprimir_todos(TablaHash * agenda, SList lista_nombre,
     tree = stree_insertar(tree, iter->dato);
     iter = iter->sig;
   }
-  stree_imprimir(agenda, tree);
+  imprimir_arbol_or(agenda, tree);
   stree_destruir(tree);
 }
 
-void stree_imprimir(TablaHash * agenda, STree tree) {
+/**
+ * Función para imprimir un árbol de los creados por
+ * la función anterior
+ */
+void imprimir_arbol_or(TablaHash * agenda, STree tree) {
   if (tree != NULL) {
-    stree_imprimir(agenda, tree->izq);
+    imprimir_arbol_or(agenda, tree->izq);
     int idx = tree->idx;
     contacto_imprimir(agenda->tabla[idx].dato);
-    stree_imprimir(agenda, tree->der);
+    imprimir_arbol_or(agenda, tree->der);
   }
 }

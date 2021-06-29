@@ -5,10 +5,16 @@
 
 #define MAX_STR 32
 
+/**
+ * Crea un árbol
+ */
 Arbol arbol_crear() {
   return NULL;
 }
 
+/**
+ * Destruye un árbol
+ */
 void arbol_destruir(Arbol arbol, int tipo_arbol) {
   if (arbol != NULL) {
     arbol_destruir(arbol->izq, tipo_arbol);
@@ -19,16 +25,25 @@ void arbol_destruir(Arbol arbol, int tipo_arbol) {
   }
 }
 
+/**
+ * Función que deuelve el máximo entre dos enteros
+ */
 int max(int a, int b) {
   return (a > b) ? a : b;
 }
 
+/**
+ * Devuelve la altura de un árbol
+ */
 int altura(Arbol arbol) {
   if (arbol == NULL)
     return 0;
   return arbol->alt;
 }
 
+/**
+ * Crea un nuevo nodo para un árbol
+ */
 Arbol nuevo_nodo(void *dato, int idx) {
   Arbol nodo = malloc(sizeof(Nodo));
 
@@ -41,6 +56,9 @@ Arbol nuevo_nodo(void *dato, int idx) {
   return nodo;
 }
 
+/**
+ * Realiza una rotación a derecha
+ */
 Arbol der_rotate(Arbol y) {
   Arbol x = y->izq;
   Arbol T2 = x->der;
@@ -54,6 +72,9 @@ Arbol der_rotate(Arbol y) {
   return x;
 }
 
+/**
+ * Realiza una rotación a izquierda
+ */
 Arbol izq_rotate(Arbol x) {
   Arbol y = x->der;
   Arbol T2 = y->izq;
@@ -67,6 +88,9 @@ Arbol izq_rotate(Arbol x) {
   return y;
 }
 
+/**
+ * Balancea el árbol pasado como parámetro en caso de ser necesario
+ */
 Arbol balancear(Arbol nodo, int balance) {
   // izq izq caso
   if (balance > 1 && get_balance(nodo->izq) >= 0)
@@ -90,12 +114,19 @@ Arbol balancear(Arbol nodo, int balance) {
   return nodo;
 }
 
-int get_balance(Arbol N) {
-  if (N == NULL)
+/**
+ * Obtiene el balance de un nodo 
+ */
+int get_balance(Arbol nodo) {
+  if (nodo == NULL)
     return 0;
-  return altura(N->izq) - altura(N->der);
+  return altura(nodo->izq) - altura(nodo->der);
 }
 
+/**
+ * Inserta un nuevo nodo formado por los datos pasados como parámetros 
+ * al árbol también pasado como parámetro
+ */
 Arbol arbol_insertar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
   if (nodo == NULL)
     return (nuevo_nodo(dato, idx));
@@ -115,6 +146,7 @@ Arbol arbol_insertar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
     if (strcmp(dato_str, nodo_dato_str) > 0)
       nodo->der = arbol_insertar(nodo->der, dato, idx, tipo_arbol);
   }
+
   // Los árboles de tipo 2 contienen int* como datos
   if (tipo_arbol == 2) {
     int dato_int = *(int *) dato;
@@ -134,6 +166,9 @@ Arbol arbol_insertar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
   return balancear(nodo, balance);
 }
 
+/**
+ * Obtiene el nodo de mínimo valor de un árbol
+ */
 Arbol min_value_nodo(Arbol nodo) {
   Arbol current = nodo;
 
@@ -143,6 +178,10 @@ Arbol min_value_nodo(Arbol nodo) {
   return current;
 }
 
+/**
+ * Elimina el nodo con los datos pasados como parámetros del árbol 
+ * también pasado como parámetro
+ */
 Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
   if (nodo == NULL) {
     return nodo;
@@ -154,18 +193,15 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
     if ((nodo->izq == NULL) || (nodo->der == NULL)) {
       Arbol temp = nodo->izq ? nodo->izq : nodo->der;
 
-      // No hijos
+      // Si no tiene hijos
       if (temp == NULL) {
         temp = nodo;
         if (tipo_arbol == 2)
           free(nodo->dato);
         free(temp);
-        //arbol_destruir(temp);
-        // Me va a generar un invalid read 
-        // si vengo como de otro lado a veces idk
         nodo = NULL;
       }
-      // Un hijo
+      // Si tiene un hijo
       else {
         if (tipo_arbol == 2)
           free(nodo->dato);
@@ -173,6 +209,7 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
         free(temp);
       }
     } else {
+      // Si tiene 2 hijos
       Arbol temp = min_value_nodo(nodo->der);
 
       nodo->idx = temp->idx;
@@ -193,7 +230,7 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
   }
 
   else {
-    // No estoy en el nodo a eliminar y tengo que ver para donde ir
+    // Si no estoy en el nodo a eliminar, tengo que ver para donde ir
 
     // Los árboles de tipo 1 contienen strings como datos
     if (tipo_arbol == 1) {
@@ -206,6 +243,7 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
       if (strcmp(dato_str, nodo_dato_str) > 0)
         nodo->der = arbol_eliminar(nodo->der, dato, idx, tipo_arbol);
     }
+
     // Los árboles de tipo 2 contienen int* como datos
     if (tipo_arbol == 2) {
       int dato_int = *(int *) dato;
@@ -236,6 +274,9 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
   return balancear(nodo, balance);
 }
 
+/**
+ * Función de utilidad para imprimir un árbol en orden
+ */
 void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol) {
   if (arbol == NULL)
     return;
@@ -254,20 +295,25 @@ void arbol_imprimir_inorder(Arbol arbol, int tipo_de_arbol) {
   arbol_imprimir_inorder(arbol->der, tipo_de_arbol);
 }
 
+/**
+ * Función para los árboles de tipo 2.
+ * Añade todos los elementos del árbol en los respectivos arrays.
+ */
 void arbol_a_arrays(Arbol arbol, int *array_edades, int *array_indices, int *i) {
   if (arbol == NULL)
     return;
 
   arbol_a_arrays(arbol->izq, array_edades, array_indices, i);
-  int dato_int = *(int *) (arbol->dato);
-  printf("En %d: %d con altura: %d e i=%d\n", arbol->idx, dato_int, arbol->alt,
-         *i);
   array_edades[*i] = *(int *) arbol->dato;
   array_indices[*i] = arbol->idx;
   *i = *i + 1;
   arbol_a_arrays(arbol->der, array_edades, array_indices, i);
 }
 
+/**
+ * Busca en un árbol todos los elementos con el dato igual al dato
+ * pasado como parámetro y los añade a la lista pasada como parámetro
+ */
 void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol) {
   if (arbol == NULL)
     return;
@@ -276,11 +322,8 @@ void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol) {
     char *arbol_dato = (char *) (arbol->dato);
     char *dato_str = (char *) dato;
     int rdo = strcmp(dato_str, arbol_dato);
-    printf("Dato_str: %s\n", dato_str);
-    printf("Arbol dato: %s\n", arbol_dato);
 
     if (rdo == 0) {
-      printf("Son iguales dato_str y arbol_dato yay!\n");
       *lista = slist_agregar_inicio(*lista, arbol->idx);
       arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
       arbol_buscar(arbol->der, lista, dato, tipo_arbol);
@@ -293,9 +336,7 @@ void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol) {
 
   else if (tipo_arbol == 2) {
     int dato_int = *(int *) dato;
-    printf("Dato_int: %d\n", dato_int);
     int arbol_dato = *(int *) (arbol->dato);
-    printf("Arbol_dato: %d\n", arbol_dato);
 
     if (dato_int == arbol_dato) {
       *lista = slist_agregar_inicio(*lista, arbol->idx);

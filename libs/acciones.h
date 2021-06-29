@@ -28,38 +28,64 @@ typedef struct {
   int cap;                      // indica el N
 } AccList;
 
-/* ------ Inicialización ------ */
-
+/**
+ * Inicializa una lista de acciones
+ */
 AccList *acciones_init(int tamano);
 
-/* ------ Agregado ------ */
-
+/**
+ * Crea una acción
+ */
 Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1,
                      char *tel2, int edad1, int edad2);
 
+/**
+ * Crea una acción y la agrega al final de una lista
+ */
 void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
                       char *tel1, char *tel2, int edad1, int edad2);
 
-/* ------ Destrucción ------ */
-
+/**
+ * Elimina todas las acciones de la lista pero dejándola inicializada
+ */
 void acciones_reestablecer(AccList * lista);
 
+/**
+ * Destruye una lista de acciones
+ */
 void acciones_destruir(AccList * lista);
 
+/**
+ * Destruye una acción
+ */
 void accion_destruir(Accion * accion);
 
-/* ------ Eliminación ------ */
-
+/**
+ * Elimina la primer acción de una lista
+ */
 void acciones_eliminar_incio(AccList * lista);
 
+/**
+ * Elimina la última acción de una lista
+ */
 void acciones_eliminar_final(AccList * lista);
 
-/* ------ Impresión ------ */
+/**
+ * Agrega la acción opuesta a la pasada como argumento a la
+ * lista pasada como argumento
+ */
+void agregar_opuesto_des_re(Accion * accion, AccList * acclist);
 
+/* ------ Funciones de utilidad ------ */
+
+/**
+ * Imprime una lista de acciones
+ */
 void imprimir_accion(Accion * acc);
 
+/**
+ * Imprime una lista de acciones
+ */
 void imprimir_acciones(AccList * list);
-
-void agregar_opuesto_des_re(Accion * accion, AccList * acclist);
 
 #endif                          /* __ACCIONES_H__ */

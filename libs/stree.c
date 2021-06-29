@@ -2,22 +2,34 @@
 #include <stdio.h>
 #include "stree.h"
 
+/**
+ * Devuelve el mayor entre dos enteros
+ */
 int mayor(int a, int b) {
   return (a > b) ? a : b;
 }
 
+/**
+ * Devuelve la altura de un STree
+ */
 int stree_alt(STree tree) {
   if (tree == NULL)
     return 0;
   return tree->alt;
 }
 
+/**
+ * Devuelve el balance de un STree
+ */
 int stree_get_balance(STree tree) {
   if (tree == NULL)
     return 0;
   return stree_alt(tree->izq) - stree_alt(tree->der);
 }
 
+/**
+ * Realiza una rotación a derecha
+ */
 STree stree_der_rotate(STree y) {
   STree x = y->izq;
   STree T2 = x->der;
@@ -31,6 +43,9 @@ STree stree_der_rotate(STree y) {
   return x;
 }
 
+/**
+ * Realiza una rotación a izquierda
+ */
 STree stree_izq_rotate(STree x) {
   STree y = x->der;
   STree T2 = y->izq;
@@ -44,6 +59,9 @@ STree stree_izq_rotate(STree x) {
   return y;
 }
 
+/**
+ * En caso de ser necesario balancea un árbol
+ */
 STree stree_balancear(STree nodo, int balance) {
   // izq izq caso
   if (balance > 1 && stree_get_balance(nodo->izq) >= 0)
@@ -67,10 +85,16 @@ STree stree_balancear(STree nodo, int balance) {
   return nodo;
 }
 
+/**
+ * Crea un STree vacío
+ */
 STree stree_crear() {
   return NULL;
 }
 
+/**
+ * Destruye un STree
+ */
 void stree_destruir(STree tree) {
   if (tree != NULL) {
     stree_destruir(tree->izq);
@@ -79,6 +103,9 @@ void stree_destruir(STree tree) {
   }
 }
 
+/**
+ * Crea un nuevo nodo
+ */
 STree stree_nuevo_nodo(int idx) {
   STree nuevo_nodo = malloc(sizeof(STNodo));
 
@@ -90,6 +117,9 @@ STree stree_nuevo_nodo(int idx) {
   return nuevo_nodo;
 }
 
+/**
+ * Inserta un nuevo elemento a un STree
+ */
 STree stree_insertar(STree tree, int idx) {
   if (tree == NULL)
     return (stree_nuevo_nodo(idx));
@@ -104,12 +134,3 @@ STree stree_insertar(STree tree, int idx) {
 
   return stree_balancear(tree, balance);
 }
-
-/*void stree_imprimir(TablaHash* agenda, STree tree) {
-    if (tree != NULL) {
-        stree_imprimir(agenda, tree->izq);
-        int idx = tree->idx;
-        contacto_imprimir(agenda->tabla[idx].dato);
-        stree_imprimir(agenda, tree->der);
-    }
-}*/

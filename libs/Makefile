@@ -35,7 +35,7 @@ $(CONTACTO:.c=.o) : $(CONTACTO) $(CONTACTO:.c=.h)
 $(SLIST:.c=.o) : $(SLIST) $(SLIST:.c=.h)
 	$(CC) $(FLAGS) -c $(SLIST)
 
-# Archivo objeto de la implementación de árboles avl
+# Archivo objeto de la implementación de árboles
 $(ARBOL:.c=.o) : $(ARBOL) $(ARBOL:.c=.h) $(SLIST:.c=.o)
 	$(CC) $(FLAGS) -c $(ARBOL)
 

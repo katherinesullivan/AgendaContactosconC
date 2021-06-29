@@ -9,7 +9,9 @@
 #define MAX_TEL 32
 #define MAX_CLAVE MAX_NOMBRE+MAX_APELLIDO
 
-/* Crea una nueva tabla Hash vacía con la capacidad dada. */
+/**
+ * Crea una nueva Tabla Hash vacía con la capacidad dada 
+ */
 TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
                            FuncionHash hash2) {
   // Pedimos memoria para la estructura principal y las casillas.
@@ -34,10 +36,10 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
   return tabla;
 }
 
-/* Inserta el dato en la tabla asociado a la clave dada. */
+/**
+ * Inserta el dato en la tabla asociado a la clave dada. 
+ */
 TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
-  printf("Entre\n");
-
   int done = 0;
   int i = 0;
   unsigned idx;
@@ -47,19 +49,12 @@ TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
     idx = tabla->hash(clave) + i * tabla->hash2(clave);
     idx = idx % tabla->capacidad;
     if (tabla->tabla[idx].estado == 0 || tabla->tabla[idx].estado == 2) {
-      printf("Encontré indice\n");
       // Si estaba vacío o eliminado el lugar, almacenamos los datos ingresados.
       tabla->tabla[idx].clave = clave;
       tabla->tabla[idx].dato = dato;
       tabla->tabla[idx].estado = 1;
 
-      // VER TEMA MEMORIA
-
       parallel_insertar_eliminar(tabla, idx, 1);
-      /*tabla->arbol_nombre = arbol_insertar(tabla->arbol_nombre, dato->nombre, idx, 1);
-         tabla->arbol_apellido = arbol_insertar(tabla->arbol_apellido, dato->apellido, idx, 1);
-         tabla->arbol_edad = arbol_insertar(tabla->arbol_edad, edad_pointer, idx, 2);
-         tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, dato->telefono, idx, 1); */
       done = 1;
     }
     i++;
@@ -76,10 +71,13 @@ TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
 
 }
 
-/* Agranda una tabla de hash dada, aumentando su capacidad al doble. */
+/**
+ * Crea una nueva tabla de hash con los elementos de la 
+ * tabla dada y con su capacidad aumentada al doble
+ */
 TablaHash *tablahash_agrandar(TablaHash * tabla) {
   printf("Su agenda estaba llegando a un punto crítico en su capacidad, ");
-  printf("por lo tanto estamos duplicando su capacidad. ");
+  printf("por lo tanto estamos duplicandola. ");
   printf("Esto puede demorar unos momentos.\n");
   unsigned cap = tabla->capacidad;
   TablaHash *nueva_tabla = tablahash_crear(cap * 2, tabla->hash, tabla->hash2);
@@ -106,10 +104,12 @@ TablaHash *tablahash_agrandar(TablaHash * tabla) {
   return nueva_tabla;
 }
 
-/* Busca el dato en la tabla asociado a la clave dada. 
-Si solover es 0, en caso de que esté presente devuelve un puntero al mismo, 
-en caso contrario devuelve NULL. Si solover es 1, devuelve NULL si no está 
-presente, y un puntero a su clave si lo está. */
+/**
+ * Busca el dato en la tabla asociado a la clave dada. 
+ * Si solover es 0, en caso de que esté presente devuelve un puntero al mismo, 
+ * en caso contrario devuelve NULL. Si solover es 1, devuelve NULL si no está 
+ * presente, y un puntero a su clave si lo está
+ */
 void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
   int done = 0;
   int i = 0;
@@ -134,8 +134,10 @@ void *tablahash_buscar(TablaHash * tabla, char *clave, int solover) {
   return NULL;
 }
 
-/* Elimina el dato en la tabla asociado a la clave dada, 
-en caso de que este haya estado presente. */
+/**
+ * Elimina el dato en la tabla asociado a la clave dada, 
+ * en caso de que este haya estado presente
+ */
 void tablahash_eliminar(TablaHash * tabla, char *clave) {
   int done = 0;
   int i = 0;
@@ -153,11 +155,6 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
 
       parallel_insertar_eliminar(tabla, idx, 2);
 
-      /*tabla->arbol_nombre = arbol_eliminar(tabla->arbol_nombre, dato->nombre, idx, 1);
-         tabla->arbol_apellido = arbol_eliminar(tabla->arbol_apellido, dato->apellido, idx, 1);
-         tabla->arbol_edad = arbol_eliminar(tabla->arbol_edad, &dato->edad, idx, 2);
-         tabla->arbol_tel = arbol_eliminar(tabla->arbol_tel, dato->telefono, idx, 1); */
-
       free(tabla->tabla[idx].clave);
       contacto_destruir(tabla->tabla[idx].dato);
       tabla->tabla[idx].estado = 2;
@@ -169,7 +166,9 @@ void tablahash_eliminar(TablaHash * tabla, char *clave) {
   }
 }
 
-/* Destruye la tabla. */
+/**
+ * Destruye la tabla 
+ */
 void tablahash_destruir(TablaHash * tabla) {
   for (unsigned int i = 0; i < tabla->capacidad; i++) {
     if (tabla->tabla[i].estado == 1) {
@@ -182,29 +181,10 @@ void tablahash_destruir(TablaHash * tabla) {
   free(tabla);
 }
 
-void prettyprint_th(TablaHash * th) {
-  printf("--- TABLA HASH (%u elemento%s) ---\n", th->numElems,
-         (th->numElems == 1) ? "" : "s");
-  for (unsigned int i = 0; i < th->capacidad; i++) {
-    if (th->tabla[i].clave == NULL || (th->tabla[i].estado == 2))
-      puts("NULL");
-    else {
-      printf("%s: \n", th->tabla[i].clave);
-      contacto_imprimir(th->tabla[i].dato);
-    }
-  }
-  printf("\nArbol nombre\n");
-  arbol_imprimir_inorder(th->arbol_nombre, 1);
-  printf("\nArbol apellido\n");
-  arbol_imprimir_inorder(th->arbol_apellido, 1);
-  printf("\nArbol edad\n");
-  arbol_imprimir_inorder(th->arbol_edad, 2);
-  printf("\nArbol tel\n");
-  arbol_imprimir_inorder(th->arbol_tel, 1);
-  printf("-------------------------------%s%s\n",
-         (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
-}
-
+/**
+ * Función para editar el elemento de la Tabla Hash con la clave dada, 
+ * en caso de que este esté presente en la misma
+ */
 void *tablahash_editar(TablaHash * tabla, char *clave, int edad, char *tel) {
   int done = 0;
   int i = 0;
@@ -214,14 +194,15 @@ void *tablahash_editar(TablaHash * tabla, char *clave, int edad, char *tel) {
     idx = tabla->hash(clave) + i * tabla->hash2(clave);
     idx = idx % tabla->capacidad;
     if (tabla->tabla[idx].estado == 0) {
+      // Si me encunentro con una casilla vacía significa que no
+      // está en la tabla el elemento con la clave dada
       done = 1;
       return NULL;
     } else if (tabla->tabla[idx].estado != 2 &&
                strcmp(tabla->tabla[idx].clave, clave) == 0) {
       done = 1;
-
-      // Hacer cambios en arboles
-      // ------------------------------------------ VER LO DE DESTRUIR EN ÁRBOLES ---------
+      
+      // Si lo encontré elimino de los árboles los elementos viejos
       char *tel_viejo = tabla->tabla[idx].dato->telefono;
       int edad_vieja = tabla->tabla[idx].dato->edad;
 
@@ -229,9 +210,12 @@ void *tablahash_editar(TablaHash * tabla, char *clave, int edad, char *tel) {
       tabla->arbol_edad =
           arbol_eliminar(tabla->arbol_edad, &edad_vieja, idx, 2);
       free(tel_viejo);
-
+      
+      // Ingreso los nuevo datos 
       tabla->tabla[idx].dato->telefono = tel;
       tabla->tabla[idx].dato->edad = edad;
+
+      // Y agrego a los árboles con los nuevos datos
       tabla->arbol_tel = arbol_insertar(tabla->arbol_tel, tel, idx, 1);
       int *edad_pointer = malloc(sizeof(int));
       *edad_pointer = edad;
@@ -245,6 +229,9 @@ void *tablahash_editar(TablaHash * tabla, char *clave, int edad, char *tel) {
   return NULL;
 }
 
+/**
+ * Función que imprime los elementos de la una Tabla Hash en un archivo
+ */
 void tablahash_imprimir_file(TablaHash * tabla, FILE * fp) {
   for (unsigned int i = 0; i < tabla->capacidad; i++) {
     if (tabla->tabla[i].estado == 1) {
@@ -253,6 +240,41 @@ void tablahash_imprimir_file(TablaHash * tabla, FILE * fp) {
   }
 }
 
+/**
+ * Imprime la Tabla Hash en un archivo siguiendo el orden de los nombres
+ */
+void tablahash_imprimir_inorder_nombre(TablaHash * tabla, FILE * fp) {
+  Arbol arbol = tabla->arbol_nombre;
+  inorder_aux(tabla, arbol, fp);
+}
+
+/**
+ * Imprime la Tabla Hash en un archivo siguiendo el orden de los apellidos
+ */
+void tablahash_imprimir_inorder_apellido(TablaHash * tabla, FILE * fp) {
+  Arbol arbol = tabla->arbol_apellido;
+  inorder_aux(tabla, arbol, fp);
+}
+
+/**
+ * Imprime la Tabla Hash en un archivo siguiendo el orden de las edades
+ */
+void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp) {
+  Arbol arbol = tabla->arbol_edad;
+  inorder_aux(tabla, arbol, fp);
+}
+
+/**
+ * Imprime la Tabla Hash en un archivo siguiendo el orden de los teléfonos
+ */
+void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp) {
+  Arbol arbol = tabla->arbol_tel;
+  inorder_aux(tabla, arbol, fp);
+}
+
+/**
+ * Función auxiliar para la impresión en orden
+ */
 void inorder_aux(TablaHash * tabla, Arbol arbol, FILE * fp) {
   if (arbol == NULL)
     return;
@@ -262,38 +284,27 @@ void inorder_aux(TablaHash * tabla, Arbol arbol, FILE * fp) {
   inorder_aux(tabla, arbol->der, fp);
 }
 
-void tablahash_imprimir_inorder_nombre(TablaHash * tabla, FILE * fp) {
-  Arbol arbol = tabla->arbol_nombre;
-  inorder_aux(tabla, arbol, fp);
-}
-
-void tablahash_imprimir_inorder_apellido(TablaHash * tabla, FILE * fp) {
-  Arbol arbol = tabla->arbol_apellido;
-  inorder_aux(tabla, arbol, fp);
-}
-
-void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp) {
-  Arbol arbol = tabla->arbol_edad;
-  inorder_aux(tabla, arbol, fp);
-}
-
-void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp) {
-  Arbol arbol = tabla->arbol_tel;
-  inorder_aux(tabla, arbol, fp);
-}
-
+/**
+ * Rutina para la función destruir con árboles de tipo 1
+ */
 void *rutina_destruir_1(void *arbol) {
   Arbol arbol1 = (Arbol) arbol;
   arbol_destruir(arbol1, 1);
   return arbol1;
 }
 
+/**
+ * Rutina para la función destruir con árboles de tipo 2
+ */
 void *rutina_destruir_2(void *arbol) {
   Arbol arbol2 = (Arbol) arbol;
   arbol_destruir(arbol2, 2);
   return arbol2;
 }
 
+/**
+ * Función para paralelizar la destrucción de los árboles
+ */
 void paralell_destruir_arboles(TablaHash * tabla) {
   Arbol arbol_nombre = tabla->arbol_nombre;
   Arbol arbol_apellido = tabla->arbol_apellido;
@@ -317,6 +328,9 @@ void paralell_destruir_arboles(TablaHash * tabla) {
 
 }
 
+/**
+ * Función para la creación de los argumentos de las rutinas
+ */
 ArgHilo *tablahash_arg_crear(Arbol * arbol, void *dato, int idx, int tipo) {
   ArgHilo *arg = malloc(sizeof(ArgHilo));
   arg->arbol = arbol;
@@ -326,6 +340,9 @@ ArgHilo *tablahash_arg_crear(Arbol * arbol, void *dato, int idx, int tipo) {
   return arg;
 }
 
+/**
+ * Rutina para la función insertar
+ */
 void *rutina_insertar(void *arg) {
   ArgHilo *arg1 = (ArgHilo *) arg;
   Arbol *arbol = arg1->arbol;
@@ -336,6 +353,9 @@ void *rutina_insertar(void *arg) {
   return arbol;
 }
 
+/**
+ * Rutina para la función eliminar
+ */
 void *rutina_eliminar(void *arg) {
   ArgHilo *arg1 = (ArgHilo *) arg;
   Arbol *arbol = arg1->arbol;
@@ -346,6 +366,9 @@ void *rutina_eliminar(void *arg) {
   return arbol;
 }
 
+/**
+ * Función para paralelizar inserción y eliminación en los árboles
+ */
 void parallel_insertar_eliminar(TablaHash * tabla, int idx, int funcion) {
   Contacto dato = tabla->tabla[idx].dato;
 
@@ -393,4 +416,30 @@ void parallel_insertar_eliminar(TablaHash * tabla, int idx, int funcion) {
   free(arg_edad);
   free(arg_tel);
 
+}
+
+/**
+ * Función de utlidad para imprimir una Tabla Hash
+ */
+void prettyprint_th(TablaHash * th) {
+  printf("--- TABLA HASH (%u elemento%s) ---\n", th->numElems,
+         (th->numElems == 1) ? "" : "s");
+  for (unsigned int i = 0; i < th->capacidad; i++) {
+    if (th->tabla[i].clave == NULL || (th->tabla[i].estado == 2))
+      puts("NULL");
+    else {
+      printf("%s: \n", th->tabla[i].clave);
+      contacto_imprimir(th->tabla[i].dato);
+    }
+  }
+  printf("\nArbol nombre\n");
+  arbol_imprimir_inorder(th->arbol_nombre, 1);
+  printf("\nArbol apellido\n");
+  arbol_imprimir_inorder(th->arbol_apellido, 1);
+  printf("\nArbol edad\n");
+  arbol_imprimir_inorder(th->arbol_edad, 2);
+  printf("\nArbol tel\n");
+  arbol_imprimir_inorder(th->arbol_tel, 1);
+  printf("-------------------------------%s%s\n",
+         (th->numElems == 1) ? "" : "-", (th->numElems > 9) ? "-" : "");
 }

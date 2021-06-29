@@ -4,6 +4,9 @@
 #include <stddef.h>
 #include <limits.h>
 
+/**
+ * Estructura para listas simplemente enlazdas
+ */
 typedef struct _SNodo {
   int dato;
   struct _SNodo *sig;
@@ -13,34 +16,39 @@ typedef struct _SNodo {
 typedef SNodo *SList;
 
 /**
- * Devuelve una lista vacía.
+ * Crea una lista simplemente enlazada
  */
 SList slist_crear();
 
 /**
- * Destruccion de la lista.
+ * Destruye una lista simplemente enlazada
  */
 void slist_destruir(SList lista);
 
 /**
- * Devuelve la cantidad de elementos de una lista.
+ * Devuelve la cantidad de elementos de la lista
  */
 int slist_cant(SList lista);
 
 /**
- * Agrega un elemento al inicio de la lista.
+ * Agrega un nodo con el dato pasado como parámetro al
+ * inicio de una lista
  */
 SList slist_agregar_inicio(SList lista, int dato);
 
+/**
+ * Setea la cantidad de una lista al máximo int
+ */
 SList slist_cant_max(SList lista);
 
 /**
- * Imprime la lista.
+ * Imprime una lista simplemente enlazada
  */
 void slist_imprimir(SList lista);
 
 /**
- * Devuelve la lista con menos elementos entre las 4 pasadas.
+ * Dadas 4 listas devuelve aquella cuya cantidad de 
+ * elementos es más pequeña
  */
 SList slist_mas_chica(SList lista1, SList lista2, SList lista3, SList lista4);
 

@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "impresiones.h"
 
-/************************** Impresiones ********************************/
-
+/**
+ * Imprime el menú de acciones
+ */
 void print_menu_acciones() {
-  printf("Menu de acciones:\n");
+  printf("Menú de acciones:\n");
 
   printf("1. Buscar\n");
   printf("2. Agregar\n");
@@ -21,23 +22,16 @@ void print_menu_acciones() {
   printf("13. Salir\n");
 }
 
+/**
+ * Imprime un mensaje para la salida
+ */
 void print_salida() {
   printf("Cerrando programa\n");
 }
 
-void print_aviso_capacidad(int tipo) {
-  if (tipo == 1) {
-    printf("Agenda llena. No fue posible realizar la acción solicitada. ");
-    printf("Guarde sus datos e inicie una nueva agenda ");
-    printf("con mayor capacidad y cargue sus datos actuales.\n");
-  } else if (tipo == 2) {
-    printf("Su agenda está llegando a un nivel crítico en su capacidad. ");
-    printf("Esto ralentiza sus operaciones. Considere guardar sus datos ");
-    printf("en un archivo e inicializar una nueva agenda con mayor ");
-    printf("capacidad donde los puede cargar automáticamente.\n");
-  }
-}
-
+/**
+ * Función para la impresión de solicitudes al usuario
+ */
 void print_solicitud(int tipo) {
 
   if (tipo == 0) {
@@ -119,6 +113,9 @@ void print_solicitud(int tipo) {
     printf("Solicitud imposible de imprimir\n");
 }
 
+/**
+ * Función para imprimir errores
+ */
 void print_error(int tipo) {
   if (tipo == 1) {
     printf("Selección inválida. ");

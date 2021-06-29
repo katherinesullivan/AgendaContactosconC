@@ -7,6 +7,9 @@
 #define MAX_APELLIDO 32
 #define MAX_TEL 32
 
+/**
+ * Inicializa una lista de acciones
+ */
 AccList *acciones_init(int tamano) {
   AccList *acciones = malloc(sizeof(AccList));
   acciones->head = NULL;
@@ -16,6 +19,9 @@ AccList *acciones_init(int tamano) {
   return acciones;
 }
 
+/**
+ * Crea una acción
+ */
 Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1,
                      char *tel2, int edad1, int edad2) {
   Accion *accion = malloc(sizeof(Accion));
@@ -31,6 +37,9 @@ Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1,
   return accion;
 }
 
+/**
+ * Crea una acción y la agrega al final de una lista
+ */
 void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
                       char *tel1, char *tel2, int edad1, int edad2) {
   if (lista->head == NULL) {
@@ -55,21 +64,18 @@ void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
 
   newnodo->dato = newaccion;
   newnodo->sig = NULL;
-  printf("Hola1\n");
+
   AccNodo *extail = lista->tail;
-  printf("Hola2\n");
   newnodo->ant = extail;
-  printf("Hola3\n");
-  if (extail == NULL)
-    printf("Extail es NULL\n");
   extail->sig = newnodo;
-  printf("Hola4\n");
 
   lista->tail = newnodo;
-  printf("Hola5\n");
   lista->elems++;
 }
 
+/**
+ * Elimina todas las acciones de la lista pero dejándola inicializada
+ */
 void acciones_reestablecer(AccList * lista) {
   if (lista != NULL) {
     int cap = lista->cap;
@@ -87,6 +93,9 @@ void acciones_reestablecer(AccList * lista) {
   }
 }
 
+/**
+ * Destruye una lista de acciones
+ */
 void acciones_destruir(AccList * lista) {
   if (lista != NULL) {
     AccNodo *head = lista->head;
@@ -100,6 +109,9 @@ void acciones_destruir(AccList * lista) {
   }
 }
 
+/**
+ * Destruye una acción
+ */
 void accion_destruir(Accion * accion) {
   free(accion->nombre);
   free(accion->apellido);
@@ -110,6 +122,9 @@ void accion_destruir(Accion * accion) {
   free(accion);
 }
 
+/**
+ * Elimina la primer acción de una lista
+ */
 void acciones_eliminar_incio(AccList * lista) {
   if (lista == NULL)
     return;
@@ -125,6 +140,9 @@ void acciones_eliminar_incio(AccList * lista) {
   }
 }
 
+/**
+ * Elimina la última acción de una lista
+ */
 void acciones_eliminar_final(AccList * lista) {
   if (lista == NULL)
     return;
@@ -149,6 +167,10 @@ void acciones_eliminar_final(AccList * lista) {
   }
 }
 
+/**
+ * Agrega la acción opuesta a la pasada como argumento a la
+ * lista pasada como argumento
+ */
 void agregar_opuesto_des_re(Accion * accion, AccList * acclist) {
   char *nombre_add = malloc(sizeof(char) * MAX_NOMBRE);
   strcpy(nombre_add, accion->nombre);
@@ -170,17 +192,26 @@ void agregar_opuesto_des_re(Accion * accion, AccList * acclist) {
     char *tel_add2 = malloc(sizeof(char) * MAX_TEL);
     strcpy(tel_add2, accion->tel[1]);
     int edad_add2 = accion->edad[1];
-    // Cambiamos de orden las edades y los telefonos para siempre sacar los del principio
+
+    // Cambiamos de orden las edades y los telefonos para siempre sacarlos del principio
     acciones_agregar(acclist, 3, nombre_add, apellido_add, tel_add2, tel_add,
                      edad_add2, edad_add);
   }
 }
 
+/* ------ Funciones de utilidad ------ */
+
+/**
+ * Imprime una acción
+ */
 void imprimir_accion(Accion * acc) {
   printf("{%d: %s,%s,tels:%s,%s,edades:%d,%d}\n", acc->tipo, acc->nombre,
          acc->apellido, acc->tel[0], acc->tel[1], acc->edad[0], acc->edad[1]);
 }
 
+/**
+ * Imprime una lista de acciones
+ */
 void imprimir_acciones(AccList * lista) {
   if (lista != NULL) {
     printf("------------Lista: %d elems------------\n", lista->elems);
