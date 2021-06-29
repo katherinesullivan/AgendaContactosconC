@@ -58,4 +58,6 @@ void imprimir_accion(Accion * acc);
 
 void imprimir_acciones(AccList * list);
 
+void agregar_opuesto_des_re(Accion* accion, AccList* acclist);
+
 #endif                          /* __ACCIONES_H__ */

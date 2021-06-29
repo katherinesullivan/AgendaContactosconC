@@ -1,6 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "acciones.h"
+
+#define MAX_NOMBRE 32
+#define MAX_APELLIDO 32
+#define MAX_TEL 32
 
 AccList *acciones_init(int tamano) {
   AccList *acciones = malloc(sizeof(AccList));
@@ -132,6 +137,28 @@ void acciones_eliminar_final(AccList * lista) {
     if (lista->tail) lista->tail->sig = NULL;
     free(extail);
     lista->elems--;
+  }
+}
+
+void agregar_opuesto_des_re(Accion* accion, AccList* acclist) {
+  char* nombre_add = malloc(sizeof(char) * MAX_NOMBRE);
+  strcpy(nombre_add, accion->nombre);
+  char* apellido_add = malloc(sizeof(char) * MAX_APELLIDO);
+  strcpy(apellido_add, accion->apellido);
+  char* tel_add = malloc(sizeof(char) * MAX_TEL);
+  strcpy(tel_add, accion->tel[0]);
+  int edad_add = accion->edad[0];
+
+  if (accion->tipo == 1) acciones_agregar(acclist, 2, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+
+  else if (accion->tipo == 2) acciones_agregar(acclist, 1, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+
+  else if (accion->tipo == 3) {
+    char* tel_add2 = malloc(sizeof(char)*MAX_TEL);
+    strcpy(tel_add2, accion->tel[1]);
+    int edad_add2 = accion->edad[1];
+    // Cambiamos de orden las edades y los telefonos para siempre sacar los del principio
+    acciones_agregar(acclist, 3, nombre_add, apellido_add, tel_add2, tel_add, edad_add2, edad_add);
   }
 }
 
