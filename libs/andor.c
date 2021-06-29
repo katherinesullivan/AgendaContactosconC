@@ -16,7 +16,7 @@ Argumento *argumento_crear(Arbol arbol, int tipo, SList * lista, void *dato) {
 
 void *rutina(void *arg) {
   Argumento *arg1 = (Argumento *) arg;
-  arbol_buscar(arg1->arbol, arg1->lista, arg1->dato, arg1->tipo, 0);
+  arbol_buscar(arg1->arbol, arg1->lista, arg1->dato, arg1->tipo);
   return arg;
 }
 
@@ -45,6 +45,9 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   SList lista_tel = slist_crear();
   Argumento *argumento_tel = argumento_crear(arbol_tel, 1, &lista_tel, tel);
 
+  printf("ARBOL TELEFONOS:\n");
+  arbol_imprimir_inorder(arbol_tel,1);
+
   assert(!pthread_create(&hilos[0], NULL, rutina, (void *) argumento_nombre));
   assert(!pthread_create(&hilos[1], NULL, rutina, (void *) argumento_apellido));
   assert(!pthread_create(&hilos[2], NULL, rutina, (void *) argumento_edad));
@@ -53,6 +56,12 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   for (int i = 0; i < 4; i++) {
     assert(!pthread_join(hilos[i], NULL));
   }
+
+  printf("ARBOL TELEFONOS:\n");
+  arbol_imprimir_inorder(arbol_tel,1);
+
+  printf("LISTA TELEFONOS:\n");
+  slist_imprimir(lista_tel);
 
   free(argumento_nombre);
   free(argumento_apellido);

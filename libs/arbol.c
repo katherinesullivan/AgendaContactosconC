@@ -150,14 +150,12 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
 
   if (idx == nodo->idx) {
     // Estamos en el nodo a eliminar 
-    printf("Elimino\n");
 
     if ((nodo->izq == NULL) || (nodo->der == NULL)) {
       Arbol temp = nodo->izq ? nodo->izq : nodo->der;
 
       // No hijos
       if (temp == NULL) {
-        printf("Sin hijos!\n");
         temp = nodo;
         if (tipo_arbol == 2)
           free(nodo->dato);
@@ -228,7 +226,6 @@ Arbol arbol_eliminar(Arbol nodo, void *dato, int idx, int tipo_arbol) {
 
   // Si el nodo no tenía hijos
   if (nodo == NULL) {
-    printf("Sali sin hijos!\n");
     return NULL;
   }
 
@@ -271,8 +268,7 @@ void arbol_a_arrays(Arbol arbol, int *array_edades, int *array_indices, int *i) 
   arbol_a_arrays(arbol->der, array_edades, array_indices, i);
 }
 
-void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol,
-                  int found) {
+void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol) {
   if (arbol == NULL)
     return;
 
@@ -286,18 +282,12 @@ void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol,
     if (rdo == 0) {
       printf("Son iguales dato_str y arbol_dato yay!\n");
       *lista = slist_agregar_inicio(*lista, arbol->idx);
-      arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 1);
-      arbol_buscar(arbol->der, lista, dato, tipo_arbol, 1);
+      arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
+      arbol_buscar(arbol->der, lista, dato, tipo_arbol);
     } else if (rdo < 0) {
-      if (found)
-        return;
-      else
-        arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 0);
+      arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
     } else {
-      if (found)
-        return;
-      else
-        arbol_buscar(arbol->der, lista, dato, tipo_arbol, 0);
+      arbol_buscar(arbol->der, lista, dato, tipo_arbol);
     }
   }
 
@@ -309,18 +299,12 @@ void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol,
 
     if (dato_int == arbol_dato) {
       *lista = slist_agregar_inicio(*lista, arbol->idx);
-      arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 1);
-      arbol_buscar(arbol->der, lista, dato, tipo_arbol, 1);
+      arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
+      arbol_buscar(arbol->der, lista, dato, tipo_arbol);
     } else if (dato_int < arbol_dato) {
-      if (found)
-        return;
-      else
-        arbol_buscar(arbol->izq, lista, dato, tipo_arbol, 0);
+      arbol_buscar(arbol->izq, lista, dato, tipo_arbol);
     } else {
-      if (found)
-        return;
-      else
-        arbol_buscar(arbol->der, lista, dato, tipo_arbol, 0);
+      arbol_buscar(arbol->der, lista, dato, tipo_arbol);
     }
   }
 }

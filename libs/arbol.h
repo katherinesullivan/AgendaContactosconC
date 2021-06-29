@@ -50,7 +50,6 @@ void arbol_a_arrays(Arbol arbol, int *array_edades, int *array_indices, int *i);
  * un nodo con la clave dada y luego fue a izquierda o derecha y no encontré
  * otro nodo con la clave dada puedo dejar de buscar.
 */
-void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol,
-                  int found);
+void arbol_buscar(Arbol arbol, SList * lista, void *dato, int tipo_arbol);
 
 #endif                          /* __ARBOL_H__ */

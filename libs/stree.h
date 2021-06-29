@@ -8,9 +8,22 @@ typedef struct _STNodo {
   int idx;                      // Índice en donde se encuentra el contacto
   struct _STNodo *izq;          // Subárbol izquierdo
   struct _STNodo *der;          // Subárbol derecho
+  int alt;
 } STNodo;
 
 typedef STNodo *STree;
+
+int mayor(int a, int b);
+
+int stree_alt(STree tree);
+
+int stree_get_balance(STree N);
+
+STree stree_der_rotate(STree y);
+
+STree stree_izq_rotate(STree x);
+
+STree stree_balancear(STree nodo, int balance);
 
 STree stree_crear();
 

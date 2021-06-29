@@ -240,14 +240,14 @@ void agregar(TablaHash ** agenda, AccList* deshacer) {
 
   Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
-  *agenda = tablahash_insertar(*agenda, clave, contacto);
-
   char* nombre_nuevo = malloc(sizeof(char)*MAX_NOMBRE);
   strcpy(nombre_nuevo, nombre);
   char* apellido_nuevo = malloc(sizeof(char)*MAX_APELLIDO);
   strcpy(apellido_nuevo, apellido);
   char* telefono_nuevo = malloc(sizeof(char)*MAX_TEL);
   strcpy(telefono_nuevo, telefono);
+
+  *agenda = tablahash_insertar(*agenda, clave, contacto);
 
   acciones_agregar(deshacer, 2, nombre_nuevo, apellido_nuevo, telefono_nuevo, NULL, edad, 0);
 
