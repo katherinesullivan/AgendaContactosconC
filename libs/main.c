@@ -24,6 +24,7 @@ int main() {
   AccList* deshacer = acciones_init(N);
   AccList* rehacer = acciones_init(N);
   TablaHash *agenda = tablahash_crear(11, hash, &hash2);
+  print_menu_acciones();
   do {
     flag = interpretar(&agenda, accion, deshacer, rehacer);
   } while (flag);

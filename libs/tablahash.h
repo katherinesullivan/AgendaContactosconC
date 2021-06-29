@@ -56,7 +56,7 @@ TablaHash *tablahash_crear(unsigned capacidad, FuncionHash hash,
 /*
  * Inserta el dato en la tabla asociado a la clave dada.
  */
-TablaHash* tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
+TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato);
 
 /*
  * Agranda una tabla de hash dada, duplicando su capacidad.
@@ -99,9 +99,9 @@ void tablahash_imprimir_inorder_edad(TablaHash * tabla, FILE * fp);
 
 void tablahash_imprimir_inorder_tel(TablaHash * tabla, FILE * fp);
 
-void* rutina_destruir_1(void* arbol);
+void *rutina_destruir_1(void *arbol);
 
-void* rutina_destruir_2(void* arbol);
+void *rutina_destruir_2(void *arbol);
 
 void paralell_destruir_arboles(TablaHash * tabla);
 

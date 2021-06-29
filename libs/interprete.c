@@ -14,7 +14,8 @@
 
 /************************** Intérprete ********************************/
 
-int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* rehacer) {
+int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
+                AccList * rehacer) {
   imprimir_acciones(deshacer);
   imprimir_acciones(rehacer);
 
@@ -29,24 +30,24 @@ int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* r
 
   if (nro_accion == 2) {
     acciones_reestablecer(rehacer);
-    agregar(agenda, deshacer);            // y los árboles
+    agregar(agenda, deshacer);  // y los árboles
     return 1;
   }
 
   if (nro_accion == 3) {
     acciones_reestablecer(rehacer);
-    eliminar(agenda, deshacer);           // y los árboles
+    eliminar(agenda, deshacer); // y los árboles
     return 1;
   }
 
   if (nro_accion == 4) {
     acciones_reestablecer(rehacer);
-    editar(agenda, deshacer);             // y los árboles
+    editar(agenda, deshacer);   // y los árboles
     return 1;
   }
 
   if (nro_accion == 5) {
-    acciones_reestablecer(rehacer); // debatible dejar esto o no
+    acciones_reestablecer(rehacer);     // debatible dejar esto o no
     cargar(agenda);
     return 1;
   }
@@ -57,14 +58,18 @@ int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* r
   }
 
   if (nro_accion == 7) {
-    if (deshacer->elems == 0) print_error(7);
-    else undo_redo(agenda, deshacer, rehacer);
+    if (deshacer->elems == 0)
+      print_error(7);
+    else
+      undo_redo(agenda, deshacer, rehacer);
     return 1;
   }
 
   if (nro_accion == 8) {
-    if (rehacer->elems == 0) print_error(8);
-    else undo_redo(agenda, rehacer, deshacer);
+    if (rehacer->elems == 0)
+      print_error(8);
+    else
+      undo_redo(agenda, rehacer, deshacer);
     return 1;
   }
 
@@ -106,19 +111,20 @@ int interpretar(TablaHash ** agenda, char *accion, AccList* deshacer, AccList* r
 
 /************************** Acciones ********************************/
 
-void buscar(TablaHash ** agenda, AccList* deshacer) {
+void buscar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 1, deshacer);
 }
 
-void eliminar(TablaHash ** agenda, AccList* deshacer) {
+void eliminar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 2, deshacer);
 }
 
-void editar(TablaHash ** agenda, AccList* deshacer) {
+void editar(TablaHash ** agenda, AccList * deshacer) {
   buscar_eliminar_editar(agenda, 3, deshacer);
 }
 
-void editar_aux(TablaHash ** agenda, char *clave, AccList* deshacer, Contacto contacto, char* tel_viejo, int edad_vieja) {
+void editar_aux(TablaHash ** agenda, char *clave, AccList * deshacer,
+                Contacto contacto, char *tel_viejo, int edad_vieja) {
   print_solicitud(5);
   char *edad_str = malloc(sizeof(char) * MAX_NRO);
   fgets(edad_str, MAX_NRO - 1, stdin);
@@ -139,18 +145,19 @@ void editar_aux(TablaHash ** agenda, char *clave, AccList* deshacer, Contacto co
     return;
   }
 
-  char* nuevo_nombre = malloc(sizeof(char)*MAX_NOMBRE);
-  strcpy(nuevo_nombre,contacto->nombre);
-  char* nuevo_apellido = malloc(sizeof(char)*MAX_APELLIDO);
-  strcpy(nuevo_apellido,contacto->apellido);
+  char *nuevo_nombre = malloc(sizeof(char) * MAX_NOMBRE);
+  strcpy(nuevo_nombre, contacto->nombre);
+  char *nuevo_apellido = malloc(sizeof(char) * MAX_APELLIDO);
+  strcpy(nuevo_apellido, contacto->apellido);
 
-  char* nuevo_tel = malloc(sizeof(char)*MAX_TEL);
+  char *nuevo_tel = malloc(sizeof(char) * MAX_TEL);
   strcpy(nuevo_tel, tel);
 
-  acciones_agregar(deshacer, 3, nuevo_nombre, nuevo_apellido, tel_viejo, nuevo_tel, edad_vieja, edad);
+  acciones_agregar(deshacer, 3, nuevo_nombre, nuevo_apellido, tel_viejo,
+                   nuevo_tel, edad_vieja, edad);
 }
 
-void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList* deshacer) {
+void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList * deshacer) {
   if ((*agenda)->numElems == (*agenda)->capacidad) {
     print_aviso_capacidad(1);
     return;
@@ -174,23 +181,22 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList* deshacer) 
     if (opcion == 1)
       contacto_imprimir(contacto);
     else if (opcion == 2) {
-      char* nombre_nuevo = malloc(sizeof(char)*MAX_NOMBRE);
+      char *nombre_nuevo = malloc(sizeof(char) * MAX_NOMBRE);
       strcpy(nombre_nuevo, nombre);
-      char* apellido_nuevo = malloc(sizeof(char)*MAX_APELLIDO);
-      strcpy(apellido_nuevo,apellido);
-      char* tel_nuevo = malloc(sizeof(char)*MAX_TEL);
-      strcpy(tel_nuevo,contacto->telefono);
+      char *apellido_nuevo = malloc(sizeof(char) * MAX_APELLIDO);
+      strcpy(apellido_nuevo, apellido);
+      char *tel_nuevo = malloc(sizeof(char) * MAX_TEL);
+      strcpy(tel_nuevo, contacto->telefono);
       int edad = contacto->edad;
-      acciones_agregar(deshacer, 1, nombre_nuevo, apellido_nuevo, tel_nuevo, NULL, edad, 0);
+      acciones_agregar(deshacer, 1, nombre_nuevo, apellido_nuevo, tel_nuevo,
+                       NULL, edad, 0);
       tablahash_eliminar(*agenda, clave);
-    }
-    else if (opcion == 3) {
-      char* tel_viejo = malloc(sizeof(char)*MAX_TEL);
-      strcpy(tel_viejo,contacto->telefono);
+    } else if (opcion == 3) {
+      char *tel_viejo = malloc(sizeof(char) * MAX_TEL);
+      strcpy(tel_viejo, contacto->telefono);
       int edad_vieja = contacto->edad;
       editar_aux(agenda, clave, deshacer, contacto, tel_viejo, edad_vieja);
-    }
-    else
+    } else
       printf("Opción inválida");
   } else
     print_error(2);
@@ -200,7 +206,7 @@ void buscar_eliminar_editar(TablaHash ** agenda, int opcion, AccList* deshacer) 
   free(clave);
 }
 
-void agregar(TablaHash ** agenda, AccList* deshacer) {
+void agregar(TablaHash ** agenda, AccList * deshacer) {
   if ((*agenda)->numElems == (*agenda)->capacidad) {
     print_aviso_capacidad(1);
     return;
@@ -240,16 +246,17 @@ void agregar(TablaHash ** agenda, AccList* deshacer) {
 
   Contacto contacto = contacto_crear(nombre, apellido, edad, telefono);
 
-  char* nombre_nuevo = malloc(sizeof(char)*MAX_NOMBRE);
+  char *nombre_nuevo = malloc(sizeof(char) * MAX_NOMBRE);
   strcpy(nombre_nuevo, nombre);
-  char* apellido_nuevo = malloc(sizeof(char)*MAX_APELLIDO);
+  char *apellido_nuevo = malloc(sizeof(char) * MAX_APELLIDO);
   strcpy(apellido_nuevo, apellido);
-  char* telefono_nuevo = malloc(sizeof(char)*MAX_TEL);
+  char *telefono_nuevo = malloc(sizeof(char) * MAX_TEL);
   strcpy(telefono_nuevo, telefono);
 
   *agenda = tablahash_insertar(*agenda, clave, contacto);
 
-  acciones_agregar(deshacer, 2, nombre_nuevo, apellido_nuevo, telefono_nuevo, NULL, edad, 0);
+  acciones_agregar(deshacer, 2, nombre_nuevo, apellido_nuevo, telefono_nuevo,
+                   NULL, edad, 0);
 
 }
 
@@ -567,211 +574,57 @@ void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
   //return subset[n][sum];
 }
 
-void undo_redo(TablaHash** agenda, AccList* acclist, AccList* opuesta_acclist) {
-  Accion* accion = acclist->tail->dato;
+void undo_redo(TablaHash ** agenda, AccList * acclist,
+               AccList * opuesta_acclist) {
+  Accion *accion = acclist->tail->dato;
 
   // Si debo agregar 
   if (accion->tipo == 1) {
     // Realizo la inserción
-    char* nombre_agg = malloc(sizeof(char) * MAX_NOMBRE);
+    char *nombre_agg = malloc(sizeof(char) * MAX_NOMBRE);
     strcpy(nombre_agg, accion->nombre);
-    char* apellido_agg = malloc(sizeof(char) * MAX_APELLIDO);
+    char *apellido_agg = malloc(sizeof(char) * MAX_APELLIDO);
     strcpy(apellido_agg, accion->apellido);
-    char* tel_agg = malloc(sizeof(char) * MAX_TEL);
+    char *tel_agg = malloc(sizeof(char) * MAX_TEL);
     strcpy(tel_agg, accion->tel[0]);
 
-    char* clave_agg = malloc(sizeof(char) * MAX_CLAVE);
+    char *clave_agg = malloc(sizeof(char) * MAX_CLAVE);
     sprintf(clave_agg, "%s%s", nombre_agg, apellido_agg);
-    Contacto contacto = contacto_crear(nombre_agg, apellido_agg, accion->edad[0], tel_agg);
+    Contacto contacto =
+        contacto_crear(nombre_agg, apellido_agg, accion->edad[0], tel_agg);
     *agenda = tablahash_insertar(*agenda, clave_agg, contacto);
   }
-
   // Si debo eliminar o editar
   else if (accion->tipo == 2 || accion->tipo == 3) {
-    char* nombre = malloc(sizeof(char) * MAX_NOMBRE);
+    char *nombre = malloc(sizeof(char) * MAX_NOMBRE);
     strcpy(nombre, accion->nombre);
-    char* apellido = malloc(sizeof(char) * MAX_APELLIDO);
+    char *apellido = malloc(sizeof(char) * MAX_APELLIDO);
     strcpy(apellido, accion->apellido);
 
-    char* clave = malloc(sizeof(char) * MAX_CLAVE);
+    char *clave = malloc(sizeof(char) * MAX_CLAVE);
     sprintf(clave, "%s%s", nombre, apellido);
 
     Contacto contacto = tablahash_buscar(*agenda, clave, 0);
     if (contacto) {
       // Elimino o
-      if (accion->tipo == 2) tablahash_eliminar(*agenda, clave);
+      if (accion->tipo == 2)
+        tablahash_eliminar(*agenda, clave);
 
       // Edito
       else {
-        char* nuevo_tel = malloc(sizeof(char)*MAX_TEL);
+        char *nuevo_tel = malloc(sizeof(char) * MAX_TEL);
         strcpy(nuevo_tel, accion->tel[0]);
         int nueva_edad = accion->edad[0];
         tablahash_editar(*agenda, clave, nueva_edad, nuevo_tel);
       }
-    }
-    else print_error(2);
+    } else
+      print_error(2);
     free(nombre);
     free(apellido);
     free(clave);
   }
-
   // Agrego la acción opuesta a la lista opuesta
   agregar_opuesto_des_re(accion, opuesta_acclist);
   // Elimino la acción de la lista
   acciones_eliminar_final(acclist);
-}
-
-
-/************************** Impresiones ********************************/
-
-void print_salida() {
-  printf("Cerrando programa\n");
-}
-
-void print_aviso_capacidad(int tipo) {
-  if (tipo == 1) {
-    printf("Agenda llena. No fue posible realizar la acción solicitada. ");
-    printf("Guarde sus datos e inicie una nueva agenda ");
-    printf("con mayor capacidad y cargue sus datos actuales.\n");
-  } else if (tipo == 2) {
-    printf("Su agenda está llegando a un nivel crítico en su capacidad. ");
-    printf("Esto ralentiza sus operaciones. Considere guardar sus datos ");
-    printf("en un archivo e inicializar una nueva agenda con mayor ");
-    printf("capacidad donde los puede cargar automáticamente.\n");
-  }
-}
-
-void print_solicitud(int tipo) {
-
-  if (tipo == 0) {
-    printf("\nSeleccione una acción:\n>");
-    return;
-  }
-
-  if (tipo == 1) {
-    printf("Ingrese nombre:\n>");
-    return;
-  }
-
-  if (tipo == 2) {
-    printf("Ingrese apellido:\n>");
-    return;
-  }
-
-  if (tipo == 3) {
-    printf("Ingrese edad:\n>");
-    return;
-  }
-
-  if (tipo == 4) {
-    printf("Ingrese teléfono:\n>");
-    return;
-  }
-
-  if (tipo == 5) {
-    printf("Ingrese nueva edad:\n>");
-    return;
-  }
-
-  if (tipo == 6) {
-    printf("Ingrese nuevo teléfono:\n>");
-    return;
-  }
-
-  if (tipo == 7) {
-    printf("Ingrese un nombre a buscar:\n>");
-    return;
-  }
-
-  if (tipo == 8) {
-    printf("Ingrese un apellido a buscar:\n>");
-    return;
-  }
-
-  if (tipo == 9) {
-    printf("Ingrese una edad a buscar:\n>");
-    return;
-  }
-
-  if (tipo == 10) {
-    printf("Ingrese un teléfono a buscar:\n>");
-    return;
-  }
-
-  if (tipo == 11) {
-    printf("Ingrese ruta de entrada:\n>");
-    return;
-  }
-
-  if (tipo == 12) {
-    printf("Ingrese ruta de salida:\n>");
-    return;
-  }
-
-  if (tipo == 13) {
-    printf("Ingrese nombre de atributo:\n>");
-    return;
-  }
-
-  if (tipo == 14) {
-    printf("Ingrese un natural:\n>");
-    return;
-  }
-
-  else
-    printf("Solicitud imposible de imprimir\n");
-}
-
-void print_error(int tipo) {
-  if (tipo == 1) {
-    printf("Selección inválida. ");
-    printf("Observe cuáles son los números de acciones permitidas.\n");
-    return;
-  }
-
-  if (tipo == 2) {
-    printf("No se pudo realizar la acción. ");
-    printf("No existe contacto con tal nombre y apellido en la agenda.\n");
-    return;
-  }
-
-  if (tipo == 3) {
-    printf("No se puede agregar un contacto con tal nombre y apellido ");
-    printf("puesto que ya existe uno así.\n");
-    printf("Intente volver a agregarlo con nombre o apellido distintos ");
-    printf("o elimine el contacto que ya tiene.\n");
-    return;
-  }
-
-  if (tipo == 4) {
-    printf("No se pudo abrir el archivo.\n");
-    return;
-  }
-
-  if (tipo == 5) {
-    printf("Atributo inválido. ");
-    printf("Los atributos permitidos son: ");
-    printf("nombre, apellido, edad y telefono.\n");
-    return;
-  }
-
-  if (tipo == 6) {
-    printf("No existe subconjunto de contactos cuyas edades ");
-    printf("sumadas den el natural propuesto.\n");
-    return;
-  }
-
-  if (tipo == 7) {
-    printf("Nada por deshacer.\n");
-    return;
-  }
-
-  if (tipo == 8) {
-    printf("Nada por rehacer.\n");
-    return;
-  }
-
-  else
-    printf("Error imposible de imprimir\n");
-
 }

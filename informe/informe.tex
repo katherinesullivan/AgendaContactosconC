@@ -69,7 +69,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{TP - Sullivan}
+\rhead{Trabajo Práctico Final - Sullivan}
 \lhead{Estructuras de Datos y Algoritmos I}
 \rfoot{\vspace{1cm} \thepage}
 
@@ -84,7 +84,7 @@
         \vfill
         \vfill
             \vspace{0.7cm}
-            \noindent\textbf{\Huge Trabajo Práctico}\par
+            \noindent\textbf{\Huge Trabajo Práctico Final}\par
             \vspace{.5cm}
         \vfill
         \noindent \textbf{\huge Alumna:}\par
@@ -96,11 +96,93 @@
         \noindent\large 2021
     \end{center}
 \end{titlepage}
-\ 
+
+A continuaci\'on se presenta un informe detallando las decisiones en general y particularidades en el dise\~{n}o y desarrollo 
+del Trabajo Pr\'actico Final de la asignatura Estructuras de Datos y Algoritmos I. 
 
 \section{M\'odulos del programa}
 
 \section{Estructuras de datos utilizadas}
+
+\subsection{Tabla Hash}
+Agenda viene a representar
+Lookup mas mportante en una genda
+
+\begin{lstlisting}[style = CStyle]
+typedef struct {
+  CasillaHash *tabla;
+  unsigned numElems;
+  unsigned capacidad;
+  FuncionHash hash;
+  FuncionHash hash2;
+  Arbol arbol_nombre;
+  Arbol arbol_apellido;
+  Arbol arbol_edad;
+  Arbol arbol_tel;
+} TablaHash;
+\end{lstlisting}
+
+\subsection{Árboles AVL}
+
+\begin{lstlisting}[style = CStyle]
+typedef struct _Nodo {
+  void *dato;
+  int idx;
+  struct _Nodo *izq;
+  struct _Nodo *der;
+  int alt;
+} Nodo;
+
+typedef Nodo *Arbol;
+\end{lstlisting}
+
+\begin{lstlisting}[style = CStyle]
+typedef struct _STNodo {
+  int idx;
+  struct _STNodo *izq;
+  struct _STNodo *der;
+  int alt;
+} STNodo;
+
+typedef STNodo *STree;
+\end{lstlisting}
+
+\subsection{Listas simplemente enlazadas}
+
+\begin{lstlisting}[style = CStyle]
+typedef struct _SNodo {
+  int dato;
+  struct _SNodo *sig;
+  int cant;
+} SNodo;
+
+typedef SNodo *SList;
+\end{lstlisting}
+
+\subsection{Listas de acciones}
+
+\begin{lstlisting}[style = CStyle]
+typedef struct {
+  int tipo;                     // 1 agregar - 2 eliminar - 3 editar 
+  char *nombre;
+  char *apellido;
+  char **tel;
+  int *edad;
+} Accion;
+\end{lstlisting}
+
+Mencionar lo de nodo
+
+\begin{lstlisting}[style = CStyle]
+typedef struct {
+  AccNodo *head;
+  AccNodo *tail;
+  int elems;
+  int cap;
+} AccList;
+\end{lstlisting}
+
+\subsection{Otras estructuras}
 
 \section{Algoritmos de inter\'es}
 
@@ -112,7 +194,28 @@
 
 \section{Dificultades encontradas}
 
+    \subsection{Sobre la impresi\'on en la b\'usqueda de suma de edades}
+
+    \subsection{Sobre la duplicaci\'on de la informaci\'on}
+
+\section{Decisiones particulares}
+
+    \subsection{Sobre cu\'ando reinicializar la lista de acciones de rehacer}
+
+    \subsection{Sobre pisar la informaci\'on de un contacto}
+
+    \subsection{Sobre resizing din\'amico de la agenda}
+    Costoso pero mejor experiencia de usuario. No real. 
+
 \section{Compilaci\'on e invocaci\'on}
+Para la compilaci\'on del programa la entrega cuenta con un archivo Makefile. Para producir el archivo ejecutable basta 
+con correr alguno de los siguientes comandos: 
+
+\begin{itemize}
+    \item \verb|make|: adem\'as de generar un ejecutable para el uso del programa borra todos los archivos objeto de la carpeta actual
+    \item \verb|make all|: \'idem make
+    \item \verb|make main|: solo produce el ejecutable main
+\end{itemize}
 
 \section{Bibliograf\'ia}
 

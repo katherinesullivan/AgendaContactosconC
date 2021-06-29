@@ -46,7 +46,7 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   Argumento *argumento_tel = argumento_crear(arbol_tel, 1, &lista_tel, tel);
 
   printf("ARBOL TELEFONOS:\n");
-  arbol_imprimir_inorder(arbol_tel,1);
+  arbol_imprimir_inorder(arbol_tel, 1);
 
   assert(!pthread_create(&hilos[0], NULL, rutina, (void *) argumento_nombre));
   assert(!pthread_create(&hilos[1], NULL, rutina, (void *) argumento_apellido));
@@ -58,7 +58,7 @@ void andor(TablaHash ** agenda, int *bands, char *nombre, char *apellido,
   }
 
   printf("ARBOL TELEFONOS:\n");
-  arbol_imprimir_inorder(arbol_tel,1);
+  arbol_imprimir_inorder(arbol_tel, 1);
 
   printf("LISTA TELEFONOS:\n");
   slist_imprimir(lista_tel);

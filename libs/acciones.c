@@ -16,24 +16,27 @@ AccList *acciones_init(int tamano) {
   return acciones;
 }
 
-Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2) {
+Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1,
+                     char *tel2, int edad1, int edad2) {
   Accion *accion = malloc(sizeof(Accion));
   accion->tipo = tipo;
   accion->nombre = nombre;
   accion->apellido = apellido;
-  accion->tel = malloc(sizeof(char*)*2);
+  accion->tel = malloc(sizeof(char *) * 2);
   accion->tel[0] = tel1;
   accion->tel[1] = tel2;
-  accion->edad = malloc(sizeof(int)*2);
+  accion->edad = malloc(sizeof(int) * 2);
   accion->edad[0] = edad1;
   accion->edad[1] = edad2;
   return accion;
 }
 
-void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2) {
+void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
+                      char *tel1, char *tel2, int edad1, int edad2) {
   if (lista->head == NULL) {
     lista->head = malloc(sizeof(AccNodo));
-    lista->head->dato = accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
+    lista->head->dato =
+        accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
     lista->head->ant = NULL;
     lista->head->sig = NULL;
 
@@ -46,7 +49,8 @@ void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido, c
     acciones_eliminar_incio(lista);
   }
 
-  Accion *newaccion = accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
+  Accion *newaccion =
+      accion_nueva(tipo, nombre, apellido, tel1, tel2, edad1, edad2);
   AccNodo *newnodo = malloc(sizeof(AccNodo));
 
   newnodo->dato = newaccion;
@@ -107,7 +111,8 @@ void accion_destruir(Accion * accion) {
 }
 
 void acciones_eliminar_incio(AccList * lista) {
-  if (lista == NULL) return;
+  if (lista == NULL)
+    return;
   if (lista->head != NULL) {
     Accion *accion_a_eliminar = lista->head->dato;
     accion_destruir(accion_a_eliminar);
@@ -121,49 +126,59 @@ void acciones_eliminar_incio(AccList * lista) {
 }
 
 void acciones_eliminar_final(AccList * lista) {
-  if (lista == NULL) return;
+  if (lista == NULL)
+    return;
   if (lista->head != NULL) {
-    if (lista->elems == 1) lista->head = NULL;
+    if (lista->elems == 1)
+      lista->head = NULL;
     Accion *accion_a_eliminar = lista->tail->dato;
     accion_destruir(accion_a_eliminar);
 
     AccNodo *extail = lista->tail;
-    if (extail->ant == NULL) printf("Nueva tail NULL");
+    if (extail->ant == NULL)
+      printf("Nueva tail NULL");
     else {
       printf("Nueva lista tail: ");
       imprimir_accion(extail->ant->dato);
     }
     lista->tail = extail->ant;
-    if (lista->tail) lista->tail->sig = NULL;
+    if (lista->tail)
+      lista->tail->sig = NULL;
     free(extail);
     lista->elems--;
   }
 }
 
-void agregar_opuesto_des_re(Accion* accion, AccList* acclist) {
-  char* nombre_add = malloc(sizeof(char) * MAX_NOMBRE);
+void agregar_opuesto_des_re(Accion * accion, AccList * acclist) {
+  char *nombre_add = malloc(sizeof(char) * MAX_NOMBRE);
   strcpy(nombre_add, accion->nombre);
-  char* apellido_add = malloc(sizeof(char) * MAX_APELLIDO);
+  char *apellido_add = malloc(sizeof(char) * MAX_APELLIDO);
   strcpy(apellido_add, accion->apellido);
-  char* tel_add = malloc(sizeof(char) * MAX_TEL);
+  char *tel_add = malloc(sizeof(char) * MAX_TEL);
   strcpy(tel_add, accion->tel[0]);
   int edad_add = accion->edad[0];
 
-  if (accion->tipo == 1) acciones_agregar(acclist, 2, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+  if (accion->tipo == 1)
+    acciones_agregar(acclist, 2, nombre_add, apellido_add, tel_add, NULL,
+                     edad_add, 0);
 
-  else if (accion->tipo == 2) acciones_agregar(acclist, 1, nombre_add, apellido_add, tel_add, NULL, edad_add, 0);
+  else if (accion->tipo == 2)
+    acciones_agregar(acclist, 1, nombre_add, apellido_add, tel_add, NULL,
+                     edad_add, 0);
 
   else if (accion->tipo == 3) {
-    char* tel_add2 = malloc(sizeof(char)*MAX_TEL);
+    char *tel_add2 = malloc(sizeof(char) * MAX_TEL);
     strcpy(tel_add2, accion->tel[1]);
     int edad_add2 = accion->edad[1];
     // Cambiamos de orden las edades y los telefonos para siempre sacar los del principio
-    acciones_agregar(acclist, 3, nombre_add, apellido_add, tel_add2, tel_add, edad_add2, edad_add);
+    acciones_agregar(acclist, 3, nombre_add, apellido_add, tel_add2, tel_add,
+                     edad_add2, edad_add);
   }
 }
 
 void imprimir_accion(Accion * acc) {
-  printf("{%d: %s,%s,tels:%s,%s,edades:%d,%d}\n", acc->tipo, acc->nombre, acc->apellido, acc->tel[0], acc->tel[1] ,acc->edad[0], acc->edad[1]);
+  printf("{%d: %s,%s,tels:%s,%s,edades:%d,%d}\n", acc->tipo, acc->nombre,
+         acc->apellido, acc->tel[0], acc->tel[1], acc->edad[0], acc->edad[1]);
 }
 
 void imprimir_acciones(AccList * lista) {

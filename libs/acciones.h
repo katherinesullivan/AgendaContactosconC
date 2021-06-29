@@ -34,9 +34,11 @@ AccList *acciones_init(int tamano);
 
 /* ------ Agregado ------ */
 
-Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2);
+Accion *accion_nueva(int tipo, char *nombre, char *apellido, char *tel1,
+                     char *tel2, int edad1, int edad2);
 
-void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido, char *tel1, char* tel2, int edad1, int edad2);
+void acciones_agregar(AccList * lista, int tipo, char *nombre, char *apellido,
+                      char *tel1, char *tel2, int edad1, int edad2);
 
 /* ------ Destrucción ------ */
 
@@ -58,6 +60,6 @@ void imprimir_accion(Accion * acc);
 
 void imprimir_acciones(AccList * list);
 
-void agregar_opuesto_des_re(Accion* accion, AccList* acclist);
+void agregar_opuesto_des_re(Accion * accion, AccList * acclist);
 
 #endif                          /* __ACCIONES_H__ */

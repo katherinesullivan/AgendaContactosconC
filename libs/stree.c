@@ -7,7 +7,8 @@ int mayor(int a, int b) {
 }
 
 int stree_alt(STree tree) {
-  if (tree == NULL) return 0;
+  if (tree == NULL)
+    return 0;
   return tree->alt;
 }
 
@@ -98,7 +99,7 @@ STree stree_insertar(STree tree, int idx) {
   else if (idx > tree->idx)
     tree->der = stree_insertar(tree->der, idx);
 
-  tree->alt = 1+ mayor(stree_alt(tree->izq), stree_alt(tree->der));
+  tree->alt = 1 + mayor(stree_alt(tree->izq), stree_alt(tree->der));
   int balance = stree_get_balance(tree);
 
   return stree_balancear(tree, balance);
