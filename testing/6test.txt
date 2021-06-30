@@ -10,5 +10,11 @@ Smith
 JOHN
 SMITH
 5
-archivoinexistemte.csv
-
+archivoinexistente.csv
+6
+/archivo .csv.noarchivo
+11
+../testing/archivos/6salida.csv
+NOMBRE
+15
+13

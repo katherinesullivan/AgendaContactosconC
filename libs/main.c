@@ -23,7 +23,7 @@ int main() {
   char *accion = malloc(sizeof(char) * 10);
   AccList* deshacer = acciones_init(N);
   AccList* rehacer = acciones_init(N);
-  TablaHash *agenda = tablahash_crear(32, hash, &hash2);
+  TablaHash *agenda = tablahash_crear(31, hash, &hash2);
   print_menu_acciones();
   do {
     flag = interpretar(&agenda, accion, deshacer, rehacer);

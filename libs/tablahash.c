@@ -63,7 +63,7 @@ TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
   // Aumentamos la cantidad de elementos que hay
   tabla->numElems++;
 
-  if (tabla->numElems / tabla->capacidad >= 0.75) {
+  if (tabla->numElems / tabla->capacidad >= 0.70) {
     tabla = tablahash_agrandar(tabla);
   }
 
@@ -73,14 +73,16 @@ TablaHash *tablahash_insertar(TablaHash * tabla, char *clave, Contacto dato) {
 
 /**
  * Crea una nueva tabla de hash con los elementos de la 
- * tabla dada y con su capacidad aumentada al doble
+ * tabla dada y con su capacidad aumentada al doble más 9. 
+ * Esto nos asegura que empezando con una capacidad de 31, recién cuando lleguemos 
+ * a 1271 la capacidad de la tabla no será prima.
  */
 TablaHash *tablahash_agrandar(TablaHash * tabla) {
-  printf("Su agenda estaba llegando a un punto crítico en su capacidad, ");
-  printf("por lo tanto estamos duplicandola. ");
-  printf("Esto puede demorar unos momentos.\n");
   unsigned cap = tabla->capacidad;
-  TablaHash *nueva_tabla = tablahash_crear(cap * 2, tabla->hash, tabla->hash2);
+  printf("Su agenda estaba llegando a un punto crítico en su capacidad, ");
+  printf("por lo tanto estamos aumentandola. Nueva capacidad:%d. ", cap*2+9);
+  printf("Esto puede demorar unos momentos.\n");
+  TablaHash *nueva_tabla = tablahash_crear((cap * 2)+9, tabla->hash, tabla->hash2);
 
   for (unsigned int idx = 0; idx < cap; idx++) {
     if (tabla->tabla[idx].estado == 1) {

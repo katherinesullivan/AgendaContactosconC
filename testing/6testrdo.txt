@@ -1,0 +1,53 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>Su agenda estaba llegando a un punto crítico en su capacidad, por lo tanto estamos aumentandola. Nueva capacidad:71. Esto puede demorar unos momentos.
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>No se pudo realizar la acción. No existe contacto con tal nombre y apellido en la agenda.
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>No se pudo realizar la acción. No existe contacto con tal nombre y apellido en la agenda.
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>No se puede agregar un contacto con tal nombre y apellido puesto que ya existe uno así.
+Intente volver a agregarlo con nombre o apellido distintos o elimine el contacto que ya tiene.
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>No se pudo abrir el archivo.
+
+Seleccione una acción:
+>Ingrese ruta de salida:
+>No se pudo abrir el archivo.
+
+Seleccione una acción:
+>Ingrese ruta de salida:
+>Ingrese nombre de atributo:
+>Atributo inválido. Los atributos permitidos son: nombre, apellido, edad y telefono.
+
+Seleccione una acción:
+>Selección inválida. Observe cuáles son los números de acciones permitidas.
+
+Seleccione una acción:
+>Cerrando programa

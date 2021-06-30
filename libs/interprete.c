@@ -442,7 +442,6 @@ void guardar_ordenado(TablaHash ** agenda) {
   char *atributo = malloc(sizeof(char) * MAX_ATR);
   fgets(atributo, MAX_ATR - 1, stdin);
   atributo[strlen(atributo) - 1] = '\0';
-  printf("%s", atributo);
 
   FILE *fp;
   fp = fopen(filename, "w+");
