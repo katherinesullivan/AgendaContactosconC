@@ -9,6 +9,17 @@ Potter
 Harry James
 Potter
 7
+8
+5
+../testing/archivos/3entrada.csv
+7
+1
+Harry James
+Potter
+8
+1
+Harry James
+Potter
 2
 Ron
 Weasley

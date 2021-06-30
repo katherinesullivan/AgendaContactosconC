@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.9.8)  28 JUN 2021 22:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.9.8)  30 JUN 2021 15:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -986,7 +986,7 @@ LaTeX Info: Redefining \nameref on input line 78.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<header2.png, id=68, 612.2875pt x 88.33pt>
+<header2.png, id=84, 612.2875pt x 88.33pt>
 File: header2.png Graphic file (type png)
 <use header2.png>
 Package pdftex.def Info: header2.png  used on input line 82.
@@ -999,20 +999,14 @@ Overfull \hbox (11.25546pt too wide) in paragraph at lines 82--83
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./header2.png>]
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-)
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 112.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 107.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 112.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 107.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1024,19 +1018,34 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.142  
-        struct _STNodo *izq; [1]
-LaTeX Font Info:    Try loading font information for U+msa on input line 166.
+l.124 A
+       l momento de elegir las estructuras de datos con las cuales trabajar ...
+[1] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 132.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[2]
+LaTeX Font Info:    Try loading font information for U+msa on input line 174.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 166.
+LaTeX Font Info:    Try loading font information for U+msb on input line 174.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 166.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 174.
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
@@ -1047,10 +1056,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2]
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 206.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 213.
+[3]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[4]
+Overfull \hbox (2.03163pt too wide) in paragraph at lines 258--259
+\OT1/cmr/m/n/10.95 tipo 2 (elim-i-naci^^Son) con to-dos los datos del con-tacto
+ agre-gado (con [][]\OT1/cmtt/m/n/10.95 accion->tel[1] = NULL
+ []
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1058,35 +1075,60 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 213.
+[5]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[6]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[7]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 312.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[8]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 312.
  (./informe.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 213.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 213.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 312.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 312.
 Package rerunfilecheck Info: File `informe.out' has not changed.
-(rerunfilecheck)             Checksum: 406D1C216E91994BCF0C57325F5AE0EA;1099.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 213.
+(rerunfilecheck)             Checksum: 1005B37C38FD2CF726936C986D5C082D;1452.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 312.
  ) 
 Here is how much of TeX's memory you used:
- 18421 strings out of 494861
- 315048 string characters out of 6178805
- 455587 words of memory out of 5000000
- 21503 multiletter control sequences out of 15000+600000
- 537369 words of font info for 50 fonts, out of 8000000 for 9000
+ 18467 strings out of 494861
+ 315571 string characters out of 6178805
+ 441869 words of memory out of 5000000
+ 21526 multiletter control sequences out of 15000+600000
+ 540579 words of font info for 63 fonts, out of 8000000 for 9000
  40 hyphenation exceptions out of 8191
- 42i,13n,58p,10453b,1893s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,13n,58p,10453b,1242s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmtt10.pfb>
-Output written on informe.pdf (4 pages, 146764 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmtt10.pfb>
+Output written on informe.pdf (9 pages, 188270 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 176 compressed objects within 2 object streams
- 74 named destinations out of 1000 (max. 500000)
- 134 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 252 PDF objects out of 1000 (max. 8388607)
+ 227 compressed objects within 3 object streams
+ 92 named destinations out of 1000 (max. 500000)
+ 166 words of extra memory for PDF output out of 10000 (max. 10000000)
 

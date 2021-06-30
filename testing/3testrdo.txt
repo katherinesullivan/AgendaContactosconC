@@ -61,13 +61,69 @@ Rehacer:
 {2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 
 Seleccione una acción:
+>Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Harry James,Potter,12,341587236}
+Deshacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Harry James,Potter,11,09876542129374}
+Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
 >Ingrese nombre:
 >Ingrese apellido:
 >Ingrese edad:
 >Ingrese teléfono:
 >Deshacer:
-------------Lista: 2 elems------------
+------------Lista: 3 elems------------
 {2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 {2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
 Rehacer:
 ------------Lista: 0 elems------------
@@ -75,8 +131,9 @@ Rehacer:
 Seleccione una acción:
 >Nada por rehacer.
 Deshacer:
-------------Lista: 2 elems------------
+------------Lista: 3 elems------------
 {2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 {2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
 Rehacer:
 ------------Lista: 0 elems------------
@@ -87,8 +144,9 @@ Seleccione una acción:
 >Ingrese nueva edad:
 >Ingrese nuevo teléfono:
 >Deshacer:
-------------Lista: 3 elems------------
+------------Lista: 4 elems------------
 {2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 {2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
 {3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
 Rehacer:
@@ -100,8 +158,9 @@ Seleccione una acción:
 >Ingrese edad:
 >Ingrese teléfono:
 >Deshacer:
-------------Lista: 4 elems------------
+------------Lista: 5 elems------------
 {2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 {2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
 {3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
 {2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
@@ -113,7 +172,7 @@ Seleccione una acción:
 >Ingrese apellido:
 >Deshacer:
 ------------Lista: 5 elems------------
-{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
 {2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
 {3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
 {2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}

@@ -101,12 +101,32 @@ A continuaci\'on se presenta un informe detallando las decisiones en general y p
 del Trabajo Pr\'actico Final de la asignatura Estructuras de Datos y Algoritmos I. 
 
 \section{M\'odulos del programa}
+El programa se encuentra dividido en 9 m\'odulos:
+
+\begin{itemize}
+  \item \verb|acciones|: engloba las funciones y estructuras particulares de las que se denominan ``listas de acciones''. Las mismas son utilizadas concretamente para la implementaci\'on de las funciones \emph{deshacer} y \emph{rehacer}. 
+  \item \verb|andor|: dada la extensi\'on del c\'odigo de las funciones \emph{and} y \emph{or} y la necesidad de crear una estructura \emph{Argumento} para la ejecuci\'on en paralelo que realizan, se decidi\'o crear este m\'odulo especificamente para ellas.
+  \item \verb|arbol|: m\'odulo creado para la implementaci\'on de \'arboles AVL que contienen un idx (atributo que no se repite entre los nodos de un mismo \'arbol) y un dato que puede repetirse entre los nodos de un mismo \'arbol pero es el que generar\'a su orden.
+  \item \verb|contacto|: engloba las funciones relativas a la estructura \emph{Contacto}, que se usa como dato para la agenda (adem\'as de la estructura misma).
+  \item \verb|impresiones|: a fin de organizar y mantener junta la interacci\'on que el programa hace con el usuario, se cre\'o este m\'odulo que mandeja las impresiones por consola.
+  \item \verb|interprete|: m\'odulo principal del programa, se encarga de las solicitudes de usuario, conteniendo en el una funci\'on que interpreta la entrada de usuario y las funciones que realizan las acciones respectivas.
+  \item \verb|slist|: m\'odulo creado para la implementaci\'on de lisats simplemente enlazadas. 
+  \item \verb|stree|: m\'odulo creado para la implementaci\'on de \'arboles AVL con un solo dato \'unico entre los nodos de un mismo \'arbol. 
+  \item \verb|tablahash|: m\'odulo creado para la implementaci\'on de la estructura principal de la agenda, una tabla de hash con manejo de colisiones a trav\'es de hashing doble. 
+\end{itemize}
 
 \section{Estructuras de datos utilizadas}
 
 \subsection{Tabla Hash}
-Agenda viene a representar
-Lookup mas mportante en una genda
+
+Como estructura principal para la representaci\'on de la agenda se decide implementar una tabla de hash.
+
+Al momento de elegir las estructuras de datos con las cuales trabajar en el proyecto, se decidi\'o priorizar el aspecto que se considera 
+el requerimiento m\'as importante de una agenda de contactos: realizar b\'usquedas r\'apidas. 
+
+Por lo tanto, para poder realizar la operaci\'on \emph{buscar} en tiempo constante se decidi\'o implementar una tabla de hash. 
+Sin embargo, si se observa la estructura a continuaci\'on se puede notar que no se trata de una tabla de hash usual, pues 
+cuenta con 4 \'arboles extra. De estos se hablar\'a en la pr\'oxima secci\'on.
 
 \begin{lstlisting}[style = CStyle]
 typedef struct {
@@ -122,7 +142,21 @@ typedef struct {
 } TablaHash;
 \end{lstlisting}
 
+Con casilla de hash siendo la estructura 
+
+\begin{lstlisting}[style = CStyle]
+  typedef struct {
+  char *clave;
+  Contacto dato;
+  int estado;                   // 0 libre, 1 ocupada, 2 eliminada
+} CasillaHash;
+\end{lstlisting}
+
+\vspace{1cm}
+
 \subsection{Árboles AVL}
+
+Los \'arboles mencionados en la secci\'on anterior son los representados por la siguiente estrctura: 
 
 \begin{lstlisting}[style = CStyle]
 typedef struct _Nodo {
@@ -136,6 +170,16 @@ typedef struct _Nodo {
 typedef Nodo *Arbol;
 \end{lstlisting}
 
+Estos \'arboles se implementaron con la misma idea de optimizar las b\'usquedas, solo que esta vez las generadas por las funciones \emph{and} y \emph{or} pues servir\'an para realizar
+b\'usquedas por atributo con un costo promedio de $O(log\ n)$ donde $n$ es la cantidad de contactos en la agenda (el costo variar\'a de acuerdo a la cantidad de elementos repetidos que se presenten, pudiendo ser mayor).
+
+Adem\'as estos \'arboles proveen una gran ventaja para la funci\'on \emph{guardar ordenado} al poder ser recorridos en orden.
+
+Respecto a los otros \'arboles implementados, su prop\'osito fue el de proveer una manera de no repetir la impresi\'on de contactos repetidos en la funci\'on \emph{or}, 
+pues puedo asegurar la no inserci\'on de elementos con claves repetidas. 
+
+Su estructura es la que se presnta a continuaci\'on:
+
 \begin{lstlisting}[style = CStyle]
 typedef struct _STNodo {
   int idx;
@@ -147,7 +191,11 @@ typedef struct _STNodo {
 typedef STNodo *STree;
 \end{lstlisting}
 
+\vspace{1cm}
+
 \subsection{Listas simplemente enlazadas}
+
+Su creaci\'on fue con el fin de tener una estructura de tamaño variable donde ir almacenando los resultados de las b\'usquedas en los \'arboles de atributos.
 
 \begin{lstlisting}[style = CStyle]
 typedef struct _SNodo {
@@ -160,6 +208,11 @@ typedef SNodo *SList;
 \end{lstlisting}
 
 \subsection{Listas de acciones}
+Las listas de acciones son, en esencia, listas doblemente enlazadas con un puntero a su cola. 
+Este tipo de estructura fue la elegida porque provee una forma simple de eliminar tanto del principio (cuando se llega a su capacidad m\'axima) como del final (cuando se realiza un deshacer o rehacer)
+e insertar al final (cuando se invoca a \emph{agregar}, \emph{eliminar} o \emph{editar}).
+
+Las acciones son estructuras con la siguiente forma: 
 
 \begin{lstlisting}[style = CStyle]
 typedef struct {
@@ -171,7 +224,7 @@ typedef struct {
 } Accion;
 \end{lstlisting}
 
-Mencionar lo de nodo
+Y se encuntran dentro de nodos doblemente enlazados para formar la siguiente estructura de lista:
 
 \begin{lstlisting}[style = CStyle]
 typedef struct {
@@ -184,13 +237,52 @@ typedef struct {
 
 \subsection{Otras estructuras}
 
+Adem\'as de los expuestos arriba el programa cuenta con 3 estructuras m\'as. 
+
+La primera de ellas es \emph{Contacto}. Esta estructura es la que representa un elemento de la agenda. 
+
+Respecto a las otras dos, ellas son \emph{Argumento} y \emph{ArgHilo}. Como se puede deducir de su nombre estas estructuras 
+sirven l porp\'osito de funcionar como argumentos para las rutinas.
+
 \section{Algoritmos de inter\'es}
 
     \subsection{Deshacer/Rehacer}
+    Como se hizo menci\'on en las secciones anteriores, las funciones \emph{deshacer} y \emph{rehacer} se apoyan en la estructura lista de acciones.
+
+    Antes de pasar a la explicaci\'on sobre el comportamiento de estas funciones, se definir\'a lo que se entiende por ``acci\'on contraria''. Por ``acci\'on contaria'' se entiende de agregar, eliminar (ambas con los mismos datos), 
+    de eliminar, agregar (ambas con los mismos datos) y de editar, editar pero con el orden de los tel\'efonos y edades cambiados, es decir, el \verb|accion->tel[0]| pasa a ser \verb|accion->tel[1]| y viceversa, y \verb|accion->edad[0]| pasa a ser \verb|accion->edad[1]| y vicerversa, en la ``acci\'on contraria''.
+
+    Ahora bien, para mantener su comportamiento esperado se siguen las siguientes reglas:
+
+    \begin{itemize}
+      \item Al realizarse la operaci\'on \emph{agregar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 2 (eliminaci\'on) con todos los datos del contacto agregado (con \verb|accion->tel[1] = NULL| y \verb|accion->edad[1] = 0|).
+      \item Al realizarse la operaci\'on \emph{eliminar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 1 (inserci\'on) con todos los datos del contacto eliminado (con \verb|accion->tel[1] = NULL| y \verb|accion->edad[1] = 0|).
+      \item Al realizarse la operaci\'on \emph{editar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 3 (edici\'on) con nombre y apellidos como los del contacto editado y en las posiciones 0 de tel\'efono y edad el t\'elefono y edad viejos, y en las posiciones 1, los nuevos.
+      \item Al llamarse a las funciones \emph{deshacer} o \emph{rehacer} se realiza la \'ultima acci\'on que agregaron a sus listas (elimin\'andola posteriormente) y se agrega a la otra lista (rehacer en el caso de deshacer, y viceversa) la acci\'on contraria.
+      \item Siempre que se realiza una acci\'ion de tipo 3 (edici\'on) se toma el tel\'efono y la edad que se encuentran en la posici\'on 0 de sus respectivos arrays.
+      \item Cada vez que se realice un cambio en la agenda (producido por las tres operaciones que influyen en deshacer y rehacer o por la funci\'on \emph{cargar}) se eliminan de rehacer todas las acciones que estaba guardando. 
+    \end{itemize}
 
     \subsection{Guardar ordenado}
+    Gracias a los \'arboles de atributos, el algoritmo necesario para guardar de manera ordenada es simplemente un recorrido inorder sobre el \'arbol de atributo indicado que va impriendo en el archivo de salida los contactos indicados por el par\'ametro \emph{idx}.
 
     \subsection{Buscar por suma de edades}
+    El algoritmo utilizado para la funci\'on \emph{buscar por suma de edades} sigue la estrategia de programaci\'on din\'amica bottom-up. 
+
+    La idea del algoritmo es, en primer lugar, establecer si se puede o no conseguir un subconjunto de edades tales que sumadas den el natural ingresado. Esta parte del algoritmo resulta ser el problema que se conoce como \emph{Subset Sum Problem} y es sobre la que se aplica la estrategia de programaci\'on din\'amica. 
+
+    La resoluci\'on del \emph{Subset Sum Problem} implementada sigue la siguiente l\'ogica: 
+
+    Podemos decidir si un conjunto de enteros (en este caso, las edades) puede formar una suma $N$ si vamos recorriendo el conjunto y por cada elemento $x$ ir viendo si se puede obtener $N$ con los anteriores elementos del conjunto o si con los anteriores elementos del conjunto se puede formar la suma $N-x$ (luego sumando $x$ al conjunto se puede obtener $N$). Por lo 
+    tanto, para evitar el rec\'alculo de algunas instancias que supondr\'ia una implementaci\'on recursiva, lo que realiza el algoritmo es la construcci\'on de una matriz $(m+1)*(N+1)$ (donde $m$ representa la cantidad de elementos del conjunto) de manera bottom-up siguiendo los pasos mostrados a continuaci\'on: 
+
+    \begin{enumerate}
+      \item Todos los elementos de la columna 0 (es decir, para la suma igual a 0) tendr\'an un valor verdadero (1 en este caso) pues se puede obtener la suma con el conjunto vac\'io. 
+      \item Salvo por el perteneciente a la columna 0 todas las entradas de la fila 0 tendr\'an un valor falso (0 en este caso) pues sin elementos no se puede conseguir ninguna otra suma m\'as que 0. 
+      \item Para completar los valores del resto de la tabla se analiza lo siguiente: si la columna en la que se est\'a posee un valor menor a la edad correspondiente a la fila (no se puede usar este elemento para construir el conjunto deseado) simplemente se copia el valor de la fila de arriba, por otro lado, si no sucede lo anterior se verifica si se pudo obtener la suma sin ese elemento (revisando la fila anterior) o si se pudo obtener la suma menos el elemento actual (fijandose en la columna correspondiente de la fila anterior).
+    \end{enumerate}
+
+    Una vez armada esa tabla simplemente se chequea el elemento de la \'ultima fila y \'ultima columna.
 
 \section{Dificultades encontradas}
 

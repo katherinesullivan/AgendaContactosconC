@@ -17,7 +17,7 @@ typedef unsigned (*FuncionHash) (char *clave);
 typedef struct {
   char *clave;
   Contacto dato;
-  int estado;                   // será 0 si esta libre, 1 si está ocupada, 2 si está eliminada
+  int estado;                   // 0 libre, 1 ocupada, 2 eliminada
 } CasillaHash;
 
 /*
