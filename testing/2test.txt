@@ -1,0 +1,17 @@
+5
+../testing/archivos/2entrada.csv
+6
+../testing/archivos/2salida.csv
+11
+../testing/archivos/2salidanombre.csv
+nombre
+11
+../testing/archivos/2salidaapellido.csv
+apellido
+11
+../testing/archivos/2salidaedad.csv
+edad
+11
+../testing/archivos/2salidatelefono.csv
+telefono
+13

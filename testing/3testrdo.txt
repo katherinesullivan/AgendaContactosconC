@@ -1,0 +1,310 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+Deshacer:
+------------Lista: 0 elems------------
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Deshacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 0 elems------------
+Rehacer:
+------------Lista: 1 elems------------
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{1: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+Rehacer:
+------------Lista: 1 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Nada por rehacer.
+Deshacer:
+------------Lista: 2 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese nueva edad:
+>Ingrese nuevo teléfono:
+>Deshacer:
+------------Lista: 3 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Deshacer:
+------------Lista: 4 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Deshacer:
+------------Lista: 5 elems------------
+{2: Harry James,Potter,tels:09876542129374,(null),edades:11,0}
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Deshacer:
+------------Lista: 5 elems------------
+{2: Ron,Weasley,tels:5346518482458722,(null),edades:14,0}
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Deshacer:
+------------Lista: 5 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: George,Weasley,tels:56456412182,(null),edades:23,0}
+Rehacer:
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 4 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+Rehacer:
+------------Lista: 1 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 3 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 2 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 2 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 3 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 3 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 2 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 4 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+Rehacer:
+------------Lista: 1 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 3 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 2 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 4 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+Rehacer:
+------------Lista: 1 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 3 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 2 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 4 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{2: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+Rehacer:
+------------Lista: 1 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 3 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 2 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 2 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+Rehacer:
+------------Lista: 3 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 1 elems------------
+{3: Ron,Weasley,tels:5346518482458722,4648115574184,edades:14,19}
+Rehacer:
+------------Lista: 4 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+
+Seleccione una acción:
+>Deshacer:
+------------Lista: 0 elems------------
+Rehacer:
+------------Lista: 5 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{3: Ron,Weasley,tels:4648115574184,5346518482458722,edades:19,14}
+
+Seleccione una acción:
+>Nada por deshacer.
+Deshacer:
+------------Lista: 0 elems------------
+Rehacer:
+------------Lista: 5 elems------------
+{1: George,Weasley,tels:56456412182,(null),edades:23,0}
+{1: Fred,Weasley,tels:54654632125,(null),edades:23,0}
+{2: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{1: Hermione,Granger,tels:56718186128489,(null),edades:17,0}
+{3: Ron,Weasley,tels:4648115574184,5346518482458722,edades:19,14}
+
+Seleccione una acción:
+>Cerrando programa

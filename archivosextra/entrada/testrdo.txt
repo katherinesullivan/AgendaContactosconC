@@ -1,0 +1,141 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+------------Lista: 0 elems------------
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>------------Lista: 0 elems------------
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese un natural:
+>suma = 5
+{Sabrina,Perez Garcia,1,3418796441}
+{Juan Manuel,Gonzalez,1,3414521201}
+{Pipi,Gonzalez,1,3414521201}
+{Pepe Juan,Lopez,1,3456782}
+{Pepe,Argento,1,3418796441}
+------------Lista: 0 elems------------
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese un natural:
+>suma = 117
+{Bianca,Lamas,75,3418796441}
+{Belinda,Kirgui,41,9087654}
+{Pepe,Argento,1,3418796441}
+------------Lista: 0 elems------------
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>Su agenda estaba llegando a un punto crítico en su capacidad, por lo tanto estamos duplicandola. Esto puede demorar unos momentos.
+------------Lista: 1 elems------------
+{2: Kathy,Sully,tels:3415813002,(null),edades:20,0}
+------------Lista: 0 elems------------
+
+Seleccione una acción:
+>------------Lista: 0 elems------------
+------------Lista: 1 elems------------
+{1: Kathy,Sully,tels:3415813002,(null),edades:20,0}
+
+Seleccione una acción:
+>Cerrando programa
+--- TABLA HASH (10 elementos) ---
+PepeArgento: 
+{Pepe,Argento,1,3418796441}
+NULL
+PipiGonzalez: 
+{Pipi,Gonzalez,1,3414521201}
+NULL
+NULL
+NULL
+Juan ManuelGonzalez: 
+{Juan Manuel,Gonzalez,1,3414521201}
+NULL
+NULL
+NULL
+NULL
+LindaAllende: 
+{Linda,Allende,33,45678912}
+NULL
+NULL
+NULL
+SabrinaPerez Garcia: 
+{Sabrina,Perez Garcia,1,3418796441}
+Pepe JuanLopez: 
+{Pepe Juan,Lopez,1,3456782}
+NULL
+BelindaKirgui: 
+{Belinda,Kirgui,41,9087654}
+BlancaNieves: 
+{Blanca,Nieves,18,12345}
+BiancaLamas: 
+{Bianca,Lamas,75,3418796441}
+PilarLopez Murphy: 
+{Pilar,Lopez Murphy,28,3418796441}
+
+Arbol nombre
+En 18: Belinda con altura: 1
+En 20: Bianca con altura: 3
+En 19: Blanca con altura: 1
+En 6: Juan Manuel con altura: 2
+En 11: Linda con altura: 4
+En 0: Pepe con altura: 1
+En 16: Pepe Juan con altura: 3
+En 21: Pilar con altura: 1
+En 2: Pipi con altura: 2
+En 15: Sabrina con altura: 1
+
+Arbol apellido
+En 11: Allende con altura: 1
+En 0: Argento con altura: 3
+En 2: Gonzalez con altura: 1
+En 6: Gonzalez con altura: 2
+En 18: Kirgui con altura: 1
+En 20: Lamas con altura: 4
+En 16: Lopez con altura: 1
+En 21: Lopez Murphy con altura: 3
+En 19: Nieves con altura: 1
+En 15: Perez Garcia con altura: 2
+
+Arbol edad
+En 2: 1 con altura: 1
+En 6: 1 con altura: 2
+En 16: 1 con altura: 1
+En 15: 1 con altura: 3
+En 0: 1 con altura: 2
+En 19: 18 con altura: 1
+En 21: 28 con altura: 4
+En 11: 33 con altura: 1
+En 18: 41 con altura: 2
+En 20: 75 con altura: 1
+
+Arbol tel
+En 19: 12345 con altura: 2
+En 2: 3414521201 con altura: 1
+En 6: 3414521201 con altura: 3
+En 21: 3418796441 con altura: 1
+En 15: 3418796441 con altura: 4
+En 20: 3418796441 con altura: 1
+En 0: 3418796441 con altura: 3
+En 16: 3456782 con altura: 1
+En 11: 45678912 con altura: 2
+En 18: 9087654 con altura: 1
+---------------------------------

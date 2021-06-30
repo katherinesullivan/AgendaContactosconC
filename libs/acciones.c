@@ -153,12 +153,6 @@ void acciones_eliminar_final(AccList * lista) {
     accion_destruir(accion_a_eliminar);
 
     AccNodo *extail = lista->tail;
-    if (extail->ant == NULL)
-      printf("Nueva tail NULL");
-    else {
-      printf("Nueva lista tail: ");
-      imprimir_accion(extail->ant->dato);
-    }
     lista->tail = extail->ant;
     if (lista->tail)
       lista->tail->sig = NULL;

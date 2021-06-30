@@ -1,0 +1,1 @@
+El próposito del test3 es verificar el correcto funcionamiento de deshacer y rehacer. Para poder seguir mejor su funcionamiento se descomentan las líneas 23 a 26 de interprete.c para así poder ir visualizando el estado de ambas listas a medida que se ejecuta el programa.

@@ -1,0 +1,1 @@
+El propósito del test6 es verificar algunos aspectos generales del programa. Entre ellos, verificar que el resizing dinámico ocurra correctamente, el manejo de solicitudes inusuales y el manejo de otros errores.

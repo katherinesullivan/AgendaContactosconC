@@ -1,0 +1,13 @@
+5
+entrada/entrada.csv
+12
+5
+12
+117
+2
+Kathy
+Sully
+20
+3415813002
+7
+13

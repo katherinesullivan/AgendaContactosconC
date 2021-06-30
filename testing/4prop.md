@@ -1,0 +1,1 @@
+El próposito del test4 es verificar el correcto funcionamiento de las funciones AND y OR.

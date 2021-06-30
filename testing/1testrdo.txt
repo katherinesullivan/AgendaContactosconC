@@ -1,0 +1,88 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Mario,Santos,40,860365501}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Pablo,Lamponne,49,755470550}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>No se pudo realizar la acción. No existe contacto con tal nombre y apellido en la agenda.
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese nueva edad:
+>Ingrese nuevo teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Mario,Santos,41,000000}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Betun,Lamponne,10,6679848559}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese nueva edad:
+>Ingrese nuevo teléfono:
+>
+Seleccione una acción:
+>Cerrando programa

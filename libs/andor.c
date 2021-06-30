@@ -119,7 +119,6 @@ void imprimir_datos_correctos(TablaHash * agenda, int *bands,
                               SList lista_comparar, char *nombre,
                               char *apellido, int edad, char *tel) {
   SList iter = lista_comparar;
-  slist_imprimir(lista_comparar);
   while (iter != NULL) {
     int suma = 0;
     int idx = iter->dato;

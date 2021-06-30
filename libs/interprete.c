@@ -20,8 +20,10 @@
  */
 int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
                 AccList * rehacer) {
+  /*printf("Deshacer:\n");
   imprimir_acciones(deshacer);
-  imprimir_acciones(rehacer);
+  printf("Rehacer:\n");
+  imprimir_acciones(rehacer);*/
 
   print_solicitud(0);
   fgets(accion, MAX_NRO, stdin);
@@ -99,7 +101,7 @@ int interpretar(TablaHash ** agenda, char *accion, AccList * deshacer,
 
   if (nro_accion == 13) {
     print_salida();
-    prettyprint_th(*agenda);
+    //prettyprint_th(*agenda);
     tablahash_destruir(*agenda);
     acciones_destruir(deshacer);
     acciones_destruir(rehacer);
@@ -481,22 +483,17 @@ void buscar_suma_edades(TablaHash ** agenda) {
   print_solicitud(14);
   fgets(suma_str, MAX_NRO - 1, stdin);
   int suma = atoi(suma_str);
+  //printf("suma = %d\n", suma);
 
   int n = (*agenda)->numElems;
 
   int *array_edades = calloc(n, sizeof(int));
   int *array_indices = calloc(n, sizeof(int));
-  printf("suma = %d\n", suma);
   int *id = malloc(sizeof(int));
   *id = 0;
 
   // Convierto en arrays los datos que usaré para la búsqueda
   arbol_a_arrays((*agenda)->arbol_edad, array_edades, array_indices, id);
-
-  for (int i = 0; i < n; i++) {
-    printf("array_edades[%d]: %d\n", i, array_edades[i]);
-    printf("array_indices[%d]: %d\n", i, array_indices[i]);
-  }
 
   // Llamo a la función que establece si existe un tal subconjunto
   // y lo imprime

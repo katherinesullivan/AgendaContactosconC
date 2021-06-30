@@ -1,0 +1,1 @@
+El propósito del test2 es verificar la correcta carga y el correcto guardado, tanto en orden como no, de contactos desde un archivo.

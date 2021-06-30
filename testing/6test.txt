@@ -1,0 +1,14 @@
+5
+../testing/archivos/6entrada.csv
+1
+Pepe
+Elenis
+4
+John
+Smith
+2
+JOHN
+SMITH
+5
+archivoinexistemte.csv
+
