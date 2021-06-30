@@ -1,0 +1,1 @@
+El propósito del test8 es verificar el comportamiento del programa con archivos de un volumen mayor. Para ello se cambia la capacidad dada en un principio para la tabla de hash a 1319.

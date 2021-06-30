@@ -14,7 +14,7 @@ Además se cuenta con una carpeta titulada archivos en donde se encuentran los a
 ## ¿Cómo verificar los tests?
 Los archivos de resultado se obtuvieron corriendo 
 
-    cat pathToTest/testX.txt | ./main > pathToTestRdo/rdotestX.txt
+    cat ../testing/Xtest.txt | ./main > ../testing/Xtestrdo.txt
 
 se puede verificar que estos son correctos volviendo a correr el mismo comando.
 

@@ -1,0 +1,86 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>
+Seleccione una acción:
+>Ingrese un nombre a buscar:
+>Ingrese un apellido a buscar:
+>Ingrese una edad a buscar:
+>Ingrese un teléfono a buscar:
+>{Lonnie,Bahnisch,42,1616916066}
+{Chelsea,Aichbauer,42,1057467587}
+{Brendon,Buhrer,42,1634296630}
+{Marisol,Artel,42,1698487330}
+{Jeannie,Burklin,42,543906158}
+{Tera,Bonneken,9,2126362173}
+{Janice,Apprich,42,1987235624}
+{Alison,Aipperspach,42,950390868}
+{Cherie,Borkircher,42,1475952280}
+{Ashlie,Auferkamp,42,442982639}
+{Justina,Bultermann,42,364531492}
+{Marcus,Adolf,42,1820388464}
+
+Seleccione una acción:
+>Ingrese un nombre a buscar:
+>Ingrese un apellido a buscar:
+>Ingrese una edad a buscar:
+>Ingrese un teléfono a buscar:
+>{Keri,Andresen,88,772634225}
+
+Seleccione una acción:
+>Ingrese un natural:
+>{Trenton,Armbrecht,5,278450030}
+{Zachery,Arnholdt,5,1259577690}
+{Israel,Aschenbruck,5,304505404}
+{Tiara,Aspacher,5,1260995960}
+{Tiffani,Badke,5,1160063179}
+{Breanne,Bokenkamp,5,309667127}
+{Riley,Bussenschutt,5,1824700010}
+{Octavia,Burglen,5,1090438014}
+{Kristin,Adelsperger,4,165344818}
+{Carrie,Aichriedler,4,201690613}
+{Mario,Alde,4,1543755629}
+{Latasha,Amborn,4,35756851}
+{Tristan,Anderweit,4,2006138722}
+{Orlando,Antonissen,4,991039875}
+{Elisa,Arends,4,1953161956}
+{Jackie,Asperger,4,933596911}
+{Perry,Aufmkolk,4,1650994571}
+{Tasia,Bosel,4,1855103807}
+{Ginger,Bottcher,4,1659239833}
+{Brittany,Abbel,3,1918502651}
+{Angela,Abstreiter,3,515530019}
+{Luke,Akolt,3,1129033333}
+{Susan,Albert,3,1750003033}
+{Collin,Assall,3,1005418816}
+{Isabel,Aulmann,3,1158747661}
+{Caitlyn,Bonsch,3,1510574887}
+{Randy,Aigenseer,2,114723506}
+{Breanna,Arendz,2,1321756868}
+{Chantel,Aymanns,2,1017565625}
+{Stefan,Bockenforde,2,1917305981}
+{Carmen,Andersson,1,207621703}
+{Ciara,Aufdemkampe,1,839425676}
+{Desirae,Buurma,1,1488873165}
+{Darcy,Buschke,1,233614511}
+
+Seleccione una acción:
+>Ingrese ruta de salida:
+>Ingrese nombre de atributo:
+>
+Seleccione una acción:
+>Cerrando programa
