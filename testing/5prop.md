@@ -1,1 +1,1 @@
-El propósito del test5 es verificar el correcto funcionamiento de la función buscar por suma de edades. Para que resulte mejor la lectura del archivo resultado se descomenta la línea 486 de interprete.c.
+El propósito del test5 es verificar el correcto funcionamiento de la función buscar por suma de edades. Para que resulte mejor la lectura del archivo resultado se descomenta la línea 485 de interprete.c.

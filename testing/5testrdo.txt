@@ -123,6 +123,18 @@ Seleccione una acción:
 No existe subconjunto de contactos cuyas edades sumadas den el natural propuesto.
 
 Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese un natural:
+>suma = 50
+{Michael,Goodplace,30,123971239}
+{Tahani,Al-Jamil,20,891032474}
+
+Seleccione una acción:
 >Ingrese un natural:
 >suma = 36
 No existe subconjunto de contactos cuyas edades sumadas den el natural propuesto.

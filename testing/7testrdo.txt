@@ -1,0 +1,79 @@
+Menú de acciones:
+1. Buscar
+2. Agregar
+3. Eliminar
+4. Editar
+5. Cargar
+6. Guardar
+7. Deshacer
+8. Rehacer
+9. AND
+10. OR
+11. Guardar ordenado
+12. Buscar por suma de edades
+13. Salir
+
+Seleccione una acción:
+>Ingrese ruta de entrada:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese edad:
+>Ingrese teléfono:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>{Pedro,Vanegas,23,6574513253}
+
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>
+Seleccione una acción:
+>Ingrese nombre:
+>Ingrese apellido:
+>Ingrese nueva edad:
+>Ingrese nuevo teléfono:
+>
+Seleccione una acción:
+>
+Seleccione una acción:
+>
+Seleccione una acción:
+>Ingrese ruta de salida:
+>
+Seleccione una acción:
+>
+Seleccione una acción:
+>Ingrese un nombre a buscar:
+>Ingrese un apellido a buscar:
+>Ingrese una edad a buscar:
+>Ingrese un teléfono a buscar:
+>{Romina,Andrada,15,8676543221}
+{Sabrina,Perez Garcia,18,3418796441}
+{Diego,Arias,18,78265232154}
+
+Seleccione una acción:
+>Ingrese un nombre a buscar:
+>Ingrese un apellido a buscar:
+>Ingrese una edad a buscar:
+>Ingrese un teléfono a buscar:
+>{Esmeralda,Gonzalez Rodriguez,31,5355454545}
+{Pilar,Gonzalez Rodriguez,31,3418796441}
+
+Seleccione una acción:
+>Ingrese ruta de salida:
+>Ingrese nombre de atributo:
+>
+Seleccione una acción:
+>Ingrese un natural:
+>{Pilar,Gonzalez Rodriguez,31,3418796441}
+{Pedro,Vanegas,23,6574513253}
+{Sabrina,Perez Garcia,18,3418796441}
+{Diego,Arias,18,78265232154}
+{Romina,Andrada,15,8676543221}
+
+Seleccione una acción:
+>Cerrando programa

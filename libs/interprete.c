@@ -569,7 +569,7 @@ void sbcjto_edad(int *array_edades, int n, int sum, int *array_indices,
       // Si no puedo ignorar la edad porque fue necesaria para la
       // construcción de la new_sum actual la imprimo y establezco
       // la new_sum actual como la anterior menos esta edad necesaria
-      if (!subset[i - 1][new_sum] && subset[i][new_sum]) {
+      if (!subset[i - 1][new_sum]) {
         int idx = array_indices[i - 1];
         contacto_imprimir((*agenda)->tabla[idx].dato);
         new_sum = new_sum - array_edades[i - 1];

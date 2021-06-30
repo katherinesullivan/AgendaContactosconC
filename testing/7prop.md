@@ -1,0 +1,1 @@
+El propósito el test7 es verificar llamadas a todas las funciones dentro del mismo test.
