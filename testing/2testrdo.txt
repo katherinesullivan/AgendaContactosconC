@@ -22,18 +22,18 @@ Seleccione una acción:
 Seleccione una acción:
 >Ingrese ruta de salida:
 >Ingrese nombre de atributo:
->nombre
+>
 Seleccione una acción:
 >Ingrese ruta de salida:
 >Ingrese nombre de atributo:
->apellido
+>
 Seleccione una acción:
 >Ingrese ruta de salida:
 >Ingrese nombre de atributo:
->edad
+>
 Seleccione una acción:
 >Ingrese ruta de salida:
 >Ingrese nombre de atributo:
->telefono
+>
 Seleccione una acción:
 >Cerrando programa

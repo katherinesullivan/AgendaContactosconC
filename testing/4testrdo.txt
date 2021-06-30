@@ -37,8 +37,8 @@ Seleccione una acción:
 >Ingrese una edad a buscar:
 >Ingrese un teléfono a buscar:
 >{Pepe,Argento,1,3418796441}
-{Sabrina,Lopez,56,0984575309}
 {Pepe Juan,Lopez,1,3456782}
+{Sabrina,Lopez,56,0984575309}
 {Sabrina,Perez Garcia,75,3418796441}
 
 Seleccione una acción:
@@ -47,10 +47,10 @@ Seleccione una acción:
 >Ingrese una edad a buscar:
 >Ingrese un teléfono a buscar:
 >{Pipi,Gonzalez,95,3414521201}
-{Linda,Allende,33,45678912}
 {Susana,Oria,15,4564651815}
 {Juan Manuel,Gonzalez,48,3414521201}
 {Blanca,Nieves,18,12345}
+{Linda,Allende,33,45678912}
 
 Seleccione una acción:
 >Ingrese un nombre a buscar:
