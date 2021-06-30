@@ -170,7 +170,7 @@ typedef struct _Nodo {
 typedef Nodo *Arbol;
 \end{lstlisting}
 
-Estos \'arboles se implementaron con la misma idea de optimizar las b\'usquedas, solo que esta vez las generadas por las funciones \emph{and} y \emph{or} pues servir\'an para realizar
+Estos \'arboles se implementaron con la misma idea de optimizar las b\'usquedas, solo que esta vez las generadas por las funciones \emph{and} y \emph{or}, pues servir\'an para realizar
 b\'usquedas por atributo con un costo promedio de $O(log\ n)$ donde $n$ es la cantidad de contactos en la agenda (el costo variar\'a de acuerdo a la cantidad de elementos repetidos que se presenten, pudiendo ser mayor).
 
 Adem\'as estos \'arboles proveen una gran ventaja para la funci\'on \emph{guardar ordenado} al poder ser recorridos en orden.
@@ -195,7 +195,7 @@ typedef STNodo *STree;
 
 \subsection{Listas simplemente enlazadas}
 
-Su creaci\'on fue con el fin de tener una estructura de tamaño variable donde ir almacenando los resultados de las b\'usquedas en los \'arboles de atributos.
+Su creaci\'on fue con el fin de tener una estructura de tamaño variable donde se pueda ir almacenando los resultados de las b\'usquedas en los \'arboles de atributos.
 
 \begin{lstlisting}[style = CStyle]
 typedef struct _SNodo {
@@ -241,8 +241,8 @@ Adem\'as de los expuestos arriba el programa cuenta con 3 estructuras m\'as.
 
 La primera de ellas es \emph{Contacto}. Esta estructura es la que representa un elemento de la agenda. 
 
-Respecto a las otras dos, ellas son \emph{Argumento} y \emph{ArgHilo}. Como se puede deducir de su nombre estas estructuras 
-sirven l porp\'osito de funcionar como argumentos para las rutinas.
+Respecto a las otras dos, ellas son \emph{Argumento} y \emph{ArgHilo}. Como se puede deducir de su nombre, estas estructuras 
+sirven el porp\'osito de funcionar como argumentos para las rutinas.
 
 \section{Algoritmos de inter\'es}
 
@@ -257,7 +257,7 @@ sirven l porp\'osito de funcionar como argumentos para las rutinas.
     \begin{itemize}
       \item Al realizarse la operaci\'on \emph{agregar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 2 (eliminaci\'on) con todos los datos del contacto agregado (con \verb|accion->tel[1] = NULL| y \verb|accion->edad[1] = 0|).
       \item Al realizarse la operaci\'on \emph{eliminar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 1 (inserci\'on) con todos los datos del contacto eliminado (con \verb|accion->tel[1] = NULL| y \verb|accion->edad[1] = 0|).
-      \item Al realizarse la operaci\'on \emph{editar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 3 (edici\'on) con nombre y apellidos como los del contacto editado y en las posiciones 0 de tel\'efono y edad el t\'elefono y edad viejos, y en las posiciones 1, los nuevos.
+      \item Al realizarse la operaci\'on \emph{editar}, se a\~{n}ade a la lista de acciones de deshacer una acci\'on de tipo 3 (edici\'on) con nombre y apellidos como los del contacto editado, en las posiciones 0 de tel\'efono y edad el t\'elefono y edad viejos, y, en las posiciones 1, los nuevos.
       \item Al llamarse a las funciones \emph{deshacer} o \emph{rehacer} se realiza la \'ultima acci\'on que agregaron a sus listas (elimin\'andola posteriormente) y se agrega a la otra lista (rehacer en el caso de deshacer, y viceversa) la acci\'on contraria.
       \item Siempre que se realiza una acci\'ion de tipo 3 (edici\'on) se toma el tel\'efono y la edad que se encuentran en la posici\'on 0 de sus respectivos arrays.
       \item Cada vez que se realice un cambio en la agenda (producido por las tres operaciones que influyen en deshacer y rehacer o por la funci\'on \emph{cargar}) se eliminan de rehacer todas las acciones que estaba guardando. 
@@ -282,22 +282,37 @@ sirven l porp\'osito de funcionar como argumentos para las rutinas.
       \item Para completar los valores del resto de la tabla se analiza lo siguiente: si la columna en la que se est\'a posee un valor menor a la edad correspondiente a la fila (no se puede usar este elemento para construir el conjunto deseado) simplemente se copia el valor de la fila de arriba, por otro lado, si no sucede lo anterior se verifica si se pudo obtener la suma sin ese elemento (revisando la fila anterior) o si se pudo obtener la suma menos el elemento actual (fijandose en la columna correspondiente de la fila anterior).
     \end{enumerate}
 
-    Una vez armada esa tabla simplemente se chequea el elemento de la \'ultima fila y \'ultima columna.
+    Una vez armada esa tabla simplemente se chequea el elemento de la \'ultima fila y \'ultima columna. Si es 1, luego significa que se puede obtener el conjunto, si es 0, no.
+
+    En cuanto a la segunda parte del algoritmo, esta solo se realiza si se determin\'o que se puede obtener alg\'un subconjunto tal que la suma de sus edades de $N$ y consiste en imprimir uno.
+
+    Para su implementaci\'on se realiza una especie de backtracking. Este consiste en, empezando desde la \'ultima fila y \'ultima columna, ir subiendo y determinando si el elemento correspondiente a esa fila es necesario para la construcci\'on del conjunto. Si se determina que es necesario, entonces se imprime y tambi\'en se cambia de an\'alisis de columna a la columna actual menos el elemento necesario.
+    Para establecer si un elemento es necesario o no se revisa si su fila anterior en la misma columna tiene un 0 o un 1. Si esta posee un 0, el elemento es necesario. Se procede as\'i hasta que la llegar a la columna 0. De esa manera queda impreso un conjunto tal que la suma de sus edades da $N$.
 
 \section{Dificultades encontradas}
 
     \subsection{Sobre la impresi\'on en la b\'usqueda de suma de edades}
+    Encontrar una forma \'optima de imprimir un conjunto dentro de esta funci\'on result\'o un desaf\'io. Se pudo crear la soluci\'on expuesta en la secci\'on anterior gracias a la lectura sobre el problema conocido como \emph{Perfect Sum Problem}, una variante del \emph{Subset Sum Problem} donde se deben imprimir todos los subconjuntos tales que den la suma requerida.
 
-    \subsection{Sobre la duplicaci\'on de la informaci\'on}
+    \subsection{Sobre la replicaci\'on de la informaci\'on}
+    Result\'o tambi\'en desafiante el decidir c\'omo manejar la replicaci\'on de la informaci\'on, especialmente frente a la decisi\'on de creaci\'on de los \'arboles. 
+    Estos deb\'ian contener el dato del atributo correspondiente pero tambi\'en una manera de acceder al contacto entero para su impresi\'on. 
+    La soluci\'on implementada fue usar el mismo puntero a char que se encuentra dentro del contacto en la tabla de hash para los atributos \'arboles correspondientes a 
+    nombres, apellidos y tel\'efonos y crear un puntero cuya desreferencia sea la edad del contacto para el \'arbol de edad, adem\'as de que todos contaran con el idx que permite acceder 
+    al contacto a trav\'es de la tabla de hash.
 
 \section{Decisiones particulares}
 
     \subsection{Sobre cu\'ando reinicializar la lista de acciones de rehacer}
+    Se decidi\'o reinicializar rehacer cuando se produjesen cambios sobre la agenda. Es decir, si se invoca a cualquier funci\'on de b\'usqueda o guardado se sigue pudiendo rehacer los cambios producidos por deshacer.
 
     \subsection{Sobre pisar la informaci\'on de un contacto}
+    Una decisi\'on importante a tomar era qu\'e hacer si un usuario intenta agregar un contacto que ya existe en la agenda. Se decidi\'o que si ese intento es realizado por la funci\'on agregar no se va a eliminar el contacto que ya exist\'ia sino que se le va a avisar al usuario, en cambio, si se est\'a intentando agregar un contacto que ya exist\'ia mediante la funci\'on cargar, entonces s\'i se pisar\'a la informaci\'on del contacto que ya exist\'ia,
+    pues se puede entender de un cargar que se requiere que queden presentes en la agenda todos los contactos que estaban en el archivo, pero podr\'ia suceder que si un usuario est\'a agregando manualmente los contactos este se olvide que ya agreg\'o uno con el mismo nombre.
 
     \subsection{Sobre resizing din\'amico de la agenda}
-    Costoso pero mejor experiencia de usuario. No real. 
+    Al crear una tabla de hash se le debe asignar una capacidad, por lo tanto surge la pregunta de qu\'e se debe hacer si se intentan agregar m\'as contactos de los que permite la capacidad. Se decidi\'o que lo mejor 
+    es realizar resizing din\'amico cuando se llega al $70\%$ de la capacidad de la tabla (para poder seguir asegurando un costo constante de b\'usqueda) y se garantiza que empezando con la capacidad dada (31) s\'olo se llegar\'a a una capacidad no prima cuando se llegue a querer una agenda de 1271 contactos a partir de esa nueva capacidad no se garantiza un efectivo doble hashing porque no existir\'a coprimalidad entre el paso de la segunda tabla de hash y la capacidad de la tabla. Si se van a cargar m\'as de 441 contactos se recomienda que se incie con una dimensi\'on prima m\'as grande. (Adem\'as de en general recomendarse establecer una capacidad lo suficientemente grande, puesto que el resizing resulta costoso).
 
 \section{Compilaci\'on e invocaci\'on}
 Para la compilaci\'on del programa la entrega cuenta con un archivo Makefile. Para producir el archivo ejecutable basta 
@@ -310,5 +325,19 @@ con correr alguno de los siguientes comandos:
 \end{itemize}
 
 \section{Bibliograf\'ia}
+
+\subsection{Obras consultadas}
+\begin{itemize}
+    \item Brassard, G. - Bratley, P. (1997) \emph{Fundamentos de la Algoritmia}.
+    \item 
+    \item Kumar, V. (2019) \emph{On the prerequisite of Coprimes in Double Hashing}.
+    \item Tenebaum, A. - Augenstein, M. - Langsam, Y. (1993) \emph{Estructuras de Datos con C}.
+\end{itemize}
+
+\subsection{Enlaces de inter\'es}
+\begin{itemize}
+    \item \href{https://www.geeksforgeeks.org/perfect-sum-problem-print-subsets-given-sum/}{https://www.geeksforgeeks.org/perfect-sum-problem-print-subsets-given-sum/}
+    \item \href{https://www.geeksforgeeks.org/subset-sum-problem-dp-25/}{https://www.geeksforgeeks.org/subset-sum-problem-dp-25/}
+\end{itemize}
 
 \end{document}
